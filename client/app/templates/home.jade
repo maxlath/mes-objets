@@ -1,0 +1,25 @@
+div.large-offset-2.large-8
+    h1 Welcome on My Own Transactions
+    p This application will help you manage your transactions!
+
+    form
+        label Title:
+        input(type="text", name="title")
+        label Url:
+        input(type="text", name="url")
+        input(id="add-transaction", type="submit", value="Add a new transaction", class="button success")
+    local
+    table
+        thead
+            tr
+              th(width='100%') Title
+              th(width='150') Action
+        tbody
+    //- ul
+        //- - for(transaction in transactions) {
+        //-     li
+        //-         a(href=transactions[transaction].url)= transactions[transaction].title
+        //-         | &nbsp;- (
+        //-         span delete
+        //-         | )
+        //- - }
