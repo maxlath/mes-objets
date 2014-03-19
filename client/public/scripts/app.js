@@ -168,7 +168,7 @@ buf.push(attrs({ 'href':(transaction.url) }, {"href":true}));
 buf.push('>');
 var __val__ = transaction.title
 buf.push(escape(null == __val__ ? "" : __val__));
-buf.push('</a></td><td><a class="delete">delete</a></td>');
+buf.push('</a></td><td><a class="delete">delete<i class="fa fa-caret-down"></i></a></td>');
 }
 return buf.join("");
 };
