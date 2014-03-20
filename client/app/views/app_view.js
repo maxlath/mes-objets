@@ -29,7 +29,7 @@ module.exports = AppView = Backbone.View.extend({
         // add it to the collection
         this.collection.create({
             title: this.$el.find('input[name="title"]').val(),
-            comment: this.$el.find('input[name="comment"]').val(),
+            comment: this.$el.find('textarea[name="comment"]').val(),
             trace: [
                     this.$el.find('select[name="proof_source"]').val()
                 ],

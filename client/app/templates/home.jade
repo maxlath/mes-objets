@@ -22,12 +22,14 @@ div.large-offset-2.large-8.small-offset-1.small-10
 
       h2 Etape 1
       p Choisissez les preuves d'achat à attacher
-      label
-        | Source
-        select(name="proof_source")
-          option(value='intermarche') Intermarché
-          option(value='intermarche') SoGé
-      a.success.radius.button(href='#', data-reveal-id='step2') Etape 2...
+      form
+        label
+          | Source
+          select(name="proof_source")
+            option(value='intermarche') Intermarché
+            option(value='intermarche') SoGé
+        a.success.radius.button(href='#', data-reveal-id='step2', type="submit") Etape 2...
+
       a.close-reveal-modal ×
 
     #step2.reveal-modal(data-reveal='data-reveal')
@@ -75,13 +77,14 @@ div.large-offset-2.large-8.small-offset-1.small-10
 
         div.comment
             label Comment: (optionel)
-            textarea(type="text", name="comment")
+            textarea(name="comment")
 
         div.url
             label Url:
             input(type="text", name="url", pattern="url")
                 small.error Une URL valide doit commencer par http(s)
-        a.success.radius.button(href='#', id="add-transaction") Valider la nouvelle transaction
+        a.success.radius.button(href='#', id="add-transaction", type="submit") Valider la nouvelle transaction
+
       a.close-reveal-modal ×
 
     //
