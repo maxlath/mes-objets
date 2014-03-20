@@ -16,5 +16,14 @@ td
 td
     span= transaction.comment
 td
-    a.delete delete
-        i.fa.fa-caret-down
+    a.dropdown(href='#', data-dropdown='drop1')
+        | Dropdown Button
+          i.fa.fa-caret-down
+        ul#drop1.f-dropdown(data-dropdown-content='data-dropdown-content')
+          li
+            a.delete delete
+            a(href='#') This is a link
+            li
+                a(href='#') This is another
+                li
+                    a(href='#') Yet another

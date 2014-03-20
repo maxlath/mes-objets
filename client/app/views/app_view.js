@@ -20,6 +20,7 @@ module.exports = AppView = Backbone.View.extend({
 
         // fetch the transactions from the database
         this.collection.fetch();
+        this.seed()
     },
 
     createTransaction: function(event) {
@@ -52,5 +53,25 @@ module.exports = AppView = Backbone.View.extend({
         });
         transactionView.render();
         this.$el.find('tbody').append(transactionView.$el);
+    },
+
+
+    seed: function(){
+        // not working
+        console.log('seeding!')
+        this.collection.create({
+            title: "Pelle à picous",
+            comment: "Très belle pelle",
+            trace: [
+                    "intermarché"
+                ],
+            category: [
+                "Bricolage",
+                "Pelle",
+                "Pelle à picous"
+            ],
+            barcode: "1248193523",
+            url: "http://pelle-a-picous.love"
+        });
     }
 });

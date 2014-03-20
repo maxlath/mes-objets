@@ -206,7 +206,7 @@ buf.push(escape(null == __val__ ? "" : __val__));
 buf.push('</span></td><td><span>');
 var __val__ = transaction.comment
 buf.push(escape(null == __val__ ? "" : __val__));
-buf.push('</span></td><td><a class="delete">delete<i class="fa fa-caret-down"></i></a></td>');
+buf.push('</span></td><td><a href="#" data-dropdown="drop1" class="dropdown">Dropdown Button<i class="fa fa-caret-down"></i><ul id="drop1" data-dropdown-content="data-dropdown-content" class="f-dropdown"><li><a class="delete">delete</a><a href="#">This is a link</a><li><a href="#">This is another</a><li><a href="#">Yet another</a></li></li></li></ul></a></td>');
 }
 return buf.join("");
 };
