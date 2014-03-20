@@ -29,7 +29,16 @@ module.exports = AppView = Backbone.View.extend({
         // add it to the collection
         this.collection.create({
             title: this.$el.find('input[name="title"]').val(),
-            description: this.$el.find('input[name="description"]').val()
+            comment: this.$el.find('input[name="comment"]').val(),
+            trace: "to be linked",
+            category: [
+                this.$el.find('select[name="cat"]').val(),
+                this.$el.find('select[name="subcat"]').val(),
+                this.$el.find('select[name="subsubcat"]').val()
+            ],
+            barcode: this.$el.find('input[name="barcode"]').val(),
+            url: this.$el.find('input[name="url"]').val()
+
         });
     },
 

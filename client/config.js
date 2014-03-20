@@ -11,7 +11,8 @@ exports.config = {
                 "before": [
                   'vendor/scripts/jquery-2.0.3.min.js',
                   'vendor/scripts/underscore-1.5.2.min.js',
-                  'vendor/scripts/backbone-1.0.0.min.js'
+                  'vendor/scripts/backbone-1.0.0.min.js',
+                  'vendor/scripts/foundation.min.js'
                 ]
             }
         },

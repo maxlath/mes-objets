@@ -101,6 +101,15 @@ module.exports = {
 };
 });
 
+;require.register("collections/receipts", function(exports, require, module) {
+Receipt = require('../models/receipt');
+module.exports = Receipts = Backbone.Collection.extend({
+    model: Receipt,
+    url: 'receipts'
+})
+
+});
+
 ;require.register("collections/transactions", function(exports, require, module) {
 Transaction = require('../models/transaction');
 module.exports = Transactions = Backbone.Collection.extend({
@@ -116,6 +125,12 @@ $(document).ready(function() {
     app.initialize()
 });
 
+});
+
+;require.register("models/receipt", function(exports, require, module) {
+module.exports = Receipt = Backbone.Model.extend({
+
+})
 });
 
 ;require.register("models/transaction", function(exports, require, module) {
@@ -151,7 +166,7 @@ attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow |
 var buf = [];
 with (locals || {}) {
 var interp;
-buf.push('<div class="large-offset-2 large-8"><h1>Welcome on My Own Transactions</h1><p>This application will help you manage your transactions!</p><form><label>Title:</label><input type="text" name="title"/><label>Url:</label><input type="text" name="url"/><input id="add-transaction" type="submit" value="Add a new transaction" class="button success"/></form><local></local><table><thead><tr><th width="100%">Title</th><th width="150">Action</th></tr></thead><tbody></tbody></table></div>');
+buf.push('<div class="large-offset-2 large-8 small-offset-1 small-10"><h1>Transactions Tracker</h1><p>This application will help you manage your transactions!</p><small data-tooltip="data-tooltip" title="Test: if it\'s pretty, it\'s working" class="has-tip">FoundationJS test</small><form data-abide="data-abide"><div id="step1"><h2>Etape 1</h2><p>Choisissez les preuves d\'achat à attacher</p><label>Catégorie<select name="proof_source"><option value="intermarche">Intermarché</option></select></label></div><div id="step2"><h2>Etape 2</h2><p>Editez les informations collectées</p><div class="title"><label>Titre:</label><input type="text" name="title" required="required"/></div><a id="trace" class="button">Attacher une preuve d\'achat</a><div class="category row collapse"><div class="large-4 columns"><label>Catégorie<select name="cat"><option value="bricolage">Bricolage</option><option value="starbuck">Starbuck</option><option value="hotdog">Hot Dog</option><option value="apollo">Apollo</option></select></label></div><div class="large-4 columns"><label>Sous-catégorie<select name="subcat"><option value="pelle">Pelle</option><option value="husker">Husker</option><option value="starbuck">Starbuck</option><option value="hotdog">Hot Dog</option></select></label></div><div class="large-4 columns"><label>Sous-sous-catégorie<select name="subsubcat"><option value="pelleapicoucontondants">Pelle à picous contondants</option><option value="husker">Husker</option><option value="apollo">Apollo</option><option value="starbuck">Starbuck</option></select></label></div></div><div class="barcode"><label>Code barre:</label><input type="text" name="barcode" required pattern="number"/></div><div class="comment"><label>Comment: (optionel)</label><textarea type="text" name="comment"></textarea></div><div class="url"><label>Url:</label><input type="text" name="url" pattern="url"/></div><div class="trace"></div><input id="add-transaction" type="submit" value="Add a new transaction" class="button success"/></div></form><local></local><table><thead><tr><th>Title</th><th>Categories</th><th>Barcode</th><th>URL</th><th>Traces</th><th width="100%">Comments</th><th width="150">Action</th></tr></thead><tbody></tbody></table><div id="receipts"><p>hello receipts div</p></div></div>');
 }
 return buf.join("");
 };
@@ -163,12 +178,31 @@ attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow |
 var buf = [];
 with (locals || {}) {
 var interp;
-buf.push('<td><a');
-buf.push(attrs({ 'href':(transaction.url) }, {"href":true}));
-buf.push('>');
+buf.push('<td><a href="transaction#show/tobeimplemented">');
 var __val__ = transaction.title
 buf.push(escape(null == __val__ ? "" : __val__));
-buf.push('</a></td><td><a class="delete">delete<i class="fa fa-caret-down"></i></a></td>');
+buf.push('</a></td><td><span>');
+var __val__ = transaction.category[0]
+buf.push(escape(null == __val__ ? "" : __val__));
+buf.push('</span><br/><span>');
+var __val__ = transaction.category[1]
+buf.push(escape(null == __val__ ? "" : __val__));
+buf.push('</span><br/><span>');
+var __val__ = transaction.category[2]
+buf.push(escape(null == __val__ ? "" : __val__));
+buf.push('</span><br/></td><td><span>');
+var __val__ = transaction.barcode
+buf.push(escape(null == __val__ ? "" : __val__));
+buf.push('</span></td><td><span>');
+var __val__ = transaction.url
+buf.push(escape(null == __val__ ? "" : __val__));
+buf.push('</span></td><td><span>');
+var __val__ = transaction.trace_ids
+buf.push(escape(null == __val__ ? "" : __val__));
+buf.push('</span></td><td><span>');
+var __val__ = transaction.comment
+buf.push(escape(null == __val__ ? "" : __val__));
+buf.push('</span></td><td><a class="delete">delete<i class="fa fa-caret-down"></i></a></td>');
 }
 return buf.join("");
 };
@@ -206,7 +240,16 @@ module.exports = AppView = Backbone.View.extend({
         // add it to the collection
         this.collection.create({
             title: this.$el.find('input[name="title"]').val(),
+            comment: this.$el.find('input[name="comment"]').val(),
+            trace: "to be linked",
+            category: [
+                this.$el.find('select[name="cat"]').val(),
+                this.$el.find('select[name="subcat"]').val(),
+                this.$el.find('select[name="subsubcat"]').val()
+            ],
+            barcode: this.$el.find('input[name="barcode"]').val(),
             url: this.$el.find('input[name="url"]').val()
+
         });
     },
 

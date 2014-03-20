@@ -4,8 +4,11 @@ americano = require('americano');
 module.exports = Transaction = americano.getModel('transactions', {
     "id": String,
     "title": String,
-    "description": { "type": String, "default": ""},
-    "barcode": { "type": String, "default": ""}
+    "barcode": { "type": String, "default": ""},
+    "category": Array,
+    "trace_ids": Array,
+    "url": { "type": String, "default": ""},
+    "comment": { "type": String, "default": ""}
 });
 
 // You can easily define here some helpers or method for transactionsTransaction.all = function(callback) {

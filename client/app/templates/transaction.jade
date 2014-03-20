@@ -1,5 +1,20 @@
 td
-    a(href=transaction.url)= transaction.title
+    a(href="transaction#show/tobeimplemented")= transaction.title
+td
+    span= transaction.category[0]
+    br
+    span= transaction.category[1]
+    br
+    span= transaction.category[2]
+    br
+td
+    span= transaction.barcode
+td
+    span= transaction.url
+td
+    span= transaction.trace_ids
+td
+    span= transaction.comment
 td
     a.delete delete
         i.fa.fa-caret-down
