@@ -30,7 +30,9 @@ module.exports = AppView = Backbone.View.extend({
         this.collection.create({
             title: this.$el.find('input[name="title"]').val(),
             comment: this.$el.find('input[name="comment"]').val(),
-            trace: "to be linked",
+            trace: [
+                    this.$el.find('select[name="proof_source"]').val()
+                ],
             category: [
                 this.$el.find('select[name="cat"]').val(),
                 this.$el.find('select[name="subcat"]').val(),
@@ -40,6 +42,7 @@ module.exports = AppView = Backbone.View.extend({
             url: this.$el.find('input[name="url"]').val()
 
         });
+        $('#step2').foundation('reveal', 'close');
     },
 
     onTransactionAdded: function(transaction) {

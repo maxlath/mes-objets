@@ -123,6 +123,10 @@ module.exports = Transactions = Backbone.Collection.extend({
 $(document).ready(function() {
     var app = require('application');
     app.initialize()
+
+    $(function(){
+        $(document).foundation();
+    });
 });
 
 });
@@ -166,7 +170,7 @@ attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow |
 var buf = [];
 with (locals || {}) {
 var interp;
-buf.push('<div class="large-offset-2 large-8 small-offset-1 small-10"><h1>Transactions Tracker</h1><p>This application will help you manage your transactions!</p><small data-tooltip="data-tooltip" title="Test: if it\'s pretty, it\'s working" class="has-tip">FoundationJS test</small><form data-abide="data-abide"><div id="step1"><h2>Etape 1</h2><p>Choisissez les preuves d\'achat à attacher</p><label>Catégorie<select name="proof_source"><option value="intermarche">Intermarché</option></select></label></div><div id="step2"><h2>Etape 2</h2><p>Editez les informations collectées</p><div class="title"><label>Titre:</label><input type="text" name="title" required="required"/></div><a id="trace" class="button">Attacher une preuve d\'achat</a><div class="category row collapse"><div class="large-4 columns"><label>Catégorie<select name="cat"><option value="bricolage">Bricolage</option><option value="starbuck">Starbuck</option><option value="hotdog">Hot Dog</option><option value="apollo">Apollo</option></select></label></div><div class="large-4 columns"><label>Sous-catégorie<select name="subcat"><option value="pelle">Pelle</option><option value="husker">Husker</option><option value="starbuck">Starbuck</option><option value="hotdog">Hot Dog</option></select></label></div><div class="large-4 columns"><label>Sous-sous-catégorie<select name="subsubcat"><option value="pelleapicoucontondants">Pelle à picous contondants</option><option value="husker">Husker</option><option value="apollo">Apollo</option><option value="starbuck">Starbuck</option></select></label></div></div><div class="barcode"><label>Code barre:</label><input type="text" name="barcode" required pattern="number"/></div><div class="comment"><label>Comment: (optionel)</label><textarea type="text" name="comment"></textarea></div><div class="url"><label>Url:</label><input type="text" name="url" pattern="url"/></div><div class="trace"></div><input id="add-transaction" type="submit" value="Add a new transaction" class="button success"/></div></form><local></local><table><thead><tr><th>Title</th><th>Categories</th><th>Barcode</th><th>URL</th><th>Traces</th><th width="100%">Comments</th><th width="150">Action</th></tr></thead><tbody></tbody></table><div id="receipts"><p>hello receipts div</p></div></div>');
+buf.push('<div class="large-offset-2 large-8 small-offset-1 small-10"><h1>Transactions Tracker</h1><p>This application will help you manage your transactions!</p><a href="#" data-reveal-id="step1" class="radius button">Ajouter une transaction</a><!--<Reveal>Modals begin</Reveal>--><div id="step1" data-reveal="data-reveal" class="reveal-modal"><h2>Etape 1</h2><p>Choisissez les preuves d\'achat à attacher</p><label>Source<select name="proof_source"><option value="intermarche">Intermarché</option><option value="intermarche">SoGé</option></select></label><a href="#" data-reveal-id="step2" class="success radius button">Etape 2...</a><a class="close-reveal-modal">×</a></div><div id="step2" data-reveal="data-reveal" class="reveal-modal"><form data-abide="data-abide"><h2>Etape 2</h2><p>Editez les informations collectées</p><div class="title"><label>Titre:</label><input type="text" name="title" required="required"/></div><div class="category row collapse"><div class="large-4 columns"><label>Catégorie<select name="cat"><option value="bricolage">Bricolage</option><option value="starbuck">Starbuck</option><option value="hotdog">Hot Dog</option><option value="apollo">Apollo</option></select></label></div><div class="large-4 columns"><label>Sous-catégorie<select name="subcat"><option value="pelle">Pelle</option><option value="husker">Husker</option><option value="starbuck">Starbuck</option><option value="hotdog">Hot Dog</option></select></label></div><div class="large-4 columns"><label>Sous-sous-catégorie<select name="subsubcat"><option value="pelleapicoucontondants">Pelle à picous contondants</option><option value="husker">Husker</option><option value="apollo">Apollo</option><option value="starbuck">Starbuck</option></select></label></div></div><div class="barcode"><label>Code barre:</label><input type="text" name="barcode" required pattern="number"/></div><div class="comment"><label>Comment: (optionel)</label><textarea type="text" name="comment"></textarea></div><div class="url"><label>Url:</label><input type="text" name="url" pattern="url"/></div><a href="#" id="add-transaction" class="success radius button">Valider la nouvelle transaction</a></form><a class="close-reveal-modal">×</a></div><!--<Reveal>Modals end</Reveal>--><local></local><table><thead><tr><th>Title</th><th>Categories</th><th>Barcode</th><th>URL</th><th>Traces</th><th width="100%">Comments</th><th width="150">Action</th></tr></thead><tbody></tbody></table><div id="receipts"><p>hello receipts div</p></div></div>');
 }
 return buf.join("");
 };
@@ -197,7 +201,7 @@ buf.push('</span></td><td><span>');
 var __val__ = transaction.url
 buf.push(escape(null == __val__ ? "" : __val__));
 buf.push('</span></td><td><span>');
-var __val__ = transaction.trace_ids
+var __val__ = transaction.trace[0]
 buf.push(escape(null == __val__ ? "" : __val__));
 buf.push('</span></td><td><span>');
 var __val__ = transaction.comment
@@ -241,7 +245,9 @@ module.exports = AppView = Backbone.View.extend({
         this.collection.create({
             title: this.$el.find('input[name="title"]').val(),
             comment: this.$el.find('input[name="comment"]').val(),
-            trace: "to be linked",
+            trace: [
+                    this.$el.find('select[name="proof_source"]').val()
+                ],
             category: [
                 this.$el.find('select[name="cat"]').val(),
                 this.$el.find('select[name="subcat"]').val(),
@@ -251,6 +257,7 @@ module.exports = AppView = Backbone.View.extend({
             url: this.$el.find('input[name="url"]').val()
 
         });
+        $('#step2').foundation('reveal', 'close');
     },
 
     onTransactionAdded: function(transaction) {

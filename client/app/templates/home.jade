@@ -13,18 +13,25 @@ div.large-offset-2.large-8.small-offset-1.small-10
     //-             li
     //-                 a(href='#') Yet another
 
-    small.has-tip(data-tooltip='data-tooltip', title="Test: if it's pretty, it's working") FoundationJS test
+    a.radius.button(href='#', data-reveal-id='step1') Ajouter une transaction
 
-    form(data-abide)
-      #step1
-        h2 Etape 1
-        p Choisissez les preuves d'achat à attacher
-        label
-          | Catégorie
-          select(name="proof_source")
-            option(value='intermarche') Intermarché
+    //
+     Reveal Modals begin
 
-      #step2
+    #step1.reveal-modal(data-reveal='data-reveal')
+
+      h2 Etape 1
+      p Choisissez les preuves d'achat à attacher
+      label
+        | Source
+        select(name="proof_source")
+          option(value='intermarche') Intermarché
+          option(value='intermarche') SoGé
+      a.success.radius.button(href='#', data-reveal-id='step2') Etape 2...
+      a.close-reveal-modal ×
+
+    #step2.reveal-modal(data-reveal='data-reveal')
+      form(data-abide)
         h2 Etape 2
         p Editez les informations collectées
 
@@ -32,8 +39,6 @@ div.large-offset-2.large-8.small-offset-1.small-10
             label Titre:
             input(type="text", name="title", required)
                 small.error Un titre est requis pour identifier la transaction
-
-        a#trace.button Attacher une preuve d'achat
 
         div.category.row.collapse
             div.large-4.columns
@@ -62,19 +67,27 @@ div.large-offset-2.large-8.small-offset-1.small-10
                       option(value='husker') Husker
                       option(value='apollo') Apollo
                       option(value='starbuck') Starbuck
+
         div.barcode
             label Code barre:
             input(type="text", name="barcode", required pattern="number")
                 small.error Le Code Barre ne peut comprendre que des chiffres
+
         div.comment
             label Comment: (optionel)
             textarea(type="text", name="comment")
+
         div.url
             label Url:
             input(type="text", name="url", pattern="url")
                 small.error Une URL valide doit commencer par http(s)
-        div.trace
-        input(id="add-transaction", type="submit", value="Add a new transaction", class="button success")
+        a.success.radius.button(href='#', id="add-transaction") Valider la nouvelle transaction
+      a.close-reveal-modal ×
+
+    //
+       Reveal Modals end
+
+
     local
     table
         thead
