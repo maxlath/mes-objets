@@ -3,7 +3,5 @@ $(document).ready(function() {
     var app = require('application');
     app.initialize()
 
-    $(function(){
-        $(document).foundation();
-    });
+    $(document).foundation();
 });

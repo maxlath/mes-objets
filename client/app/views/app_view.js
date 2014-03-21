@@ -1,4 +1,5 @@
 var TransactionView = require('./transaction');
+var Step1 = require('./modal_step1')
 
 module.exports = AppView = Backbone.View.extend({
 
@@ -17,7 +18,8 @@ module.exports = AppView = Backbone.View.extend({
 
         // we render the template
         this.$el.html(this.template());
-
+        var step1 = new Step1()
+        step1.render()
         // fetch the transactions from the database
         this.collection.fetch();
         this.seed()
@@ -44,6 +46,22 @@ module.exports = AppView = Backbone.View.extend({
 
         });
         $('#step2').foundation('reveal', 'close');
+    },
+
+    updateTransaction: function(event) {
+        var that = this
+        this.model.save({
+            barcode: this.$el.find('input[name="barcode"]').val() // ou qqch comme ça
+        },
+        // alternative: ajouter un change listner qui rerender le bouzin
+        {
+            success: function(){
+                that.render()
+            },
+            error: function(){
+                console.log('doh!')
+            }
+        })
     },
 
     onTransactionAdded: function(transaction) {

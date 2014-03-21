@@ -16,4 +16,4 @@ Transaction.all = function(callback) {
     Transaction.request("all", {}, function(err, transactions) {
        callback(null, transactions);
     });
-};am
+};

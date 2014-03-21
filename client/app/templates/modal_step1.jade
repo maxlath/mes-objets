@@ -1,0 +1,17 @@
+h2 Etape 1
+      p Choisissez les preuves d'achat à attacher
+      form
+        label
+          | Source
+          select(id="proof_source", name="proof_source")
+            option(value='null') Choisissez une source d'information
+            option(value='intermarche') Intermarché
+            option(value='intermarche') SoGé
+        #receiptfilter
+        #receiptelements
+            select(id="proof_detail", name="proof_detail")
+
+
+      a.success.radius.button(href='#', data-reveal-id='step2', type="submit") Etape 2...
+
+      a.close-reveal-modal ×

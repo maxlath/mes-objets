@@ -1,4 +1,5 @@
 var transactions = require('./transactions');
+var receiptdetails = require('./receiptdetails');
 
 module.exports = {
     'transactions': {
@@ -7,5 +8,8 @@ module.exports = {
     },
     'transactions/:id': {
         del: transactions.delete
+    },
+    'receiptdetail': {
+        get: receiptdetails.list
     }
 };

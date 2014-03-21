@@ -294,3 +294,9 @@ ReceiptDetail.mostBoughtProductOfMonth = function(month, callback) {
             }
         });
 }
+
+ReceiptDetail.all = function(callback) {
+    ReceiptDetail.request("all", {}, function(err, lignes_de_ticket) {
+       callback(null, lignes_de_ticket);
+    });
+};

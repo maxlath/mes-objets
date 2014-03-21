@@ -1,7 +1,9 @@
 var AppView = require('views/app_view');
 var TransactionCollection = require('collections/transactions');
+var ReceiptDetailCollection = require('collections/receiptdetails');
 
 var transactions = new TransactionCollection();
+var receiptdetails = new ReceiptDetailCollection();
 
 module.exports = Router = Backbone.Router.extend({
 
@@ -11,7 +13,8 @@ module.exports = Router = Backbone.Router.extend({
 
     main: function() {
         var mainView = new AppView({
-            collection: transactions
+            collection: transactions,
+            receiptcollection: receiptdetails
         });
         mainView.render();
     }

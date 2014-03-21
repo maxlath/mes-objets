@@ -1,17 +1,6 @@
-div.large-offset-2.large-8.small-offset-1.small-10
+#main.large-offset-2.large-8.small-offset-1.small-10
     h1 Transactions Tracker
     p This application will help you manage your transactions!
-
-    //- Test Foundation JS
-    //- a.button.dropdown(href='#', data-dropdown='drop1') Dropdown Button
-    //- br
-    //-     ul#drop1.f-dropdown(data-dropdown-content='data-dropdown-content')
-    //-       li
-    //-         a(href='#') This is a link
-    //-         li
-    //-             a(href='#') This is another
-    //-             li
-    //-                 a(href='#') Yet another
 
     a.radius.button(href='#', data-reveal-id='step1') Ajouter une transaction
 
@@ -20,17 +9,7 @@ div.large-offset-2.large-8.small-offset-1.small-10
 
     #step1.reveal-modal(data-reveal='data-reveal')
 
-      h2 Etape 1
-      p Choisissez les preuves d'achat à attacher
-      form
-        label
-          | Source
-          select(name="proof_source")
-            option(value='intermarche') Intermarché
-            option(value='intermarche') SoGé
-        a.success.radius.button(href='#', data-reveal-id='step2', type="submit") Etape 2...
 
-      a.close-reveal-modal ×
 
     #step2.reveal-modal(data-reveal='data-reveal')
       form(data-abide)
@@ -104,5 +83,6 @@ div.large-offset-2.large-8.small-offset-1.small-10
               th(width='150') Action
         tbody
             //- transactions
-    #receipts
-      p hello receipts div
+    #preview.panel
+      p
+        em Selectionnez une transaction
