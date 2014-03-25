@@ -1,5 +1,5 @@
 {
-  "name": "cozy-tutorial",
+  "name": "mes-transactions",
   "version": "0.0.1",
   "description": "An application to get you started with web app development and Cozy.",
   "repository": {
@@ -20,11 +20,8 @@
   },
   "cozy-displayName": "Mes Transactions",
   "cozy-permissions": {
-    "Receipt": {
-      "description": "Visualiser la liste de vos tickets de caisse."
-    },
     "ReceiptDetail": {
-      "description": "Visualiser les lignes de vos tickets de caisse."
+      "description": "Ajouter les référence de vos tickets de caisse à vos transactions."
     }
   }
 }
