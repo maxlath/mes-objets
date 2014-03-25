@@ -1,0 +1,89 @@
+div.row
+    div.large-8.columns
+        h1 Transactions Tracker
+        p This application will help you manage your transactions!
+
+    div.large-4.columns
+        a#addtransacbutton.radius.button(href='#', data-reveal-id='step1') Ajouter une transaction
+
+    //
+     Reveal Modals begin
+    #step1.reveal-modal(data-reveal='data-reveal')
+
+
+
+    #step2.reveal-modal(data-reveal='data-reveal')
+      form(data-abide)
+        h2 Etape 2
+        p Editez les informations collectées
+
+        div.title
+            label Titre:
+            input(type="text", name="title", required)
+                small.error Un titre est requis pour identifier la transaction
+
+        div.category.row.collapse
+            div.large-4.columns
+                label
+                    | Catégorie
+                    select(name="cat")
+                      option(value='bricolage') Bricolage
+                      option(value='starbuck') Starbuck
+                      option(value='hotdog') Hot Dog
+                      option(value='apollo') Apollo
+
+            div.large-4.columns
+                label
+                    | Sous-catégorie
+                    select(name="subcat")
+                      option(value='pelle') Pelle
+                      option(value='husker') Husker
+                      option(value='starbuck') Starbuck
+                      option(value='hotdog') Hot Dog
+
+            div.large-4.columns
+                label
+                    | Sous-sous-catégorie
+                    select(name="subsubcat")
+                      option(value='pelleapicoucontondants') Pelle à picous contondants
+                      option(value='husker') Husker
+                      option(value='apollo') Apollo
+                      option(value='starbuck') Starbuck
+
+        div.barcode
+            label Code barre:
+            input(type="text", name="barcode", required pattern="number")
+                small.error Le Code Barre ne peut comprendre que des chiffres
+
+        div.comment
+            label Comment: (optionel)
+            textarea(name="comment")
+
+        div.url
+            label Url:
+            input(type="text", name="url", pattern="url")
+                small.error Une URL valide doit commencer par http(s)
+        a.success.radius.button(href='#', id="add-transaction", type="submit") Valider la nouvelle transaction
+
+      a.close-reveal-modal ×
+
+    //
+       Reveal Modals end
+.row
+  table
+      thead
+          tr
+            th Title
+            th Categories
+            th Barcode
+            th URL
+            th Traces
+            th(width='100%') Comments
+            th(width='150') Action
+      tbody
+          //- transactions
+  #preview.panel
+    p
+      em Selectionnez une transaction
+
+

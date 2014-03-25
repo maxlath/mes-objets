@@ -16,10 +16,13 @@ exports.config = {
                 ]
             }
         },
-
         "templates": {
             "defaultExtension": 'jade',
             "joinTo": 'scripts/app.js'
+        },
+        "stylesheets": {
+            "defaultExtension": 'scss',
+            "joinTo": 'stylesheets/app.css'
         }
     }
 }

@@ -1,0 +1,14 @@
+
+$smallscreen: 600px;
+
+/*Small screens*/
+@media screen and (max-width: $smallscreen) {
+
+}
+
+/*Large screens*/
+@media screen and (min-width: $smallscreen) {
+    #addtransacbutton{
+        margin: 20px;
+    }
+}

@@ -1,0 +1,10 @@
+/*Small screens*/
+@media screen and (max-width: 600px) { }
+
+/*Large screens*/
+@media screen and (min-width: 600px) {
+  #addtransacbutton {
+    margin: 20px; } }
+
+
+/*# sourceMappingURL=app.css.map*/

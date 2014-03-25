@@ -122,7 +122,26 @@ module.exports = ReceiptDetails = Backbone.Collection.extend({
 Transaction = require('../models/transaction');
 module.exports = Transactions = Backbone.Collection.extend({
     model: Transaction,
-    url: 'transactions'
+    url: 'transactions',
+    seed: function(){
+        // not working
+        console.log('seeding!')
+        this.create({
+            id:"1231512512341512412",
+            title: "Pelle à picous",
+            comment: "Très belle pelle",
+            trace: [
+                    "intermarché"
+                ],
+            category: [
+                "Bricolage",
+                "Pelle",
+                "Pelle à picous"
+            ],
+            barcode: "1248193523",
+            url: "http://pelle-a-picous.love"
+        });
+    }
 });
 });
 
@@ -150,7 +169,7 @@ module.exports = Transaction = Backbone.Model.extend({
 });
 
 ;require.register("router", function(exports, require, module) {
-var AppView = require('views/app_view');
+var AppView = require('views/app');
 var TransactionCollection = require('collections/transactions');
 var ReceiptDetailCollection = require('collections/receiptdetails');
 
@@ -173,13 +192,13 @@ module.exports = Router = Backbone.Router.extend({
 });
 });
 
-;require.register("templates/home", function(exports, require, module) {
+;require.register("templates/app", function(exports, require, module) {
 module.exports = function anonymous(locals, attrs, escape, rethrow, merge) {
 attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow || jade.rethrow; merge = merge || jade.merge;
 var buf = [];
 with (locals || {}) {
 var interp;
-buf.push('<div id="main" class="large-offset-2 large-8 small-offset-1 small-10"><h1>Transactions Tracker</h1><p>This application will help you manage your transactions!</p><a href="#" data-reveal-id="step1" class="radius button">Ajouter une transaction</a><!--<Reveal>Modals begin</Reveal>--><div id="step1" data-reveal="data-reveal" class="reveal-modal"></div><div id="step2" data-reveal="data-reveal" class="reveal-modal"><form data-abide="data-abide"><h2>Etape 2</h2><p>Editez les informations collectées</p><div class="title"><label>Titre:</label><input type="text" name="title" required="required"/></div><div class="category row collapse"><div class="large-4 columns"><label>Catégorie<select name="cat"><option value="bricolage">Bricolage</option><option value="starbuck">Starbuck</option><option value="hotdog">Hot Dog</option><option value="apollo">Apollo</option></select></label></div><div class="large-4 columns"><label>Sous-catégorie<select name="subcat"><option value="pelle">Pelle</option><option value="husker">Husker</option><option value="starbuck">Starbuck</option><option value="hotdog">Hot Dog</option></select></label></div><div class="large-4 columns"><label>Sous-sous-catégorie<select name="subsubcat"><option value="pelleapicoucontondants">Pelle à picous contondants</option><option value="husker">Husker</option><option value="apollo">Apollo</option><option value="starbuck">Starbuck</option></select></label></div></div><div class="barcode"><label>Code barre:</label><input type="text" name="barcode" required pattern="number"/></div><div class="comment"><label>Comment: (optionel)</label><textarea name="comment"></textarea></div><div class="url"><label>Url:</label><input type="text" name="url" pattern="url"/></div><a href="#" id="add-transaction" type="submit" class="success radius button">Valider la nouvelle transaction</a></form><a class="close-reveal-modal">×</a></div><!--<Reveal>Modals end</Reveal>--><local></local><table><thead><tr><th>Title</th><th>Categories</th><th>Barcode</th><th>URL</th><th>Traces</th><th width="100%">Comments</th><th width="150">Action</th></tr></thead><tbody></tbody></table><div id="preview" class="panel"><p><em>Selectionnez une transaction</em></p></div></div>');
+buf.push('<div class="row"><div class="large-8 columns"><h1>Transactions Tracker</h1><p>This application will help you manage your transactions!</p></div><div class="large-4 columns"><a id="addtransacbutton" href="#" data-reveal-id="step1" class="radius button">Ajouter une transaction</a></div><!--<Reveal>Modals begin</Reveal>--><div id="step1" data-reveal="data-reveal" class="reveal-modal"></div><div id="step2" data-reveal="data-reveal" class="reveal-modal"><form data-abide="data-abide"><h2>Etape 2</h2><p>Editez les informations collectées</p><div class="title"><label>Titre:</label><input type="text" name="title" required="required"/></div><div class="category row collapse"><div class="large-4 columns"><label>Catégorie<select name="cat"><option value="bricolage">Bricolage</option><option value="starbuck">Starbuck</option><option value="hotdog">Hot Dog</option><option value="apollo">Apollo</option></select></label></div><div class="large-4 columns"><label>Sous-catégorie<select name="subcat"><option value="pelle">Pelle</option><option value="husker">Husker</option><option value="starbuck">Starbuck</option><option value="hotdog">Hot Dog</option></select></label></div><div class="large-4 columns"><label>Sous-sous-catégorie<select name="subsubcat"><option value="pelleapicoucontondants">Pelle à picous contondants</option><option value="husker">Husker</option><option value="apollo">Apollo</option><option value="starbuck">Starbuck</option></select></label></div></div><div class="barcode"><label>Code barre:</label><input type="text" name="barcode" required pattern="number"/></div><div class="comment"><label>Comment: (optionel)</label><textarea name="comment"></textarea></div><div class="url"><label>Url:</label><input type="text" name="url" pattern="url"/></div><a href="#" id="add-transaction" type="submit" class="success radius button">Valider la nouvelle transaction</a></form><a class="close-reveal-modal">×</a></div><!--<Reveal>Modals end</Reveal>--></div><div class="row"><table><thead><tr><th>Title</th><th>Categories</th><th>Barcode</th><th>URL</th><th>Traces</th><th width="100%">Comments</th><th width="150">Action</th></tr></thead><tbody></tbody></table><div id="preview" class="panel"><p><em>Selectionnez une transaction</em></p></div></div>');
 }
 return buf.join("");
 };
@@ -203,7 +222,9 @@ attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow |
 var buf = [];
 with (locals || {}) {
 var interp;
-buf.push('<td><a href="transaction#show/tobeimplemented">');
+buf.push('<td><a');
+buf.push(attrs({ 'href':("transaction#show/" + (transaction.id) + "") }, {"href":true}));
+buf.push('>');
 var __val__ = transaction.title
 buf.push(escape(null == __val__ ? "" : __val__));
 buf.push('</a></td><td><span>');
@@ -233,19 +254,19 @@ return buf.join("");
 };
 });
 
-;require.register("views/app_view", function(exports, require, module) {
+;require.register("views/app", function(exports, require, module) {
 var TransactionView = require('./transaction');
 var Step1 = require('./modal_step1')
 
 module.exports = AppView = Backbone.View.extend({
 
     el: 'body',
-    template: require('../templates/home'),
+    template: require('../templates/app'),
     events: {
         "click #add-transaction": "createTransaction"
     },
 
-    // initialize is automatically called once after the view is constructed
+    // initialize is automatically called once after the view is contructed
     initialize: function() {
         this.listenTo(this.collection, "add", this.onTransactionAdded);
     },
@@ -258,7 +279,7 @@ module.exports = AppView = Backbone.View.extend({
         step1.render()
         // fetch the transactions from the database
         this.collection.fetch();
-        this.seed()
+        this.collection.seed()
     },
 
     createTransaction: function(event) {
@@ -284,21 +305,21 @@ module.exports = AppView = Backbone.View.extend({
         $('#step2').foundation('reveal', 'close');
     },
 
-    updateTransaction: function(event) {
-        var that = this
-        this.model.save({
-            barcode: this.$el.find('input[name="barcode"]').val() // ou qqch comme ça
-        },
-        // alternative: ajouter un change listner qui rerender le bouzin
-        {
-            success: function(){
-                that.render()
-            },
-            error: function(){
-                console.log('doh!')
-            }
-        })
-    },
+    // updateTransaction: function(event) {
+    //     var that = this
+    //     this.model.save({
+    //         barcode: this.$el.find('input[name="barcode"]').val() // ou qqch comme ça
+    //     },
+    //     // alternative: ajouter un change listner qui rerender le bouzin
+    //     {
+    //         success: function(){
+    //             that.render()
+    //         },
+    //         error: function(){
+    //             console.log('doh!')
+    //         }
+    //     })
+    // },
 
     onTransactionAdded: function(transaction) {
         // render the specific element
@@ -307,26 +328,6 @@ module.exports = AppView = Backbone.View.extend({
         });
         transactionView.render();
         this.$el.find('tbody').append(transactionView.$el);
-    },
-
-
-    seed: function(){
-        // not working
-        console.log('seeding!')
-        this.collection.create({
-            title: "Pelle à picous",
-            comment: "Très belle pelle",
-            trace: [
-                    "intermarché"
-                ],
-            category: [
-                "Bricolage",
-                "Pelle",
-                "Pelle à picous"
-            ],
-            barcode: "1248193523",
-            url: "http://pelle-a-picous.love"
-        });
     }
 });
 });

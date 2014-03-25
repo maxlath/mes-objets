@@ -1,4 +1,4 @@
-var AppView = require('views/app_view');
+var AppView = require('views/app');
 var TransactionCollection = require('collections/transactions');
 var ReceiptDetailCollection = require('collections/receiptdetails');
 

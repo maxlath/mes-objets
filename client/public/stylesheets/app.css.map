@@ -1,0 +1,1 @@
+{"version":3,"file":"public/stylesheets/app.css","sources":["app/stylesheets/app.scss"],"names":[],"mappings":"AAAA;AACA;AACA;AACA;AACA;AACA;AACA;AACA","sourcesContent":["/*Small screens*/\n@media screen and (max-width: 600px) { }\n\n/*Large screens*/\n@media screen and (min-width: 600px) {\n  #addtransacbutton {\n    margin: 20px; } }\n"]}
