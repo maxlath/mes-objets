@@ -12,10 +12,11 @@ td
 td
     span= transaction.url
 td
-    span= transaction.trace[0]
+    //- span= transaction.trace[0]
 td
     span= transaction.comment
 td
+    a.delete Supprimer /
     a.dropdown(href='#', data-dropdown='drop1')
         | Dropdown Button
         i.fa.fa-caret-down

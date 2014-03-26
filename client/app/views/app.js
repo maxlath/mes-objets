@@ -22,7 +22,7 @@ module.exports = AppView = Backbone.View.extend({
         step1.render()
         // fetch the transactions from the database
         this.collection.fetch();
-        this.collection.seed()
+        // this.collection.seed()
     },
 
     createTransaction: function(event) {
@@ -71,5 +71,5 @@ module.exports = AppView = Backbone.View.extend({
         });
         transactionView.render();
         this.$el.find('tbody').append(transactionView.$el);
-    }
+    },
 });

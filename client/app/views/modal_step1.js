@@ -6,6 +6,7 @@ module.exports = ReceiptDetail = Backbone.View.extend({
     template: require('../templates/modal_step1'),
 
      events: {
+        'show #proof_source': 'getOptionValues',
         'change #proof_source': 'getOptionValues'
     },
 
@@ -25,7 +26,7 @@ module.exports = ReceiptDetail = Backbone.View.extend({
                 this.collection = new ReceiptDetailsCollection
                 this.collection.fetch()
                 this.listenTo(this.collection, "add", this.onReceiptDetailsAdded);
-                this.collection.seed()
+                // this.collection.seed()
                 break;
         }
     }
