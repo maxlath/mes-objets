@@ -124,25 +124,25 @@ Transaction = require('../models/transaction');
 module.exports = Transactions = Backbone.Collection.extend({
     model: Transaction,
     url: 'transactions',
-    seed: function(){
-        // not working
-        console.log('seeding!')
-        this.create({
-            id:"1231512512341512412",
-            title: "Pelle à picous",
-            comment: "Très belle pelle",
-            trace: [
-                    "intermarché"
-                ],
-            category: [
-                "Bricolage",
-                "Pelle",
-                "Pelle à picous"
-            ],
-            barcode: "1248193523",
-            url: "http://pelle-a-picous.love"
-        });
-    }
+    // seed: function(){
+    //     // not working
+    //     console.log('seeding!')
+    //     this.create({
+    //         id:"1231512512341512412",
+    //         title: "Pelle à picous",
+    //         comment: "Très belle pelle",
+    //         trace: [
+    //                 "intermarché"
+    //             ],
+    //         category: [
+    //             "Bricolage",
+    //             "Pelle",
+    //             "Pelle à picous"
+    //         ],
+    //         barcode: "1248193523",
+    //         url: "http://pelle-a-picous.love"
+    //     });
+    // }
 });
 });
 
@@ -244,7 +244,7 @@ buf.push(escape(null == __val__ ? "" : __val__));
 buf.push('</span></td><td></td><td><span>');
 var __val__ = transaction.comment
 buf.push(escape(null == __val__ ? "" : __val__));
-buf.push('</span></td><td><a class="delete">Supprimer /</a><a href="#" data-dropdown="drop1" class="dropdown">Dropdown Button<i class="fa fa-caret-down"></i><ul id="drop1" data-dropdown-content="data-dropdown-content" class="f-dropdown"><li><a class="delete">Supprimer</a><li><a href="#">This is another</a><li><a href="#">Yet another</a></li></li></li></ul></a></td>');
+buf.push('</span></td><td><a class="edit">Editer /</a><a class="delete">Supprimer /</a><a href="#" data-dropdown="drop1" class="dropdown">Dropdown Button<i class="fa fa-caret-down"></i><ul id="drop1" data-dropdown-content="data-dropdown-content" class="f-dropdown"><li><a class="delete">Supprimer</a><li><a href="#">This is another</a><li><a href="#">Yet another</a></li></li></li></ul></a></td>');
 }
 return buf.join("");
 };
@@ -370,7 +370,8 @@ module.exports = Transaction = Backbone.View.extend({
     tagName: 'tr',
     template: require('../templates/transaction'),
     events: {
-        'click a.delete': 'deleteTransaction'
+        'click a.delete': 'deleteTransaction',
+        'click a.edit': 'editTransaction'
     },
 
     render: function() {
@@ -382,6 +383,10 @@ module.exports = Transaction = Backbone.View.extend({
     deleteTransaction: function() {
         this.model.destroy();
         this.remove();
+    },
+
+    editTransaction: function(){
+        alert('fonctionnalité à venir')
     }
 });
 });

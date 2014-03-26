@@ -3,7 +3,8 @@ module.exports = Transaction = Backbone.View.extend({
     tagName: 'tr',
     template: require('../templates/transaction'),
     events: {
-        'click a.delete': 'deleteTransaction'
+        'click a.delete': 'deleteTransaction',
+        'click a.edit': 'editTransaction'
     },
 
     render: function() {
@@ -15,5 +16,9 @@ module.exports = Transaction = Backbone.View.extend({
     deleteTransaction: function() {
         this.model.destroy();
         this.remove();
+    },
+
+    editTransaction: function(){
+        alert('fonctionnalité à venir')
     }
 });
