@@ -11,6 +11,29 @@ module.exports.list = function(req, res) {
     });
 };
 
+// module.exports.show = function(req, res) {
+// Transaction.find(req.params.id, function(err, transaction) {
+//         if(err != null) {
+//             res.send(500, {error: "Transaction couldn't be retrieved -- " + err});
+//         }
+//         else if(transaction == null) {
+//             res.send(404, {error: "Transaction not found"});
+//         }
+//         else {
+//             transaction.destroy(function(err) {
+//                 if(err != null) {
+//                     res.send(500, {error: "An error has occurred -- " + err});
+//                 }
+//                 else {
+//                     res.send(200);
+//                 }
+//             });
+//         }
+//     });
+// };
+
+
+
 // We define a new route that will handle transaction creation
 module.exports.add = function(req, res) {
     Transaction.create(req.body, function(err, transaction) {

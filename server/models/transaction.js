@@ -5,8 +5,10 @@ module.exports = Transaction = americano.getModel('transactions', {
     "id": String,
     "title": String,
     "barcode": { "type": String, "default": ""},
-    "category": Array,
-    "trace_ids": Array,
+    "category": String,
+    "subcategory": String,
+    "subsubcategory": String,
+    "proof": Array,
     "url": { "type": String, "default": ""},
     "comment": { "type": String, "default": ""}
 });

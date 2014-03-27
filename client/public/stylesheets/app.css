@@ -6,5 +6,8 @@
   #addtransacbutton {
     margin: 20px; } }
 
+#step1 div {
+  display: none; }
+
 
 /*# sourceMappingURL=app.css.map*/

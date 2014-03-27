@@ -1,5 +1,6 @@
 var transactions = require('./transactions');
 var receiptdetails = require('./receiptdetails');
+var receipts = require('./receipts');
 
 module.exports = {
     'transactions': {
@@ -7,9 +8,16 @@ module.exports = {
         post: transactions.add,
     },
     'transactions/:id': {
+        // get: transactions.show,
         del: transactions.delete
     },
-    'receiptdetail': {
+    'receipts': {
+        get: receipts.newest
+    },
+    'receipts/:receiptid/sections': {
+        get: receiptdetails.sections
+    },
+    'receiptdetails': {
         get: receiptdetails.list
     }
 };

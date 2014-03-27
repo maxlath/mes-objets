@@ -1,16 +1,34 @@
 h2 Etape 1
       p Choisissez les preuves d'achat à attacher
       form
-        label
-          | Source
+        #source
+          label
+            | Source
           select(id="proof_source", name="proof_source")
-            option(value='null') Choisissez une source d'information
+            option(value='null') == Choisissez une source d'information ==
             option(value='intermarche') Intermarché
             option(value='intermarche') SoGé
-        #receiptfilter
+        #receipts
+          label
+            | Tickets de caisse
+          select(id="receipt", name="receipt")
+            option(value='null') == Choisissez un ticket de caisse ==
+        //- #receiptsections
+        //-   label
+        //-     | Rayon
+        //-   select(id="sections", name="sections")
+        //-     option(value='null') == Choisissez un rayon ==
         #receiptelements
-            select(id="proof_detail", name="proof_detail")
+          label
+            | Détails du ticket
+          select(id="receipt_details", name="receipt_details")
+            option(value='null') == Choisissez une ligne du ticket ==
 
+
+
+      #manualbarcode
+        span ou entrer le code bar manuellement
+          input(placeholder="barcode")
 
       a.success.radius.button(href='#', data-reveal-id='step2', type="submit") Etape 2...
 

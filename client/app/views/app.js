@@ -36,11 +36,9 @@ module.exports = AppView = Backbone.View.extend({
             trace: [
                     this.$el.find('select[name="proof_source"]').val()
                 ],
-            category: [
-                this.$el.find('select[name="cat"]').val(),
-                this.$el.find('select[name="subcat"]').val(),
-                this.$el.find('select[name="subsubcat"]').val()
-            ],
+            category: this.$el.find('select[name="cat"]').val(),
+            subcategory: this.$el.find('select[name="subcat"]').val(),
+            subsubcategory: this.$el.find('select[name="subsubcat"]').val(),
             barcode: this.$el.find('input[name="barcode"]').val(),
             url: this.$el.find('input[name="url"]').val()
 

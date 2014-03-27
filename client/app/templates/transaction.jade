@@ -1,11 +1,11 @@
 td
     a(href="transaction#show/#{transaction.id}")= transaction.title
 td
-    span= transaction.category[0]
+    span= transaction.category
     br
-    span= transaction.category[1]
+    span= transaction.subcategory
     br
-    span= transaction.category[2]
+    span= transaction.subsubcategory
     br
 td
     span= transaction.barcode

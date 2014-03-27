@@ -118,6 +118,31 @@ module.exports = ReceiptDetails = Backbone.Collection.extend({
 
 });
 
+;require.register("collections/receipts", function(exports, require, module) {
+Receipt = require('../models/receipt');
+module.exports = Receipts = Backbone.Collection.extend({
+    model: Receipt,
+    url: 'receipts'
+})
+});
+
+;require.register("collections/sections", function(exports, require, module) {
+Section = require('../models/section');
+module.exports = Sections = Backbone.Collection.extend({
+
+    initialize: function(models, options) {
+        this.receiptId = options.receiptId;
+    },
+
+    url: function() {
+        // return 'receipts/' + this.receiptId + '/sections';
+        return 'receipts/' + "5102589" + '/sections';
+    },
+    model: Section,
+
+});
+});
+
 ;require.register("collections/transactions", function(exports, require, module) {
 Transaction = require('../models/transaction');
 
@@ -156,10 +181,22 @@ $(document).ready(function() {
 });
 });
 
+;require.register("models/receipt", function(exports, require, module) {
+module.exports = Receipt = Backbone.Model.extend({
+
+})
+});
+
 ;require.register("models/receiptdetail", function(exports, require, module) {
 module.exports = ReceiptDetail = Backbone.Model.extend({
 
 })
+});
+
+;require.register("models/section", function(exports, require, module) {
+module.exports = Section = Backbone.Model.extend({
+
+});
 });
 
 ;require.register("models/transaction", function(exports, require, module) {
@@ -197,7 +234,7 @@ attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow |
 var buf = [];
 with (locals || {}) {
 var interp;
-buf.push('<div class="row"><div class="large-8 columns"><h1>Transactions Tracker</h1><p>This application will help you manage your transactions!</p></div><div class="large-4 columns"><a id="addtransacbutton" href="#" data-reveal-id="step1" class="radius button">Ajouter une transaction</a></div><!--<Reveal>Modals begin</Reveal>--><div id="step1" data-reveal="data-reveal" class="reveal-modal"></div><div id="step2" data-reveal="data-reveal" class="reveal-modal"><form data-abide="data-abide"><h2>Etape 2</h2><p>Editez les informations collectées</p><div class="title"><label>Titre:</label><input type="text" name="title" required="required"/></div><div class="category row collapse"><div class="large-4 columns"><label>Catégorie<select name="cat"><option value="bricolage">Bricolage</option><option value="starbuck">Starbuck</option><option value="hotdog">Hot Dog</option><option value="apollo">Apollo</option></select></label></div><div class="large-4 columns"><label>Sous-catégorie<select name="subcat"><option value="pelle">Pelle</option><option value="husker">Husker</option><option value="starbuck">Starbuck</option><option value="hotdog">Hot Dog</option></select></label></div><div class="large-4 columns"><label>Sous-sous-catégorie<select name="subsubcat"><option value="pelleapicoucontondants">Pelle à picous contondants</option><option value="husker">Husker</option><option value="apollo">Apollo</option><option value="starbuck">Starbuck</option></select></label></div></div><div class="barcode"><label>Code barre:</label><input type="text" name="barcode" required pattern="number"/></div><div class="comment"><label>Comment: (optionel)</label><textarea name="comment"></textarea></div><div class="url"><label>Url:</label><input type="text" name="url" pattern="url"/></div><a href="#" id="add-transaction" type="submit" class="success radius button">Valider la nouvelle transaction</a></form><a class="close-reveal-modal">×</a></div><!--<Reveal>Modals end</Reveal>--></div><div class="row"><table><thead><tr><th>Title</th><th>Categories</th><th>Barcode</th><th>URL</th><th>Traces</th><th width="100%">Comments</th><th width="150">Action</th></tr></thead><tbody></tbody></table><div id="preview" class="panel"><p><em>Selectionnez une transaction</em></p></div></div><div id="barcodes"></div>');
+buf.push('<div class="row"><div class="large-8 columns"><h1>Transactions Tracker</h1><p>This application will help you manage your transactions!</p></div><div class="large-4 columns"><a id="addtransacbutton" href="#" data-reveal-id="step1" class="radius button">Ajouter une transaction</a></div><!--<Reveal>Modals begin</Reveal>--><div id="step1" data-reveal="data-reveal" class="reveal-modal"></div><div id="step2" data-reveal="data-reveal" class="reveal-modal"><form data-abide="data-abide"><h2>Etape 2</h2><p>Editez les informations collectées</p><div class="title"><label>Titre:</label><input type="text" name="title" required="required"/></div><div class="category row collapse"><div class="large-4 columns"><label>Catégorie<select name="cat"><option value="bricolage">Bricolage</option><option value="starbuck">Starbuck</option><option value="hotdog">Hot Dog</option><option value="apollo">Apollo</option></select></label></div><div class="large-4 columns"><label>Sous-catégorie<select name="subcat"><option value="pelle">Pelle</option><option value="husker">Husker</option><option value="starbuck">Starbuck</option><option value="hotdog">Hot Dog</option></select></label></div><div class="large-4 columns"><label>Sous-sous-catégorie<select name="subsubcat"><option value="pelleapicoucontondants">Pelle à picous contondants</option><option value="husker">Husker</option><option value="apollo">Apollo</option><option value="starbuck">Starbuck</option></select></label></div></div><div class="barcode"><label>Code barre:</label><input type="text" name="barcode" required pattern="number"/></div><div class="comment"><label>Comment: (optionel)</label><textarea name="comment"></textarea></div><div class="url"><label>Url:</label><input type="text" name="url" pattern="url"/></div><a href="#" id="add-transaction" type="submit" class="success radius button">Valider la nouvelle transaction</a></form><a class="close-reveal-modal">×</a></div><!--<Reveal>Modals end</Reveal>--></div><div class="row"><table><thead><tr><th width="100%">Title</th><th>Categories</th><th>Barcode</th><th>URL</th><th>Traces</th><th>Comments</th><th>Action</th></tr></thead><tbody></tbody></table><div id="preview" class="panel"><p><em>Selectionnez une transaction</em></p></div></div><div id="barcodes"></div>');
 }
 return buf.join("");
 };
@@ -209,7 +246,7 @@ attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow |
 var buf = [];
 with (locals || {}) {
 var interp;
-buf.push('<h2>Etape 1<p>Choisissez les preuves d\'achat à attacher</p><form><label>Source<select id="proof_source" name="proof_source"><option value="null">Choisissez une source d\'information</option><option value="intermarche">Intermarché</option><option value="intermarche">SoGé</option></select></label><div id="receiptfilter"></div><div id="receiptelements"><select id="proof_detail" name="proof_detail"></select></div></form><a href="#" data-reveal-id="step2" type="submit" class="success radius button">Etape 2...</a><a class="close-reveal-modal">×</a></h2>');
+buf.push('<h2>Etape 1<p>Choisissez les preuves d\'achat à attacher</p><form><div id="source"><label>Source</label><select id="proof_source" name="proof_source"><option value="null">== Choisissez une source d\'information ==</option><option value="intermarche">Intermarché</option><option value="intermarche">SoGé</option></select></div><div id="receipts"><label>Tickets de caisse</label><select id="receipt" name="receipt"><option value="null">== Choisissez un ticket de caisse ==</option></select></div><div id="receiptelements"><label>Détails du ticket</label><select id="receipt_details" name="receipt_details"><option value="null">== Choisissez une ligne du ticket ==</option></select></div></form><div id="manualbarcode"><span>ou entrer le code bar manuellement<input placeholder="barcode"/></span></div><a href="#" data-reveal-id="step2" type="submit" class="success radius button">Etape 2...</a><a class="close-reveal-modal">×</a></h2>');
 }
 return buf.join("");
 };
@@ -227,13 +264,13 @@ buf.push('>');
 var __val__ = transaction.title
 buf.push(escape(null == __val__ ? "" : __val__));
 buf.push('</a></td><td><span>');
-var __val__ = transaction.category[0]
+var __val__ = transaction.category
 buf.push(escape(null == __val__ ? "" : __val__));
 buf.push('</span><br/><span>');
-var __val__ = transaction.category[1]
+var __val__ = transaction.subcategory
 buf.push(escape(null == __val__ ? "" : __val__));
 buf.push('</span><br/><span>');
-var __val__ = transaction.category[2]
+var __val__ = transaction.subsubcategory
 buf.push(escape(null == __val__ ? "" : __val__));
 buf.push('</span><br/></td><td><span>');
 var __val__ = transaction.barcode
@@ -289,11 +326,9 @@ module.exports = AppView = Backbone.View.extend({
             trace: [
                     this.$el.find('select[name="proof_source"]').val()
                 ],
-            category: [
-                this.$el.find('select[name="cat"]').val(),
-                this.$el.find('select[name="subcat"]').val(),
-                this.$el.find('select[name="subsubcat"]').val()
-            ],
+            category: this.$el.find('select[name="cat"]').val(),
+            subcategory: this.$el.find('select[name="subcat"]').val(),
+            subsubcategory: this.$el.find('select[name="subsubcat"]').val(),
             barcode: this.$el.find('input[name="barcode"]').val(),
             url: this.$el.find('input[name="url"]').val()
 
@@ -330,6 +365,9 @@ module.exports = AppView = Backbone.View.extend({
 
 ;require.register("views/modal_step1", function(exports, require, module) {
 ReceiptDetailsCollection = require('../collections/receiptdetails')
+SectionCollection = require('../collections/sections');
+ReceiptDetailsCollection = require('../collections/receiptdetails')
+ReceiptsCollection = require('../collections/receipts')
 
 module.exports = ReceiptDetail = Backbone.View.extend({
 
@@ -337,31 +375,98 @@ module.exports = ReceiptDetail = Backbone.View.extend({
     template: require('../templates/modal_step1'),
 
      events: {
-        'show #proof_source': 'getOptionValues',
-        'change #proof_source': 'getOptionValues'
+        'change #proof_source': 'getProofOptions',
+        'change #receipt': 'getReceiptSections',
+        // 'change #receiptsections': 'getReceiptSectionDetails'
     },
 
     render: function() {
-        this.$el.html(this.template({}));
+        this.$el.html(this.template({}))
+        $('#source').fadeIn(1000)
     },
 
-    onReceiptDetailsAdded: function(model) {
-        opt = $('<option>').val(model.id).text(model.get('barcode'))
-        this.$('#receiptelements select').append(opt)
-    },
-
-    getOptionValues: function(){
-        console.log('hello getOptionValues')
+    getProofOptions: function(){
+        $('#receipts').fadeIn(1500)
         switch($('#proof_source').val()){
             case 'intermarche':
-                this.collection = new ReceiptDetailsCollection
-                this.collection.fetch()
-                this.listenTo(this.collection, "add", this.onReceiptDetailsAdded);
+                this.receiptsCollection = new ReceiptsCollection
+                this.receiptsCollection.fetch()
+                this.listenTo(this.receiptsCollection, "add", this.onReceiptsAdded);
+
+
+                // this.collection = new ReceiptDetailsCollection
+                // this.listenTo(this.collection, "add", this.onReceiptSections);
                 // this.collection.seed()
                 break;
         }
-    }
+    },
+
+    onReceiptsAdded: function(model) {
+        opt = $('<option>').val(model.get('receiptId')).text(model.get('snippet')+ ' - Nombre d\'articles :'  + model.get('articlesCount'))
+        this.$('#receipts select').append(opt)
+    },
+
+    getReceiptSections: function(){
+        this.selectedReceiptId = $('#receipt').val()
+        this.sectionCollection = new SectionCollection([],{receiptId: this.selectedReceiptId})
+        this.sectionCollection.fetch()
+        this.listenTo(this.sectionCollection, "add", this.onReceiptSections);
+    },
+
+    onReceiptSections: function(model) {
+
+        var upAndDownCase = function(string){
+            return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+        }
+
+        $('#receiptelements').fadeIn(1500)
+        opt = $('<option>').val(model.id).text(upAndDownCase(model.get('sectionLabel'))+' - ' + model.get('name')+' - '+ model.get('price')+'€' ).data('details', {
+            origin: model.get('origin'),
+            order: model.get('order'),
+            barcode: model.get('barcode'),
+            label: model.get('label'),
+            family: model.get('family'),
+            familyLabel: model.get('familyLabel'),
+            section: model.get('section'),
+            sectionLabel: model.get('sectionLabel'),
+            amount: model.get('amount'),
+            price: model.get('price'),
+            type: model.get('type'),
+            typeLabel: model.get('typeLabel'),
+            receiptId: model.get('receiptId'),
+            intermarcheShopId: model.get('intermarcheShopId'),
+            timestamp: model.get('timestamp'),
+            isOnlineBuy: model.get('isOnlineBuy'),
+            aggregatedSection: model.get('aggregatedSection'),
+            quantityUnit: model.get('quantityUnit'),
+            quantityAmount: model.get('quantityAmount'),
+            quantityWeight: model.get('quantityWeight'),
+            quantityLabel: model.get('quantityLabel'),
+            name: model.get('name')
+        })
+        this.$('#receiptelements select').append(opt)
+
+        var listToReorder = $('#receiptelements select');
+        var listitems = $('#receiptelements select').children('option').get();
+        listitems.sort(function(a, b) {
+           return $(a).text().toUpperCase().localeCompare($(b).text().toUpperCase());
+        })
+        $.each(listitems, function(idx, itm) { listToReorder.append(itm); });
+
+        // $('#receiptsections').change(model.get('receiptDetails'), function(receiptdetails){
+
+        //     $('#receiptelements').fadeIn(1500)
+        //     //         console.log(this)
+        //     // );
+
+        // })
+
+    },
 });
+
+
+
+
 });
 
 ;require.register("views/transaction", function(exports, require, module) {
