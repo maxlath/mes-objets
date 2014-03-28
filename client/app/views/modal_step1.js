@@ -11,29 +11,36 @@ module.exports = ReceiptDetail = Backbone.View.extend({
     template: require('../templates/modal_step1'),
 
      events: {
-        'change #proof_source': 'getProofOptions',
+        'change #source': 'getProofOptions',
         'change #receipt': 'getReceiptSections',
         'change #receiptelements': 'updateDetailsPreview',
     },
 
     render: function() {
         this.$el.html(this.template({}))
-        $('#source').fadeIn(1000)
+        $('#sources').fadeIn(1000)
     },
 
     getProofOptions: function(){
-        $('#receipts').fadeIn(1500)
-        switch($('#proof_source').val()){
+        $('#receiptelements').hide()
+        $('#receipts').hide()
+        switch($('#source').val()){
             case 'intermarche':
+                $('#receipts').fadeIn(1500)
                 this.receiptsCollection = new ReceiptsCollection
                 this.receiptsCollection.fetch()
                 this.listenTo(this.receiptsCollection, "add", this.onReceiptsAdded);
                 break;
             case 'manuel':
                 $('#next').trigger('click')
-
+                break;
         }
     },
+
+
+
+
+    // SPECIFIQUE INTERMARCHE
 
     onReceiptsAdded: function(model) {
         opt = $('<option>').val(model.get('receiptId')).text(prettyDate(model.get('timestamp'))+ ' - ' + model.get('articlesCount') + " articles")
@@ -49,33 +56,20 @@ module.exports = ReceiptDetail = Backbone.View.extend({
     },
 
     onReceiptSections: function(model) {
-
-        var upAndDownCase = function(string){
-            return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
-        }
-
+        $('#receiptelements')
         $('#receiptelements').fadeIn(1500)
         $('#receiptelements div').fadeIn(1500)
-        opt = $('<option>').val(model.id).text(upAndDownCase(model.get('sectionLabel'))+' - ' + model.get('name')+' - '+ model.get('price')+'€' )
+        opt = $('<option>').val(model.id).text((model.get('sectionLabel').upAndDownCase())+' - ' + model.get('name')+' - '+ model.get('price')+'€' )
         this.$('#receiptelements select').append(opt)
         window.local.selectedTicket[model.id] = model.attributes
 
-        // $('#detailspreview div').fadeIn(1500)
+        listToReorder($('#receiptelements select'),$('#receiptelements select').children('option').get())
 
-
-        var listToReorder = $('#receiptelements select');
-        var listitems = $('#receiptelements select').children('option').get();
-        listitems.sort(function(a, b) {
-           return $(a).text().toUpperCase().localeCompare($(b).text().toUpperCase());
-        })
-        $.each(listitems, function(idx, itm) { listToReorder.append(itm); });
     },
 
     updateDetailsPreview: function(){
         window.local.selectedItemId = $('#receiptelements select').val()
-        console.log(window.local.selectedItemId)
         window.local.selectedItem = window.local.selectedTicket[window.local.selectedItemId]
-        console.log(window.local.selectedItem)
         preview = new Preview({
             model: window.local.selectedItem
         })
@@ -85,6 +79,3 @@ module.exports = ReceiptDetail = Backbone.View.extend({
         // $('#preview_image').error(this.$('#preview_image').hide())
     }
 });
-
-
-

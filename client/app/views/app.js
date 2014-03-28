@@ -37,9 +37,12 @@ module.exports = AppView = Backbone.View.extend({
         this.collection.create({
             title: this.$el.find('input[name="title"]').val(),
             comment: this.$el.find('textarea[name="comment"]').val(),
-            trace: [
-                    this.$el.find('select[name="proof_source"]').val()
-                ],
+            // trace: {
+
+            //         this.$el.find('select[name="proof_source"]').val()
+            //         // window.local.selectedItem.origin
+            //     ],
+            // }
             category: this.$el.find('select[name="cat"]').val(),
             subcategory: this.$el.find('select[name="subcat"]').val(),
             subsubcategory: this.$el.find('select[name="subsubcat"]').val(),
@@ -80,6 +83,7 @@ module.exports = AppView = Backbone.View.extend({
         if(local.selectedItem && local.selectedItem.barcode){
             $('#barcode input').remove()
             $('#barcode').append(local.selectedItem.barcode)
+            // $.getJSON()
         }
 
         if(local.selectedItem && local.selectedItem.name){

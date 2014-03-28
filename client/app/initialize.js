@@ -39,3 +39,16 @@ window.prettyDate = function(rawDate) {
         if (mois == 11){ mois = "Dec";}
         return jour + "-" + mois + "-" + annee + ", " + heure + ":" + minute
 };
+
+
+String.prototype.upAndDownCase = function(){
+    return this.charAt(0).toUpperCase() + this.slice(1).toLowerCase();
+}
+
+
+window.listToReorder = function(listToReorder,listitems){
+    listitems.sort(function(a, b) {
+       return $(a).text().toUpperCase().localeCompare($(b).text().toUpperCase());
+    })
+    $.each(listitems, function(idx, itm) { listToReorder.append(itm); });
+}

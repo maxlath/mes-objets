@@ -213,6 +213,19 @@ window.prettyDate = function(rawDate) {
         if (mois == 11){ mois = "Dec";}
         return jour + "-" + mois + "-" + annee + ", " + heure + ":" + minute
 };
+
+
+String.prototype.upAndDownCase = function(){
+    return this.charAt(0).toUpperCase() + this.slice(1).toLowerCase();
+}
+
+
+window.listToReorder = function(listToReorder,listitems){
+    listitems.sort(function(a, b) {
+       return $(a).text().toUpperCase().localeCompare($(b).text().toUpperCase());
+    })
+    $.each(listitems, function(idx, itm) { listToReorder.append(itm); });
+}
 });
 
 ;require.register("models/receipt", function(exports, require, module) {
@@ -280,7 +293,7 @@ attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow |
 var buf = [];
 with (locals || {}) {
 var interp;
-buf.push('<h2>Etape 1 : Attacher des preuves d\'achat</h2><p>Choisissez les données relatives à l\'objet que vous souhaitez ajouter à votre inventaire</p><form><div id="source" class="fields"><label class="superlab">Source</label><select id="proof_source" name="proof_source"><option value="null">* Choisissez une source d\'information *</option><option value="intermarche">Intermarché</option><option value="manuel">Ajout manuel</option></select></div><div id="receipts" class="fields"><label class="superlab">Tickets de caisse</label><select id="receipt" name="receipt"><option value="null">* Choisissez un ticket de caisse *</option></select></div><div id="receiptelements" class="fields"><label class="superlab">Détails du ticket<select id="receipt_details" name="receipt_details"><option value="null">* Choisissez une ligne du ticket *</option></select></label></div><div id="detailspreview" class="panel"></div><div id="additionaldata" class="panel"></div></form><div id="manualbarcode"><span>ou entrer le code bar manuellement<input placeholder="barcode"/></span></div><a href="#" data-reveal-id="step2" type="submit" id="next" class="success radius button right">Etape 2...</a><a class="close-reveal-modal">×</a>');
+buf.push('<h2>Etape 1 : Attacher des preuves d\'achat</h2><p>Choisissez les données relatives à l\'objet que vous souhaitez ajouter à votre inventaire</p><form><div id="sources" class="fields"><label class="superlab">Source</label><select id="source" name="source"><option value="null">* Choisissez une source d\'information *</option><option value="intermarche">Intermarché</option><option value="manuel">Ajout manuel</option></select></div><div id="receipts" class="fields"><label class="superlab">Tickets de caisse</label><select id="receipt" name="receipt"><option value="null">* Choisissez un ticket de caisse *</option></select></div><div id="receiptelements" class="fields"><label class="superlab">Détails du ticket<select id="receipt_details" name="receipt_details"><option value="null">* Choisissez une ligne du ticket *</option></select></label></div><div id="detailspreview" class="panel"></div><div id="additionaldata" class="panel"></div></form><div id="manualbarcode"><span>ou entrer le code bar manuellement<input placeholder="barcode"/></span></div><a href="#" data-reveal-id="step2" type="submit" id="next" class="success radius button right">Etape 2...</a><a class="close-reveal-modal">×</a>');
 }
 return buf.join("");
 };
@@ -404,9 +417,12 @@ module.exports = AppView = Backbone.View.extend({
         this.collection.create({
             title: this.$el.find('input[name="title"]').val(),
             comment: this.$el.find('textarea[name="comment"]').val(),
-            trace: [
-                    this.$el.find('select[name="proof_source"]').val()
-                ],
+            // trace: {
+
+            //         this.$el.find('select[name="proof_source"]').val()
+            //         // window.local.selectedItem.origin
+            //     ],
+            // }
             category: this.$el.find('select[name="cat"]').val(),
             subcategory: this.$el.find('select[name="subcat"]').val(),
             subsubcategory: this.$el.find('select[name="subsubcat"]').val(),
@@ -447,6 +463,7 @@ module.exports = AppView = Backbone.View.extend({
         if(local.selectedItem && local.selectedItem.barcode){
             $('#barcode input').remove()
             $('#barcode').append(local.selectedItem.barcode)
+            // $.getJSON()
         }
 
         if(local.selectedItem && local.selectedItem.name){
@@ -470,29 +487,36 @@ module.exports = ReceiptDetail = Backbone.View.extend({
     template: require('../templates/modal_step1'),
 
      events: {
-        'change #proof_source': 'getProofOptions',
+        'change #source': 'getProofOptions',
         'change #receipt': 'getReceiptSections',
         'change #receiptelements': 'updateDetailsPreview',
     },
 
     render: function() {
         this.$el.html(this.template({}))
-        $('#source').fadeIn(1000)
+        $('#sources').fadeIn(1000)
     },
 
     getProofOptions: function(){
-        $('#receipts').fadeIn(1500)
-        switch($('#proof_source').val()){
+        $('#receiptelements').hide()
+        $('#receipts').hide()
+        switch($('#source').val()){
             case 'intermarche':
+                $('#receipts').fadeIn(1500)
                 this.receiptsCollection = new ReceiptsCollection
                 this.receiptsCollection.fetch()
                 this.listenTo(this.receiptsCollection, "add", this.onReceiptsAdded);
                 break;
             case 'manuel':
                 $('#next').trigger('click')
-
+                break;
         }
     },
+
+
+
+
+    // SPECIFIQUE INTERMARCHE
 
     onReceiptsAdded: function(model) {
         opt = $('<option>').val(model.get('receiptId')).text(prettyDate(model.get('timestamp'))+ ' - ' + model.get('articlesCount') + " articles")
@@ -508,33 +532,20 @@ module.exports = ReceiptDetail = Backbone.View.extend({
     },
 
     onReceiptSections: function(model) {
-
-        var upAndDownCase = function(string){
-            return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
-        }
-
+        $('#receiptelements')
         $('#receiptelements').fadeIn(1500)
         $('#receiptelements div').fadeIn(1500)
-        opt = $('<option>').val(model.id).text(upAndDownCase(model.get('sectionLabel'))+' - ' + model.get('name')+' - '+ model.get('price')+'€' )
+        opt = $('<option>').val(model.id).text((model.get('sectionLabel').upAndDownCase())+' - ' + model.get('name')+' - '+ model.get('price')+'€' )
         this.$('#receiptelements select').append(opt)
         window.local.selectedTicket[model.id] = model.attributes
 
-        // $('#detailspreview div').fadeIn(1500)
+        listToReorder($('#receiptelements select'),$('#receiptelements select').children('option').get())
 
-
-        var listToReorder = $('#receiptelements select');
-        var listitems = $('#receiptelements select').children('option').get();
-        listitems.sort(function(a, b) {
-           return $(a).text().toUpperCase().localeCompare($(b).text().toUpperCase());
-        })
-        $.each(listitems, function(idx, itm) { listToReorder.append(itm); });
     },
 
     updateDetailsPreview: function(){
         window.local.selectedItemId = $('#receiptelements select').val()
-        console.log(window.local.selectedItemId)
         window.local.selectedItem = window.local.selectedTicket[window.local.selectedItemId]
-        console.log(window.local.selectedItem)
         preview = new Preview({
             model: window.local.selectedItem
         })
@@ -544,10 +555,6 @@ module.exports = ReceiptDetail = Backbone.View.extend({
         // $('#preview_image').error(this.$('#preview_image').hide())
     }
 });
-
-
-
-
 });
 
 ;require.register("views/preview", function(exports, require, module) {
