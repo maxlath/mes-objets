@@ -246,7 +246,50 @@ attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow |
 var buf = [];
 with (locals || {}) {
 var interp;
-buf.push('<h2>Etape 1<p>Choisissez les preuves d\'achat à attacher</p><form><div id="source"><label>Source</label><select id="proof_source" name="proof_source"><option value="null">== Choisissez une source d\'information ==</option><option value="intermarche">Intermarché</option><option value="intermarche">SoGé</option></select></div><div id="receipts"><label>Tickets de caisse</label><select id="receipt" name="receipt"><option value="null">== Choisissez un ticket de caisse ==</option></select></div><div id="receiptelements"><label>Détails du ticket</label><select id="receipt_details" name="receipt_details"><option value="null">== Choisissez une ligne du ticket ==</option></select></div></form><div id="manualbarcode"><span>ou entrer le code bar manuellement<input placeholder="barcode"/></span></div><a href="#" data-reveal-id="step2" type="submit" class="success radius button">Etape 2...</a><a class="close-reveal-modal">×</a></h2>');
+buf.push('<h2>Etape 1</h2><p>Choisissez les preuves d\'achat à attacher</p><form><div id="source"><label>Source</label><select id="proof_source" name="proof_source"><option value="null">== Choisissez une source d\'information ==</option><option value="intermarche">Intermarché</option><option value="intermarche">SoGé</option></select></div><div id="receipts"><label>Tickets de caisse</label><select id="receipt" name="receipt"><option value="null">== Choisissez un ticket de caisse ==</option></select></div><div id="receiptelements"><label>Détails du ticket<select id="receipt_details" name="receipt_details"><option value="null">== Choisissez une ligne du ticket ==</option></select></label></div><div id="detailspreview" class="panel"></div></form><div id="manualbarcode"><span>ou entrer le code bar manuellement<input placeholder="barcode"/></span></div><a href="#" data-reveal-id="step2" type="submit" class="success radius button">Etape 2...</a><a class="close-reveal-modal">×</a>');
+}
+return buf.join("");
+};
+});
+
+;require.register("templates/preview", function(exports, require, module) {
+module.exports = function anonymous(locals, attrs, escape, rethrow, merge) {
+attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow || jade.rethrow; merge = merge || jade.merge;
+var buf = [];
+with (locals || {}) {
+var interp;
+buf.push('<div class="row"><div class="large-4 small-12 columns"><div class="row"><div class="large-6 small-12 columns"><span><strong>Nom de l\'article</strong></span></div><div class="large-6 small-12 columns"><span>');
+var __val__ = name
+buf.push(escape(null == __val__ ? "" : __val__));
+buf.push('</span></div></div><div class="row"><div class="large-6 small-12 columns"><span><strong>Quantité</strong></span></div><div class="large-6 small-12 columns"><span>');
+var __val__ = amount
+buf.push(escape(null == __val__ ? "" : __val__));
+buf.push('</span></div></div><div class="row"><div class="large-6 small-12 columns"><span><strong>Prix</strong></span></div><div class="large-6 small-12 columns"><span>');
+var __val__ = price + " €"
+buf.push(escape(null == __val__ ? "" : __val__));
+buf.push('</span></div></div><div class="row"><div class="large-6 small-12 columns"><span><strong>Code Barre</strong></span></div><div class="large-6 small-12 columns"><span>');
+var __val__ = barcode
+buf.push(escape(null == __val__ ? "" : __val__));
+buf.push('</span></div></div><div class="row"><div class="large-6 small-12 columns"><span><strong>Label</strong></span></div><div class="large-6 small-12 columns"><span>');
+var __val__ = label
+buf.push(escape(null == __val__ ? "" : __val__));
+buf.push('</span></div></div><div class="row"><div class="large-6 small-12 columns"><span><strong>Section</strong></span></div><div class="large-6 small-12 columns"><span>');
+var __val__ = sectionLabel
+buf.push(escape(null == __val__ ? "" : __val__));
+buf.push('</span></div></div><div class="row"><div class="large-6 small-12 columns"><span><strong>Identifiant du magasin</strong></span></div><div class="large-6 small-12 columns"><span>');
+var __val__ = intermarcheShopId
+buf.push(escape(null == __val__ ? "" : __val__));
+buf.push('</span></div></div><div class="row"><div class="large-6 small-12 columns"><span><strong>Date</strong></span></div><div class="large-6 small-12 columns"><span>');
+var __val__ = new Date(timestamp)
+buf.push(escape(null == __val__ ? "" : __val__));
+buf.push('</span></div></div></div><div class="large-4 small-12 columns">');
+if ( barcode.lenght = 13)
+{
+buf.push('<img');
+buf.push(attrs({ 'src':('http://drive.intermarche.com/ressources/images/produit/zoom/0' + (barcode) + '.jpg'), 'alt':('' + (name) + ''), 'id':('preview_image') }, {"src":true,"alt":true,"id":true}));
+buf.push('/>');
+}
+buf.push('</div></div>');
 }
 return buf.join("");
 };
@@ -368,6 +411,8 @@ ReceiptDetailsCollection = require('../collections/receiptdetails')
 SectionCollection = require('../collections/sections');
 ReceiptDetailsCollection = require('../collections/receiptdetails')
 ReceiptsCollection = require('../collections/receipts')
+Preview = require('./preview')
+
 
 module.exports = ReceiptDetail = Backbone.View.extend({
 
@@ -377,7 +422,7 @@ module.exports = ReceiptDetail = Backbone.View.extend({
      events: {
         'change #proof_source': 'getProofOptions',
         'change #receipt': 'getReceiptSections',
-        // 'change #receiptsections': 'getReceiptSectionDetails'
+        'change #receiptelements': 'updateDetailsPreview'
     },
 
     render: function() {
@@ -411,6 +456,7 @@ module.exports = ReceiptDetail = Backbone.View.extend({
         this.sectionCollection = new SectionCollection([],{receiptId: this.selectedReceiptId})
         this.sectionCollection.fetch()
         this.listenTo(this.sectionCollection, "add", this.onReceiptSections);
+        window.selecetedTicket = {}
     },
 
     onReceiptSections: function(model) {
@@ -420,31 +466,13 @@ module.exports = ReceiptDetail = Backbone.View.extend({
         }
 
         $('#receiptelements').fadeIn(1500)
-        opt = $('<option>').val(model.id).text(upAndDownCase(model.get('sectionLabel'))+' - ' + model.get('name')+' - '+ model.get('price')+'€' ).data('details', {
-            origin: model.get('origin'),
-            order: model.get('order'),
-            barcode: model.get('barcode'),
-            label: model.get('label'),
-            family: model.get('family'),
-            familyLabel: model.get('familyLabel'),
-            section: model.get('section'),
-            sectionLabel: model.get('sectionLabel'),
-            amount: model.get('amount'),
-            price: model.get('price'),
-            type: model.get('type'),
-            typeLabel: model.get('typeLabel'),
-            receiptId: model.get('receiptId'),
-            intermarcheShopId: model.get('intermarcheShopId'),
-            timestamp: model.get('timestamp'),
-            isOnlineBuy: model.get('isOnlineBuy'),
-            aggregatedSection: model.get('aggregatedSection'),
-            quantityUnit: model.get('quantityUnit'),
-            quantityAmount: model.get('quantityAmount'),
-            quantityWeight: model.get('quantityWeight'),
-            quantityLabel: model.get('quantityLabel'),
-            name: model.get('name')
-        })
+        $('#receiptelements div').fadeIn(1500)
+        opt = $('<option>').val(model.id).text(upAndDownCase(model.get('sectionLabel'))+' - ' + model.get('name')+' - '+ model.get('price')+'€' )
         this.$('#receiptelements select').append(opt)
+        window.selecetedTicket[model.id] = model.attributes
+
+        // $('#detailspreview div').fadeIn(1500)
+
 
         var listToReorder = $('#receiptelements select');
         var listitems = $('#receiptelements select').children('option').get();
@@ -452,21 +480,47 @@ module.exports = ReceiptDetail = Backbone.View.extend({
            return $(a).text().toUpperCase().localeCompare($(b).text().toUpperCase());
         })
         $.each(listitems, function(idx, itm) { listToReorder.append(itm); });
-
-        // $('#receiptsections').change(model.get('receiptDetails'), function(receiptdetails){
-
-        //     $('#receiptelements').fadeIn(1500)
-        //     //         console.log(this)
-        //     // );
-
-        // })
-
     },
+
+    updateDetailsPreview: function(){
+        var selectedId = $('#receiptelements select').val()
+        console.log(selectedId)
+        var selected = window.selecetedTicket[selectedId]
+        console.log(selected)
+        preview = new Preview({
+            model: selected
+        })
+        preview.render()
+        $('#detailspreview').fadeIn(500)
+        $('#detailspreview div').fadeIn(500)
+        // $('#preview_image').error(this.$('#preview_image').hide())
+    }
 });
 
 
 
 
+});
+
+;require.register("views/preview", function(exports, require, module) {
+module.exports = ReceiptDetailPreview = Backbone.View.extend({
+
+    el: 'div',
+    template: require('../templates/preview'),
+
+     // events: {
+        // 'change #proof_source': 'getProofOptions',
+        // 'change #receipt': 'getReceiptSections',
+        // 'change #receiptelements': 'updateDetailsPreview'
+    // },
+
+    render: function() {
+        $('#detailspreview').html(this.template(this.model));
+        console.log(this.model)
+        console.log("RENDER")
+        return this;
+    }
+})
 });
 
 ;require.register("views/transaction", function(exports, require, module) {

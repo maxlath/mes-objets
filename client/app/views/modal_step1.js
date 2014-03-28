@@ -2,6 +2,8 @@ ReceiptDetailsCollection = require('../collections/receiptdetails')
 SectionCollection = require('../collections/sections');
 ReceiptDetailsCollection = require('../collections/receiptdetails')
 ReceiptsCollection = require('../collections/receipts')
+Preview = require('./preview')
+
 
 module.exports = ReceiptDetail = Backbone.View.extend({
 
@@ -11,7 +13,7 @@ module.exports = ReceiptDetail = Backbone.View.extend({
      events: {
         'change #proof_source': 'getProofOptions',
         'change #receipt': 'getReceiptSections',
-        // 'change #receiptsections': 'getReceiptSectionDetails'
+        'change #receiptelements': 'updateDetailsPreview'
     },
 
     render: function() {
@@ -45,6 +47,7 @@ module.exports = ReceiptDetail = Backbone.View.extend({
         this.sectionCollection = new SectionCollection([],{receiptId: this.selectedReceiptId})
         this.sectionCollection.fetch()
         this.listenTo(this.sectionCollection, "add", this.onReceiptSections);
+        window.selecetedTicket = {}
     },
 
     onReceiptSections: function(model) {
@@ -54,31 +57,13 @@ module.exports = ReceiptDetail = Backbone.View.extend({
         }
 
         $('#receiptelements').fadeIn(1500)
-        opt = $('<option>').val(model.id).text(upAndDownCase(model.get('sectionLabel'))+' - ' + model.get('name')+' - '+ model.get('price')+'€' ).data('details', {
-            origin: model.get('origin'),
-            order: model.get('order'),
-            barcode: model.get('barcode'),
-            label: model.get('label'),
-            family: model.get('family'),
-            familyLabel: model.get('familyLabel'),
-            section: model.get('section'),
-            sectionLabel: model.get('sectionLabel'),
-            amount: model.get('amount'),
-            price: model.get('price'),
-            type: model.get('type'),
-            typeLabel: model.get('typeLabel'),
-            receiptId: model.get('receiptId'),
-            intermarcheShopId: model.get('intermarcheShopId'),
-            timestamp: model.get('timestamp'),
-            isOnlineBuy: model.get('isOnlineBuy'),
-            aggregatedSection: model.get('aggregatedSection'),
-            quantityUnit: model.get('quantityUnit'),
-            quantityAmount: model.get('quantityAmount'),
-            quantityWeight: model.get('quantityWeight'),
-            quantityLabel: model.get('quantityLabel'),
-            name: model.get('name')
-        })
+        $('#receiptelements div').fadeIn(1500)
+        opt = $('<option>').val(model.id).text(upAndDownCase(model.get('sectionLabel'))+' - ' + model.get('name')+' - '+ model.get('price')+'€' )
         this.$('#receiptelements select').append(opt)
+        window.selecetedTicket[model.id] = model.attributes
+
+        // $('#detailspreview div').fadeIn(1500)
+
 
         var listToReorder = $('#receiptelements select');
         var listitems = $('#receiptelements select').children('option').get();
@@ -86,16 +71,21 @@ module.exports = ReceiptDetail = Backbone.View.extend({
            return $(a).text().toUpperCase().localeCompare($(b).text().toUpperCase());
         })
         $.each(listitems, function(idx, itm) { listToReorder.append(itm); });
-
-        // $('#receiptsections').change(model.get('receiptDetails'), function(receiptdetails){
-
-        //     $('#receiptelements').fadeIn(1500)
-        //     //         console.log(this)
-        //     // );
-
-        // })
-
     },
+
+    updateDetailsPreview: function(){
+        var selectedId = $('#receiptelements select').val()
+        console.log(selectedId)
+        var selected = window.selecetedTicket[selectedId]
+        console.log(selected)
+        preview = new Preview({
+            model: selected
+        })
+        preview.render()
+        $('#detailspreview').fadeIn(500)
+        $('#detailspreview div').fadeIn(500)
+        // $('#preview_image').error(this.$('#preview_image').hide())
+    }
 });
 
 

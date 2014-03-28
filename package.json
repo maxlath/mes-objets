@@ -20,6 +20,9 @@
   },
   "cozy-displayName": "Mes Transactions",
   "cozy-permissions": {
+    "Transactions": {
+      "description": "Réunissez toutes les informations disponibles sur vos transactions."
+    },
     "ReceiptDetail": {
       "description": "Ajouter les référence de vos tickets de caisse à vos transactions."
     }

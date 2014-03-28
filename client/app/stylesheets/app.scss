@@ -18,4 +18,13 @@ $smallscreen: 600px;
     div{
         display: none;
     }
+    table
+    {
+        list-style-type: none;
+    }
+    th{
+        text-align: left;
+        padding-left: 5vw;
+        padding-right: 10vw;
+    }
 }

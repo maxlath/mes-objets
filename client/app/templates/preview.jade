@@ -1,0 +1,132 @@
+.row
+    .large-4.small-12.columns
+        .row
+            .large-6.small-12.columns
+                span
+                    strong Nom de l'article
+            .large-6.small-12.columns
+                span= name
+        .row
+            .large-6.small-12.columns
+                span
+                    strong Quantité
+            .large-6.small-12.columns
+                span= amount
+        .row
+            .large-6.small-12.columns
+                span
+                    strong Prix
+            .large-6.small-12.columns
+                span= price + " €"
+        //- .row
+        //-     .large-6.small-12.columns
+        //-         span
+        //-             strong order
+        //-     .large-6.small-12.columns
+        //-         span= order
+        .row
+            .large-6.small-12.columns
+                span
+                    strong Code Barre
+            .large-6.small-12.columns
+                span= barcode
+        .row
+            .large-6.small-12.columns
+                span
+                    strong Label
+            .large-6.small-12.columns
+                span= label
+        //- .row
+        //-     .large-6.small-12.columns
+        //-         span
+        //-             strong Family
+        //-     .large-6.small-12.columns
+        //-         span= family
+        //- .row
+        //-     .large-6.small-12.columns
+        //-         span
+        //-             strong familyLabel
+        //-     .large-6.small-12.columns
+        //-         span= familyLabel
+        .row
+            .large-6.small-12.columns
+                span
+                    strong Section
+            .large-6.small-12.columns
+                span= sectionLabel
+        //-     .large-6.small-12.columns
+        //-         span= section
+        //- .row
+        //-     .large-6.small-12.columns
+        //-         span
+        //-             strong sectionLabel
+        //- .row
+        //-     .large-6.small-12.columns
+        //-         span
+        //-             strong type
+        //-     .large-6.small-12.columns
+        //-         span= type
+        //- .row
+        //-     .large-6.small-12.columns
+        //-         span
+        //-             strong typeLabel
+        //-     .large-6.small-12.columns
+        //-         span= typeLabel
+        //- .row
+        //-     .large-6.small-12.columns
+        //-         span
+        //-             strong receiptId
+        //-     .large-6.small-12.columns
+        //-         span= receiptId
+        .row
+            .large-6.small-12.columns
+                span
+                    strong Identifiant du magasin
+            .large-6.small-12.columns
+                span= intermarcheShopId
+        .row
+            .large-6.small-12.columns
+                span
+                    strong Date
+            .large-6.small-12.columns
+                span= new Date(timestamp)
+        //- .row
+        //-     .large-6.small-12.columns
+        //-         span
+        //-             strong isOnlineBuy
+        //-     .large-6.small-12.columns
+        //-         span= isOnlineBuy
+        //- .row
+        //-     .large-6.small-12.columns
+        //-         span
+        //-             strong aggregatedSection
+        //-     .large-6.small-12.columns
+        //-         span= aggregatedSection
+        //- .row
+        //-     .large-6.small-12.columns
+        //-         span
+        //-             strong quantityUnit
+        //-     .large-6.small-12.columns
+        //-         span= quantityUnit
+        //- .row
+        //-     .large-6.small-12.columns
+        //-         span
+        //-             strong quantityAmount
+        //-     .large-6.small-12.columns
+        //-         span= quantityAmount
+        //- .row
+        //-     .large-6.small-12.columns
+        //-         span
+        //-             strong quantityWeight
+        //-     .large-6.small-12.columns
+        //-         span= quantityWeight
+        //- .row
+        //-     .large-6.small-12.columns
+        //-         span
+        //-             strong quantityLabel
+        //-     .large-6.small-12.columns
+        //-         span= quantityLabel
+
+    .large-4.small-12.columns
+        if barcode.lenght = 13
+            img(src='http://drive.intermarche.com/ressources/images/produit/zoom/0#{barcode}.jpg', alt='#{name}', id='preview_image')
