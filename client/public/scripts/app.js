@@ -309,32 +309,59 @@ var buf = [];
 with (locals || {}) {
 var interp;
 buf.push('<div class="row"><div class="large-4 small-12 columns"><div class="row"><div class="large-6 small-12 columns"><span><strong>Nom de l\'article</strong></span></div><div class="large-6 small-12 columns"><span>');
+if ( typeof name !== "undefined")
+{
 var __val__ = name
 buf.push(escape(null == __val__ ? "" : __val__));
+}
 buf.push('</span></div></div><div class="row"><div class="large-6 small-12 columns"><span><strong>Quantité</strong></span></div><div class="large-6 small-12 columns"><span>');
+if ( typeof amount !== "undefined")
+{
 var __val__ = amount
 buf.push(escape(null == __val__ ? "" : __val__));
+}
 buf.push('</span></div></div><div class="row"><div class="large-6 small-12 columns"><span><strong>Prix</strong></span></div><div class="large-6 small-12 columns"><span>');
+if ( typeof price !== "undefined")
+{
 var __val__ = price + " €"
 buf.push(escape(null == __val__ ? "" : __val__));
-buf.push('</span></div></div><div class="row"><div class="large-6 small-12 columns"><span><strong>Code Barre</strong></span></div><div class="large-6 small-12 columns"><span>');
-var __val__ = barcode
-buf.push(escape(null == __val__ ? "" : __val__));
-buf.push('</span></div></div><div class="row"><div class="large-6 small-12 columns"><span><strong>Label</strong></span></div><div class="large-6 small-12 columns"><span>');
-var __val__ = label
-buf.push(escape(null == __val__ ? "" : __val__));
-buf.push('</span></div></div><div class="row"><div class="large-6 small-12 columns"><span><strong>Section</strong></span></div><div class="large-6 small-12 columns"><span>');
-var __val__ = sectionLabel
-buf.push(escape(null == __val__ ? "" : __val__));
-buf.push('</span></div></div><div class="row"><div class="large-6 small-12 columns"><span><strong>Identifiant du magasin</strong></span></div><div class="large-6 small-12 columns"><span>');
-var __val__ = intermarcheShopId
-buf.push(escape(null == __val__ ? "" : __val__));
-buf.push('</span></div></div><div class="row"><div class="large-6 small-12 columns"><span><strong>Date</strong></span></div><div class="large-6 small-12 columns"><span>');
-var __val__ = prettyDate(timestamp)
-buf.push(escape(null == __val__ ? "" : __val__));
+}
 buf.push('</span></div></div><div class="row"><div class="large-6 small-12 columns"><span><strong>Quantité</strong></span></div><div class="large-6 small-12 columns"><span>');
+if ( typeof quantityLabel !== "undefined")
+{
 var __val__ = quantityLabel
 buf.push(escape(null == __val__ ? "" : __val__));
+}
+buf.push('</span></div></div><div class="row"><div class="large-6 small-12 columns"><span><strong>Code Barre</strong></span></div><div class="large-6 small-12 columns"><span>');
+if ( typeof barcode !== "undefined")
+{
+var __val__ = barcode
+buf.push(escape(null == __val__ ? "" : __val__));
+}
+buf.push('</span></div></div><div class="row"><div class="large-6 small-12 columns"><span><strong>Label</strong></span></div><div class="large-6 small-12 columns"><span>');
+if ( typeof label !== "undefined")
+{
+var __val__ = label
+buf.push(escape(null == __val__ ? "" : __val__));
+}
+buf.push('</span></div></div><div class="row"><div class="large-6 small-12 columns"><span><strong>Section</strong></span></div><div class="large-6 small-12 columns"><span>');
+if ( typeof sectionLabel !== "undefined")
+{
+var __val__ = sectionLabel
+buf.push(escape(null == __val__ ? "" : __val__));
+}
+buf.push('</span></div></div><div class="row"><div class="large-6 small-12 columns"><span><strong>Identifiant du magasin</strong></span></div><div class="large-6 small-12 columns"><span>');
+if ( typeof intermarcheShopId !== "undefined")
+{
+var __val__ = intermarcheShopId
+buf.push(escape(null == __val__ ? "" : __val__));
+}
+buf.push('</span></div></div><div class="row"><div class="large-6 small-12 columns"><span><strong>Date</strong></span></div><div class="large-6 small-12 columns"><span>');
+if ( typeof timestamp !== "undefined")
+{
+var __val__ = prettyDate(timestamp)
+buf.push(escape(null == __val__ ? "" : __val__));
+}
 buf.push('</span></div></div></div><div class="large-4 small-12 columns">');
 if ( barcode.lenght = 13)
 {
@@ -534,6 +561,7 @@ module.exports = ReceiptDetail = Backbone.View.extend({
 
     getReceiptSections: function(){
         $('#receiptelements option').remove()
+        $('#detailspreview').hide().html('')
 
         this.selectedReceiptId = $('#receipt').val()
         this.sectionCollection = new SectionCollection([],{receiptId: this.selectedReceiptId})
@@ -555,8 +583,11 @@ module.exports = ReceiptDetail = Backbone.View.extend({
     },
 
     updateDetailsPreview: function(){
+        $('#detailspreview').hide().html('')
+
         window.local.selectedItemId = $('#receiptelements select').val()
         window.local.selectedItem = window.local.selectedTicket[window.local.selectedItemId]
+        window.local.selectedItem
         preview = new Preview({
             model: window.local.selectedItem
         })

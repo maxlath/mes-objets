@@ -52,6 +52,7 @@ module.exports = ReceiptDetail = Backbone.View.extend({
 
     getReceiptSections: function(){
         $('#receiptelements option').remove()
+        $('#detailspreview').hide().html('')
 
         this.selectedReceiptId = $('#receipt').val()
         this.sectionCollection = new SectionCollection([],{receiptId: this.selectedReceiptId})
@@ -73,8 +74,11 @@ module.exports = ReceiptDetail = Backbone.View.extend({
     },
 
     updateDetailsPreview: function(){
+        $('#detailspreview').hide().html('')
+
         window.local.selectedItemId = $('#receiptelements select').val()
         window.local.selectedItem = window.local.selectedTicket[window.local.selectedItemId]
+        window.local.selectedItem
         preview = new Preview({
             model: window.local.selectedItem
         })

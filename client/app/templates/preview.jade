@@ -5,127 +5,169 @@
                 span
                     strong Nom de l'article
             .large-6.small-12.columns
-                span= name
+                span
+                    if typeof name !== "undefined"
+                        = name
         .row
             .large-6.small-12.columns
                 span
                     strong Quantité
             .large-6.small-12.columns
-                span= amount
+                span
+                    if typeof amount !== "undefined"
+                        = amount
         .row
             .large-6.small-12.columns
                 span
                     strong Prix
             .large-6.small-12.columns
-                span= price + " €"
+                span
+                    if typeof price !== "undefined"
+                        = price + " €"
         //- .row
         //-     .large-6.small-12.columns
         //-         span
         //-             strong order
         //-     .large-6.small-12.columns
-        //-         span= order
-        .row
-            .large-6.small-12.columns
-                span
-                    strong Code Barre
-            .large-6.small-12.columns
-                span= barcode
-        .row
-            .large-6.small-12.columns
-                span
-                    strong Label
-            .large-6.small-12.columns
-                span= label
-        //- .row
-        //-     .large-6.small-12.columns
         //-         span
-        //-             strong Family
-        //-     .large-6.small-12.columns
-        //-         span= family
-        //- .row
-        //-     .large-6.small-12.columns
-        //-         span
-        //-             strong familyLabel
-        //-     .large-6.small-12.columns
-        //-         span= familyLabel
-        .row
-            .large-6.small-12.columns
-                span
-                    strong Section
-            .large-6.small-12.columns
-                span= sectionLabel
-        //-     .large-6.small-12.columns
-        //-         span= section
-        //- .row
-        //-     .large-6.small-12.columns
-        //-         span
-        //-             strong sectionLabel
-        //- .row
-        //-     .large-6.small-12.columns
-        //-         span
-        //-             strong type
-        //-     .large-6.small-12.columns
-        //-         span= type
-        //- .row
-        //-     .large-6.small-12.columns
-        //-         span
-        //-             strong typeLabel
-        //-     .large-6.small-12.columns
-        //-         span= typeLabel
-        //- .row
-        //-     .large-6.small-12.columns
-        //-         span
-        //-             strong receiptId
-        //-     .large-6.small-12.columns
-        //-         span= receiptId
-        .row
-            .large-6.small-12.columns
-                span
-                    strong Identifiant du magasin
-            .large-6.small-12.columns
-                span= intermarcheShopId
-        .row
-            .large-6.small-12.columns
-                span
-                    strong Date
-            .large-6.small-12.columns
-                span= prettyDate(timestamp)
-        //- .row
-        //-     .large-6.small-12.columns
-        //-         span
-        //-             strong isOnlineBuy
-        //-     .large-6.small-12.columns
-        //-         span= isOnlineBuy
-        //- .row
-        //-     .large-6.small-12.columns
-        //-         span
-        //-             strong aggregatedSection
-        //-     .large-6.small-12.columns
-        //-         span= aggregatedSection
-        //- .row
-        //-     .large-6.small-12.columns
-        //-         span
-        //-             strong quantityUnit
-        //-     .large-6.small-12.columns
-        //-         span= quantityUnit
-        //- .row
-        //-     .large-6.small-12.columns
-        //-         span
-        //-             strong quantityAmount
-        //-     .large-6.small-12.columns
-        //-         span= quantityAmount
-        //- .row
-        //-     .large-6.small-12.columns
-        //-         span
-        //-             strong quantityWeight
-        //-     .large-6.small-12.columns
-        //-         span= quantityWeight
+        //- if typeof order !== "undefined"
+        //-     = order
         .row
             .large-6.small-12.columns
                 span
                     strong Quantité
             .large-6.small-12.columns
-                span= quantityLabel
+                span
+                    if typeof quantityLabel !== "undefined"
+                        = quantityLabel
+        .row
+            .large-6.small-12.columns
+                span
+                    strong Code Barre
+            .large-6.small-12.columns
+                span
+                    if typeof barcode !== "undefined"
+                        = barcode
+        .row
+            .large-6.small-12.columns
+                span
+                    strong Label
+            .large-6.small-12.columns
+                span
+                    if typeof label !== "undefined"
+                        = label
+        //- .row
+        //-     .large-6.small-12.columns
+        //-         span
+        //-             strong Family
+        //-     .large-6.small-12.columns
+        //- //-         span
+        //- if typeof family !== "undefined"
+        //-     = family
+        //- .row
+        //-     .large-6.small-12.columns
+        //-         span
+        //-             strong familyLabel
+        //-     .large-6.small-12.columns
+        //-         span
+        //- if typeof familyLabel !== "undefined"
+        //-     = familyLabel
+        .row
+            .large-6.small-12.columns
+                span
+                    strong Section
+            .large-6.small-12.columns
+                span
+                    if typeof sectionLabel !== "undefined"
+                        = sectionLabel
+        //-     .large-6.small-12.columns
+        //-         span= section
+        //- .row
+        //-     .large-6.small-12.columns
+        //- //-         span
+        //- //-             strong sectionLabel
+        //- //- .row
+        //- //-     .large-6
+        //- if typeof mall !== "undefined"
+        //-     .small-12.columns
+        //- //-         span
+        //- //-             strong type
+        //- //-     .large-6.small-12.columns
+        //- //-         span
+        //- if typeof type !== "undefined"
+        //-     = type
+        //- //- .row
+        //- //-     .large-6.small-12.columns
+        //- //-         span
+        //- //-             strong typeLabel
+        //- //-     .large-6.small-12.columns
+        //- //-         span
+        //- if typeof typeLabel !== "undefined"
+        //-     = typeLabel
+        //- //- .row
+        //- //-     .large-6.small-12.columns
+        //- //-         span
+        //- //-             strong receiptId
+        //- //-     .large-6.small-12.columns
+        //- //-         span
+        //- if typeof receiptId !== "undefined"
+        //-     = receiptId
+        .row
+            .large-6.small-12.columns
+                span
+                    strong Identifiant du magasin
+            .large-6.small-12.columns
+                span
+                    if typeof intermarcheShopId !== "undefined"
+                        = intermarcheShopId
+        .row
+            .large-6.small-12.columns
+                span
+                    strong Date
+            .large-6.small-12.columns
+                span
+                    if typeof timestamp !== "undefined"
+                        = prettyDate(timestamp)
+        //- .row
+        //-     .large-6.small-12.columns
+        //-         span
+        //-             strong isOnlineBuy
+        //- //-     .large-6.small-12.columns
+        //- //-         span
+        //- if typeof isOnlineBuy !== "undefined"
+        //-     = isOnlineBuy
+        //- //- .row
+        //- //-     .large-6.small-12.columns
+        //- //-         span
+        //- //-             strong aggregatedSection
+        //- //-     .large-6.small-12.columns
+        //- //-         span
+        //- if typeof aggregatedSection !== "undefined"
+        //-     = aggregatedSection
+        //- //- .row
+        //- //-     .large-6.small-12.columns
+        //- //-         span
+        //- //-             strong quantityUnit
+        //- //-     .large-6.small-12.columns
+        //- //-         span
+        //- if typeof quantityUnit !== "undefined"
+        //-     = quantityUnit
+        //- //- .row
+        //- //-     .large-6.small-12.columns
+        //- //-         span
+        //- //-             strong quantityAmount
+        //- //-     .large-6.small-12.columns
+        //- //-         span
+        //- if typeof quantityAmount !== "undefined"
+        //-     = quantityAmount
+        //- //- .row
+        //- //-     .large-6.small-12.columns
+        //- //-         span
+        //- //-             strong quantityWeight
+        //- //-     .large-6.small-12.columns
+        //- //-         span
+        //- if typeof quantityWeight !== "undefined"
+        //-     = quantityWeight
 
     .large-4.small-12.columns
         if barcode.lenght = 13
