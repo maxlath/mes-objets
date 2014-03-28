@@ -6,12 +6,16 @@ $(document).ready(function() {
     $(document).foundation();
 });
 
-window.local = {
-    selectedTicket: undefined,
-    selectedItem: undefined,
-    selectedItemId: undefined
+window.reinitilizeLocalValues = function(){
+    window.local = {
+        selectedTicket: undefined,
+        selectedItem: undefined,
+        selectedItemId: undefined
+    }
+    $('.dynOption option').remove()
+    $('.dynOption').append('<option class="option_placeholder">- Choisissez une option -<option>')
 }
-
+reinitilizeLocalValues()
 
 window.prettyDate = function(rawDate) {
         d = new Date(rawDate)

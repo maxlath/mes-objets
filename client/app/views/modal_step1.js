@@ -24,6 +24,9 @@ module.exports = ReceiptDetail = Backbone.View.extend({
     getProofOptions: function(){
         $('#receiptelements').hide()
         $('#receipts').hide()
+        $('#detailspreview').hide()
+        reinitilizeLocalValues()
+
         switch($('#source').val()){
             case 'intermarche':
                 $('#receipts').fadeIn(1500)

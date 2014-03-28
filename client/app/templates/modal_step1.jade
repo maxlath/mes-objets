@@ -12,7 +12,7 @@ form
   #receipts.fields
     label(class="superlab")
       | Tickets de caisse
-    select(id="receipt", name="receipt")
+    select(id="receipt", name="receipt", class="dynOption")
       option(value='null') * Choisissez un ticket de caisse *
   //- #receiptsections.fields
   //-   label(class="superlab")
@@ -22,7 +22,7 @@ form
   #receiptelements.fields
     label(class="superlab")
       | Détails du ticket
-      select(id="receipt_details", name="receipt_details")
+      select(id="receipt_details", name="receipt_details", class="dynOption")
         option(value='null') * Choisissez une ligne du ticket *
   #detailspreview.panel
 

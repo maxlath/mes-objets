@@ -180,12 +180,16 @@ $(document).ready(function() {
     $(document).foundation();
 });
 
-window.local = {
-    selectedTicket: undefined,
-    selectedItem: undefined,
-    selectedItemId: undefined
+window.reinitilizeLocalValues = function(){
+    window.local = {
+        selectedTicket: undefined,
+        selectedItem: undefined,
+        selectedItemId: undefined
+    }
+    $('.dynOption option').remove()
+    $('.dynOption').append('<option class="option_placeholder">- Choisissez une option -<option>')
 }
-
+reinitilizeLocalValues()
 
 window.prettyDate = function(rawDate) {
         d = new Date(rawDate)
@@ -293,7 +297,7 @@ attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow |
 var buf = [];
 with (locals || {}) {
 var interp;
-buf.push('<h2>Etape 1 : Attacher des preuves d\'achat</h2><p>Choisissez les données relatives à l\'objet que vous souhaitez ajouter à votre inventaire</p><form><div id="sources" class="fields"><label class="superlab">Source</label><select id="source" name="source"><option value="null">* Choisissez une source d\'information *</option><option value="intermarche">Intermarché</option><option value="manuel">Ajout manuel</option></select></div><div id="receipts" class="fields"><label class="superlab">Tickets de caisse</label><select id="receipt" name="receipt"><option value="null">* Choisissez un ticket de caisse *</option></select></div><div id="receiptelements" class="fields"><label class="superlab">Détails du ticket<select id="receipt_details" name="receipt_details"><option value="null">* Choisissez une ligne du ticket *</option></select></label></div><div id="detailspreview" class="panel"></div><div id="additionaldata" class="panel"></div></form><div id="manualbarcode"><span>ou entrer le code bar manuellement<input placeholder="barcode"/></span></div><a href="#" data-reveal-id="step2" type="submit" id="next" class="success radius button right">Etape 2...</a><a class="close-reveal-modal">×</a>');
+buf.push('<h2>Etape 1 : Attacher des preuves d\'achat</h2><p>Choisissez les données relatives à l\'objet que vous souhaitez ajouter à votre inventaire</p><form><div id="sources" class="fields"><label class="superlab">Source</label><select id="source" name="source"><option value="null">* Choisissez une source d\'information *</option><option value="intermarche">Intermarché</option><option value="manuel">Ajout manuel</option></select></div><div id="receipts" class="fields"><label class="superlab">Tickets de caisse</label><select id="receipt" name="receipt" class="dynOption"><option value="null">* Choisissez un ticket de caisse *</option></select></div><div id="receiptelements" class="fields"><label class="superlab">Détails du ticket<select id="receipt_details" name="receipt_details" class="dynOption"><option value="null">* Choisissez une ligne du ticket *</option></select></label></div><div id="detailspreview" class="panel"></div><div id="additionaldata" class="panel"></div></form><div id="manualbarcode"><span>ou entrer le code bar manuellement<input placeholder="barcode"/></span></div><a href="#" data-reveal-id="step2" type="submit" id="next" class="success radius button right">Etape 2...</a><a class="close-reveal-modal">×</a>');
 }
 return buf.join("");
 };
@@ -500,6 +504,9 @@ module.exports = ReceiptDetail = Backbone.View.extend({
     getProofOptions: function(){
         $('#receiptelements').hide()
         $('#receipts').hide()
+        $('#detailspreview').hide()
+        reinitilizeLocalValues()
+
         switch($('#source').val()){
             case 'intermarche':
                 $('#receipts').fadeIn(1500)
