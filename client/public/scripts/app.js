@@ -135,7 +135,6 @@ module.exports = Sections = Backbone.Collection.extend({
     },
 
     url: function() {
-        // return 'receipts/' + this.receiptId + '/sections';
         return 'receipts/' + this.receiptId + '/sections';
     },
     model: Section,
@@ -332,6 +331,9 @@ var __val__ = intermarcheShopId
 buf.push(escape(null == __val__ ? "" : __val__));
 buf.push('</span></div></div><div class="row"><div class="large-6 small-12 columns"><span><strong>Date</strong></span></div><div class="large-6 small-12 columns"><span>');
 var __val__ = prettyDate(timestamp)
+buf.push(escape(null == __val__ ? "" : __val__));
+buf.push('</span></div></div><div class="row"><div class="large-6 small-12 columns"><span><strong>Quantité</strong></span></div><div class="large-6 small-12 columns"><span>');
+var __val__ = quantityLabel
 buf.push(escape(null == __val__ ? "" : __val__));
 buf.push('</span></div></div></div><div class="large-4 small-12 columns">');
 if ( barcode.lenght = 13)
@@ -531,8 +533,9 @@ module.exports = ReceiptDetail = Backbone.View.extend({
     },
 
     getReceiptSections: function(){
+        $('#receiptelements option').remove()
+
         this.selectedReceiptId = $('#receipt').val()
-        console.log($('#receipt').val())
         this.sectionCollection = new SectionCollection([],{receiptId: this.selectedReceiptId})
         this.sectionCollection.fetch()
         this.listenTo(this.sectionCollection, "add", this.onReceiptSections);
