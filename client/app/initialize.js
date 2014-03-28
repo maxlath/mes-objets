@@ -20,7 +20,7 @@ reinitilizeLocalValues()
 window.prettyDate = function(rawDate) {
         d = new Date(rawDate)
         jour = d.getDate()
-        mois = d.getMonth() + 1
+        mois = d.getMonth()
         annee = d.getFullYear()
         heure = d.getHours()
         minute = d.getMinutes()

@@ -194,7 +194,7 @@ reinitilizeLocalValues()
 window.prettyDate = function(rawDate) {
         d = new Date(rawDate)
         jour = d.getDate()
-        mois = d.getMonth() + 1
+        mois = d.getMonth()
         annee = d.getFullYear()
         heure = d.getHours()
         minute = d.getMinutes()
@@ -532,6 +532,7 @@ module.exports = ReceiptDetail = Backbone.View.extend({
 
     getReceiptSections: function(){
         this.selectedReceiptId = $('#receipt').val()
+        console.log($('#receipt').val())
         this.sectionCollection = new SectionCollection([],{receiptId: this.selectedReceiptId})
         this.sectionCollection.fetch()
         this.listenTo(this.sectionCollection, "add", this.onReceiptSections);

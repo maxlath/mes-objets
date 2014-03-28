@@ -52,6 +52,7 @@ module.exports = ReceiptDetail = Backbone.View.extend({
 
     getReceiptSections: function(){
         this.selectedReceiptId = $('#receipt').val()
+        console.log($('#receipt').val())
         this.sectionCollection = new SectionCollection([],{receiptId: this.selectedReceiptId})
         this.sectionCollection.fetch()
         this.listenTo(this.sectionCollection, "add", this.onReceiptSections);
