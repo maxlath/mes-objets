@@ -7,7 +7,7 @@ module.exports = Sections = Backbone.Collection.extend({
 
     url: function() {
         // return 'receipts/' + this.receiptId + '/sections';
-        return 'receipts/' + "5102589" + '/sections';
+        return 'receipts/' + this.receiptId + '/sections';
     },
     model: Section,
 
