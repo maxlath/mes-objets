@@ -179,6 +179,40 @@ $(document).ready(function() {
 
     $(document).foundation();
 });
+
+window.local = {
+    selectedTicket: undefined,
+    selectedItem: undefined,
+    selectedItemId: undefined
+}
+
+
+window.prettyDate = function(rawDate) {
+        d = new Date(rawDate)
+        jour = d.getDate()
+        mois = d.getMonth() + 1
+        annee = d.getFullYear()
+        heure = d.getHours()
+        minute = d.getMinutes()
+
+        if (minute < 10){ minute = "0" + minute;}
+        if (jour < 10){ jour = "0" + jour;}
+
+
+        if (mois == 0){ mois = "Jan";}
+        if (mois == 1){ mois = "Fev";}
+        if (mois == 2){ mois = "Mar";}
+        if (mois == 3){ mois = "Avr";}
+        if (mois == 4){ mois = "Mai";}
+        if (mois == 5){ mois = "Jun";}
+        if (mois == 6){ mois = "Jui";}
+        if (mois == 7){ mois = "Aou";}
+        if (mois == 8){ mois = "Sep";}
+        if (mois == 9){ mois = "Oct";}
+        if (mois == 10){ mois = "Nov";}
+        if (mois == 11){ mois = "Dec";}
+        return jour + "-" + mois + "-" + annee + ", " + heure + ":" + minute
+};
 });
 
 ;require.register("models/receipt", function(exports, require, module) {
@@ -234,7 +268,7 @@ attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow |
 var buf = [];
 with (locals || {}) {
 var interp;
-buf.push('<div class="row"><div class="large-8 columns"><h1>Transactions Tracker</h1><p>This application will help you manage your transactions!</p></div><div class="large-4 columns"><a id="addtransacbutton" href="#" data-reveal-id="step1" class="radius button">Ajouter une transaction</a></div><!--<Reveal>Modals begin</Reveal>--><div id="step1" data-reveal="data-reveal" class="reveal-modal"></div><div id="step2" data-reveal="data-reveal" class="reveal-modal"><form data-abide="data-abide"><h2>Etape 2</h2><p>Editez les informations collectées</p><div class="title"><label>Titre:</label><input type="text" name="title" required="required"/></div><div class="category row collapse"><div class="large-4 columns"><label>Catégorie<select name="cat"><option value="bricolage">Bricolage</option><option value="starbuck">Starbuck</option><option value="hotdog">Hot Dog</option><option value="apollo">Apollo</option></select></label></div><div class="large-4 columns"><label>Sous-catégorie<select name="subcat"><option value="pelle">Pelle</option><option value="husker">Husker</option><option value="starbuck">Starbuck</option><option value="hotdog">Hot Dog</option></select></label></div><div class="large-4 columns"><label>Sous-sous-catégorie<select name="subsubcat"><option value="pelleapicoucontondants">Pelle à picous contondants</option><option value="husker">Husker</option><option value="apollo">Apollo</option><option value="starbuck">Starbuck</option></select></label></div></div><div class="barcode"><label>Code barre:</label><input type="text" name="barcode" required pattern="number"/></div><div class="comment"><label>Comment: (optionel)</label><textarea name="comment"></textarea></div><div class="url"><label>Url:</label><input type="text" name="url" pattern="url"/></div><a href="#" id="add-transaction" type="submit" class="success radius button">Valider la nouvelle transaction</a></form><a class="close-reveal-modal">×</a></div><!--<Reveal>Modals end</Reveal>--></div><div class="row"><table><thead><tr><th width="100%">Title</th><th>Categories</th><th>Barcode</th><th>URL</th><th>Traces</th><th>Comments</th><th>Action</th></tr></thead><tbody></tbody></table><div id="preview" class="panel"><p><em>Selectionnez une transaction</em></p></div></div><div id="barcodes"></div>');
+buf.push('<div class="row"><div class="large-8 columns"><h1>Transactions Tracker</h1><p>This application will help you manage your transactions!</p></div><div id="menu" class="large-4 columns"><a id="addtransacbutton" href="#" data-reveal-id="step1" class="success radius button">Ajouter une transaction</a></div></div><div class="row"><table><thead><tr><th width="100%">Title</th><th>Categories</th><th>Barcode</th><th>URL</th><th>Traces</th><th>Comments</th><th>Action</th></tr></thead><tbody></tbody></table><div id="preview" class="panel"><p><em>Selectionnez une transaction</em></p></div></div><footer><div class="row"><div class="text-center columns"><a id="tour" href="#" class="radius button">Visite guidée</a></div><!--<Reveal>Modals begin</Reveal>--><div id="step1" data-reveal="data-reveal" class="reveal-modal"></div><div id="step2" data-reveal="data-reveal" class="reveal-modal"><form data-abide="data-abide"><h2>Etape 2 : Compléter les données récoltées</h2><p>Ajoutez des informations ou éditez celles collectées</p><div id="title"><label>Titre:</label><input type="text" name="title" required="required"/></div><div id="barcode"><label>Code barre:</label><input type="text" name="barcode" required pattern="number"/></div><div id="comment"><label>Comment: (optionel)</label><textarea name="comment"></textarea></div><div id="url"><label>Url: (optionel)</label><input type="text" name="url" pattern="url"/></div><a href="#" id="add-transaction" type="submit" class="success radius button right">Valider la nouvelle transaction</a><a href="#" data-reveal-id="step1" type="submit" id="prev" class="radius button">Retour à l\'étape 1</a></form><a class="close-reveal-modal">×</a></div><!--<Reveal>Modals end</Reveal>--></div></footer>');
 }
 return buf.join("");
 };
@@ -246,7 +280,7 @@ attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow |
 var buf = [];
 with (locals || {}) {
 var interp;
-buf.push('<h2>Etape 1</h2><p>Choisissez les preuves d\'achat à attacher</p><form><div id="source"><label>Source</label><select id="proof_source" name="proof_source"><option value="null">== Choisissez une source d\'information ==</option><option value="intermarche">Intermarché</option><option value="intermarche">SoGé</option></select></div><div id="receipts"><label>Tickets de caisse</label><select id="receipt" name="receipt"><option value="null">== Choisissez un ticket de caisse ==</option></select></div><div id="receiptelements"><label>Détails du ticket<select id="receipt_details" name="receipt_details"><option value="null">== Choisissez une ligne du ticket ==</option></select></label></div><div id="detailspreview" class="panel"></div></form><div id="manualbarcode"><span>ou entrer le code bar manuellement<input placeholder="barcode"/></span></div><a href="#" data-reveal-id="step2" type="submit" class="success radius button">Etape 2...</a><a class="close-reveal-modal">×</a>');
+buf.push('<h2>Etape 1 : Attacher des preuves d\'achat</h2><p>Choisissez les données relatives à l\'objet que vous souhaitez ajouter à votre inventaire</p><form><div id="source" class="fields"><label class="superlab">Source</label><select id="proof_source" name="proof_source"><option value="null">* Choisissez une source d\'information *</option><option value="intermarche">Intermarché</option><option value="manuel">Ajout manuel</option></select></div><div id="receipts" class="fields"><label class="superlab">Tickets de caisse</label><select id="receipt" name="receipt"><option value="null">* Choisissez un ticket de caisse *</option></select></div><div id="receiptelements" class="fields"><label class="superlab">Détails du ticket<select id="receipt_details" name="receipt_details"><option value="null">* Choisissez une ligne du ticket *</option></select></label></div><div id="detailspreview" class="panel"></div><div id="additionaldata" class="panel"></div></form><div id="manualbarcode"><span>ou entrer le code bar manuellement<input placeholder="barcode"/></span></div><a href="#" data-reveal-id="step2" type="submit" id="next" class="success radius button right">Etape 2...</a><a class="close-reveal-modal">×</a>');
 }
 return buf.join("");
 };
@@ -280,7 +314,7 @@ buf.push('</span></div></div><div class="row"><div class="large-6 small-12 colum
 var __val__ = intermarcheShopId
 buf.push(escape(null == __val__ ? "" : __val__));
 buf.push('</span></div></div><div class="row"><div class="large-6 small-12 columns"><span><strong>Date</strong></span></div><div class="large-6 small-12 columns"><span>');
-var __val__ = new Date(timestamp)
+var __val__ = prettyDate(timestamp)
 buf.push(escape(null == __val__ ? "" : __val__));
 buf.push('</span></div></div></div><div class="large-4 small-12 columns">');
 if ( barcode.lenght = 13)
@@ -339,7 +373,7 @@ module.exports = AppView = Backbone.View.extend({
     el: 'body',
     template: require('../templates/app'),
     events: {
-        "click #add-transaction": "createTransaction"
+        "click #add-transaction": "createTransaction",
     },
 
     // initialize is automatically called once after the view is contructed
@@ -356,6 +390,10 @@ module.exports = AppView = Backbone.View.extend({
         // fetch the transactions from the database
         this.collection.fetch();
         // this.collection.seed()
+        var appjs = this
+        $(document).on('opened', '[data-reveal]', function () {
+          appjs.fillFields()
+        });
     },
 
     createTransaction: function(event) {
@@ -372,7 +410,7 @@ module.exports = AppView = Backbone.View.extend({
             category: this.$el.find('select[name="cat"]').val(),
             subcategory: this.$el.find('select[name="subcat"]').val(),
             subsubcategory: this.$el.find('select[name="subsubcat"]').val(),
-            barcode: this.$el.find('input[name="barcode"]').val(),
+            barcode: this.$el.find('input[name="barcode"]').val() || local.selectedItem.barcode,
             url: this.$el.find('input[name="url"]').val()
 
         });
@@ -403,6 +441,18 @@ module.exports = AppView = Backbone.View.extend({
         transactionView.render();
         this.$el.find('tbody').append(transactionView.$el);
     },
+
+    fillFields: function(){
+        // BARCODE
+        if(local.selectedItem && local.selectedItem.barcode){
+            $('#barcode input').remove()
+            $('#barcode').append(local.selectedItem.barcode)
+        }
+
+        if(local.selectedItem && local.selectedItem.name){
+            $('#title input').val(local.selectedItem.name)
+        }
+    }
 });
 });
 
@@ -422,7 +472,7 @@ module.exports = ReceiptDetail = Backbone.View.extend({
      events: {
         'change #proof_source': 'getProofOptions',
         'change #receipt': 'getReceiptSections',
-        'change #receiptelements': 'updateDetailsPreview'
+        'change #receiptelements': 'updateDetailsPreview',
     },
 
     render: function() {
@@ -437,17 +487,15 @@ module.exports = ReceiptDetail = Backbone.View.extend({
                 this.receiptsCollection = new ReceiptsCollection
                 this.receiptsCollection.fetch()
                 this.listenTo(this.receiptsCollection, "add", this.onReceiptsAdded);
-
-
-                // this.collection = new ReceiptDetailsCollection
-                // this.listenTo(this.collection, "add", this.onReceiptSections);
-                // this.collection.seed()
                 break;
+            case 'manuel':
+                $('#next').trigger('click')
+
         }
     },
 
     onReceiptsAdded: function(model) {
-        opt = $('<option>').val(model.get('receiptId')).text(model.get('snippet')+ ' - Nombre d\'articles :'  + model.get('articlesCount'))
+        opt = $('<option>').val(model.get('receiptId')).text(prettyDate(model.get('timestamp'))+ ' - ' + model.get('articlesCount') + " articles")
         this.$('#receipts select').append(opt)
     },
 
@@ -456,7 +504,7 @@ module.exports = ReceiptDetail = Backbone.View.extend({
         this.sectionCollection = new SectionCollection([],{receiptId: this.selectedReceiptId})
         this.sectionCollection.fetch()
         this.listenTo(this.sectionCollection, "add", this.onReceiptSections);
-        window.selecetedTicket = {}
+        window.local.selectedTicket = {}
     },
 
     onReceiptSections: function(model) {
@@ -469,7 +517,7 @@ module.exports = ReceiptDetail = Backbone.View.extend({
         $('#receiptelements div').fadeIn(1500)
         opt = $('<option>').val(model.id).text(upAndDownCase(model.get('sectionLabel'))+' - ' + model.get('name')+' - '+ model.get('price')+'€' )
         this.$('#receiptelements select').append(opt)
-        window.selecetedTicket[model.id] = model.attributes
+        window.local.selectedTicket[model.id] = model.attributes
 
         // $('#detailspreview div').fadeIn(1500)
 
@@ -483,12 +531,12 @@ module.exports = ReceiptDetail = Backbone.View.extend({
     },
 
     updateDetailsPreview: function(){
-        var selectedId = $('#receiptelements select').val()
-        console.log(selectedId)
-        var selected = window.selecetedTicket[selectedId]
-        console.log(selected)
+        window.local.selectedItemId = $('#receiptelements select').val()
+        console.log(window.local.selectedItemId)
+        window.local.selectedItem = window.local.selectedTicket[window.local.selectedItemId]
+        console.log(window.local.selectedItem)
         preview = new Preview({
-            model: selected
+            model: window.local.selectedItem
         })
         preview.render()
         $('#detailspreview').fadeIn(500)
@@ -516,8 +564,6 @@ module.exports = ReceiptDetailPreview = Backbone.View.extend({
 
     render: function() {
         $('#detailspreview').html(this.template(this.model));
-        console.log(this.model)
-        console.log("RENDER")
         return this;
     }
 })

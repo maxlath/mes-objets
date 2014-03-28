@@ -3,7 +3,7 @@
 
 /*Large screens*/
 @media screen and (min-width: 600px) {
-  #addtransacbutton {
+  #menu a {
     margin: 20px; } }
 
 #step1 div {
@@ -12,8 +12,21 @@
   list-style-type: none; }
 #step1 th {
   text-align: left;
-  padding-left: 5vw;
-  padding-right: 10vw; }
+  padding-left: 10px;
+  padding-right: 20px; }
+#step1 label {
+  margin-top: 15px;
+  color: #555555;
+  font-size: 1.3em; }
+
+.reveal-modal {
+  top: 0 !important; }
+
+#step2 label {
+  margin-top: 15px;
+  color: #555555;
+  font-size: 1.3em; }
+
 
 
 /*# sourceMappingURL=app.css.map*/

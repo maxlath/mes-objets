@@ -11,8 +11,6 @@ module.exports = ReceiptDetailPreview = Backbone.View.extend({
 
     render: function() {
         $('#detailspreview').html(this.template(this.model));
-        console.log(this.model)
-        console.log("RENDER")
         return this;
     }
 })

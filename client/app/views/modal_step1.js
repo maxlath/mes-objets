@@ -13,7 +13,7 @@ module.exports = ReceiptDetail = Backbone.View.extend({
      events: {
         'change #proof_source': 'getProofOptions',
         'change #receipt': 'getReceiptSections',
-        'change #receiptelements': 'updateDetailsPreview'
+        'change #receiptelements': 'updateDetailsPreview',
     },
 
     render: function() {
@@ -28,17 +28,15 @@ module.exports = ReceiptDetail = Backbone.View.extend({
                 this.receiptsCollection = new ReceiptsCollection
                 this.receiptsCollection.fetch()
                 this.listenTo(this.receiptsCollection, "add", this.onReceiptsAdded);
-
-
-                // this.collection = new ReceiptDetailsCollection
-                // this.listenTo(this.collection, "add", this.onReceiptSections);
-                // this.collection.seed()
                 break;
+            case 'manuel':
+                $('#next').trigger('click')
+
         }
     },
 
     onReceiptsAdded: function(model) {
-        opt = $('<option>').val(model.get('receiptId')).text(model.get('snippet')+ ' - Nombre d\'articles :'  + model.get('articlesCount'))
+        opt = $('<option>').val(model.get('receiptId')).text(prettyDate(model.get('timestamp'))+ ' - ' + model.get('articlesCount') + " articles")
         this.$('#receipts select').append(opt)
     },
 
@@ -47,7 +45,7 @@ module.exports = ReceiptDetail = Backbone.View.extend({
         this.sectionCollection = new SectionCollection([],{receiptId: this.selectedReceiptId})
         this.sectionCollection.fetch()
         this.listenTo(this.sectionCollection, "add", this.onReceiptSections);
-        window.selecetedTicket = {}
+        window.local.selectedTicket = {}
     },
 
     onReceiptSections: function(model) {
@@ -60,7 +58,7 @@ module.exports = ReceiptDetail = Backbone.View.extend({
         $('#receiptelements div').fadeIn(1500)
         opt = $('<option>').val(model.id).text(upAndDownCase(model.get('sectionLabel'))+' - ' + model.get('name')+' - '+ model.get('price')+'€' )
         this.$('#receiptelements select').append(opt)
-        window.selecetedTicket[model.id] = model.attributes
+        window.local.selectedTicket[model.id] = model.attributes
 
         // $('#detailspreview div').fadeIn(1500)
 
@@ -74,12 +72,12 @@ module.exports = ReceiptDetail = Backbone.View.extend({
     },
 
     updateDetailsPreview: function(){
-        var selectedId = $('#receiptelements select').val()
-        console.log(selectedId)
-        var selected = window.selecetedTicket[selectedId]
-        console.log(selected)
+        window.local.selectedItemId = $('#receiptelements select').val()
+        console.log(window.local.selectedItemId)
+        window.local.selectedItem = window.local.selectedTicket[window.local.selectedItemId]
+        console.log(window.local.selectedItem)
         preview = new Preview({
-            model: selected
+            model: window.local.selectedItem
         })
         preview.render()
         $('#detailspreview').fadeIn(500)

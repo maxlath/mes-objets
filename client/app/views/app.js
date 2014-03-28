@@ -6,7 +6,7 @@ module.exports = AppView = Backbone.View.extend({
     el: 'body',
     template: require('../templates/app'),
     events: {
-        "click #add-transaction": "createTransaction"
+        "click #add-transaction": "createTransaction",
     },
 
     // initialize is automatically called once after the view is contructed
@@ -23,6 +23,10 @@ module.exports = AppView = Backbone.View.extend({
         // fetch the transactions from the database
         this.collection.fetch();
         // this.collection.seed()
+        var appjs = this
+        $(document).on('opened', '[data-reveal]', function () {
+          appjs.fillFields()
+        });
     },
 
     createTransaction: function(event) {
@@ -39,7 +43,7 @@ module.exports = AppView = Backbone.View.extend({
             category: this.$el.find('select[name="cat"]').val(),
             subcategory: this.$el.find('select[name="subcat"]').val(),
             subsubcategory: this.$el.find('select[name="subsubcat"]').val(),
-            barcode: this.$el.find('input[name="barcode"]').val(),
+            barcode: this.$el.find('input[name="barcode"]').val() || local.selectedItem.barcode,
             url: this.$el.find('input[name="url"]').val()
 
         });
@@ -70,4 +74,16 @@ module.exports = AppView = Backbone.View.extend({
         transactionView.render();
         this.$el.find('tbody').append(transactionView.$el);
     },
+
+    fillFields: function(){
+        // BARCODE
+        if(local.selectedItem && local.selectedItem.barcode){
+            $('#barcode input').remove()
+            $('#barcode').append(local.selectedItem.barcode)
+        }
+
+        if(local.selectedItem && local.selectedItem.name){
+            $('#title input').val(local.selectedItem.name)
+        }
+    }
 });

@@ -1,29 +1,33 @@
-h2 Etape 1
-p Choisissez les preuves d'achat à attacher
+h2 Etape 1 : Attacher des preuves d'achat
+p Choisissez les données relatives à l'objet que vous souhaitez ajouter à votre inventaire
 form
-  #source
-    label
+  #source.fields
+    label(class="superlab")
       | Source
     select(id="proof_source", name="proof_source")
-      option(value='null') == Choisissez une source d'information ==
+      option(value='null') * Choisissez une source d'information *
       option(value='intermarche') Intermarché
-      option(value='intermarche') SoGé
-  #receipts
-    label
+      option(value='manuel') Ajout manuel
+      //- option(value='intermarche') SoGé
+  #receipts.fields
+    label(class="superlab")
       | Tickets de caisse
     select(id="receipt", name="receipt")
-      option(value='null') == Choisissez un ticket de caisse ==
-  //- #receiptsections
-  //-   label
+      option(value='null') * Choisissez un ticket de caisse *
+  //- #receiptsections.fields
+  //-   label(class="superlab")
   //-     | Rayon
   //-   select(id="sections", name="sections")
-  //-     option(value='null') == Choisissez un rayon ==
-  #receiptelements
-    label
+  //-     option(value='null') * Choisissez un rayon *
+  #receiptelements.fields
+    label(class="superlab")
       | Détails du ticket
       select(id="receipt_details", name="receipt_details")
-        option(value='null') == Choisissez une ligne du ticket ==
+        option(value='null') * Choisissez une ligne du ticket *
   #detailspreview.panel
+
+  #additionaldata.panel
+
 
 
 
@@ -31,6 +35,6 @@ form
   span ou entrer le code bar manuellement
     input(placeholder="barcode")
 
-a.success.radius.button(href='#', data-reveal-id='step2', type="submit") Etape 2...
+a.success.radius.button.right(href='#', data-reveal-id='step2', type="submit", id="next") Etape 2...
 
 a.close-reveal-modal ×
