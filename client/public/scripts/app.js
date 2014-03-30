@@ -92,189 +92,211 @@
 })();
 require.register("application", function(exports, require, module) {
 module.exports = {
-
-    initialize: function() {
-        var Router = require('router');
-        this.router = new Router();
-        Backbone.history.start();
-    }
+  initialize: function() {
+    var Router;
+    Router = require("router");
+    this.router = new Router();
+    Backbone.history.start();
+  }
 };
 });
 
+;require.register("collections/receipt", function(exports, require, module) {
+
+});
+
 ;require.register("collections/receiptdetails", function(exports, require, module) {
-ReceiptDetail = require('../models/receiptdetail');
+var ReceiptDetail, ReceiptDetails;
+
+ReceiptDetail = require("../models/receiptdetail");
 
 module.exports = ReceiptDetails = Backbone.Collection.extend({
-    model: ReceiptDetail,
-    url: 'receiptdetails',
-    seed: function(){
-        console.log('receipt seeding :D')
-        this.create({
-            id: '123',
-            barcode: "1234567890"
-        })
-    }
-})
-
+  model: ReceiptDetail,
+  url: "receiptdetails",
+  seed: function() {
+    console.log("receipt seeding :D");
+    this.create({
+      id: "123",
+      barcode: "1234567890"
+    });
+  }
+});
 });
 
 ;require.register("collections/receipts", function(exports, require, module) {
-Receipt = require('../models/receipt');
+var Receipt, Receipts;
+
+Receipt = require("../models/receipt");
+
 module.exports = Receipts = Backbone.Collection.extend({
-    model: Receipt,
-    url: 'receipts'
-})
+  model: Receipt,
+  url: "receipts"
+});
 });
 
 ;require.register("collections/sections", function(exports, require, module) {
-Section = require('../models/section');
+var Section, Sections;
+
+Section = require("../models/section");
+
 module.exports = Sections = Backbone.Collection.extend({
-
-    initialize: function(models, options) {
-        this.receiptId = options.receiptId;
-    },
-
-    url: function() {
-        return 'receipts/' + this.receiptId + '/sections';
-    },
-    model: Section,
-
+  initialize: function(models, options) {
+    this.receiptId = options.receiptId;
+  },
+  url: function() {
+    return "receipts/" + this.receiptId + "/sections";
+  },
+  model: Section
 });
 });
 
 ;require.register("collections/transactions", function(exports, require, module) {
-Transaction = require('../models/transaction');
+var Transaction, Transactions;
+
+Transaction = require("../models/transaction");
 
 module.exports = Transactions = Backbone.Collection.extend({
-    model: Transaction,
-    url: 'transactions',
-    // seed: function(){
-    //     // not working
-    //     console.log('seeding!')
-    //     this.create({
-    //         id:"1231512512341512412",
-    //         title: "Pelle à picous",
-    //         comment: "Très belle pelle",
-    //         trace: [
-    //                 "intermarché"
-    //             ],
-    //         category: [
-    //             "Bricolage",
-    //             "Pelle",
-    //             "Pelle à picous"
-    //         ],
-    //         barcode: "1248193523",
-    //         url: "http://pelle-a-picous.love"
-    //     });
-    // }
+  model: Transaction,
+  url: "transactions"
 });
 });
 
 ;require.register("initialize", function(exports, require, module) {
-// The function called from index.html
 $(document).ready(function() {
-    var app = require('application');
-    app.initialize()
-
-    $(document).foundation();
+  var app;
+  app = require("application");
+  app.initialize();
+  $(document).foundation();
 });
 
-window.reinitilizeLocalValues = function(){
-    window.local = {
-        selectedTicket: undefined,
-        selectedItem: undefined,
-        selectedItemId: undefined
-    }
-    $('.dynOption option').remove()
-    $('.dynOption').append('<option class="option_placeholder">- Choisissez une option -<option>')
-}
-reinitilizeLocalValues()
-
-window.prettyDate = function(rawDate) {
-        d = new Date(rawDate)
-        jour = d.getDate()
-        mois = d.getMonth()
-        annee = d.getFullYear()
-        heure = d.getHours()
-        minute = d.getMinutes()
-
-        if (minute < 10){ minute = "0" + minute;}
-        if (jour < 10){ jour = "0" + jour;}
-
-
-        if (mois == 0){ mois = "Jan";}
-        if (mois == 1){ mois = "Fev";}
-        if (mois == 2){ mois = "Mar";}
-        if (mois == 3){ mois = "Avr";}
-        if (mois == 4){ mois = "Mai";}
-        if (mois == 5){ mois = "Jun";}
-        if (mois == 6){ mois = "Jui";}
-        if (mois == 7){ mois = "Aou";}
-        if (mois == 8){ mois = "Sep";}
-        if (mois == 9){ mois = "Oct";}
-        if (mois == 10){ mois = "Nov";}
-        if (mois == 11){ mois = "Dec";}
-        return jour + "-" + mois + "-" + annee + ", " + heure + ":" + minute
+window.reinitilizeLocalValues = function() {
+  window.local = {
+    selectedTicket: undefined,
+    selectedItem: undefined,
+    selectedItemId: undefined
+  };
+  $(".dynOption option").remove();
+  $(".dynOption").append("<option class=\"option_placeholder\">- Choisissez une option -<option>");
 };
 
+reinitilizeLocalValues();
 
-String.prototype.upAndDownCase = function(){
-    return this.charAt(0).toUpperCase() + this.slice(1).toLowerCase();
-}
+window.prettyDate = function(rawDate) {
+  var annee, d, heure, jour, minute, mois;
+  d = new Date(rawDate);
+  jour = d.getDate();
+  mois = d.getMonth();
+  annee = d.getFullYear();
+  heure = d.getHours();
+  minute = d.getMinutes();
+  if (minute < 10) {
+    minute = "0" + minute;
+  }
+  if (jour < 10) {
+    jour = "0" + jour;
+  }
+  if (mois === 0) {
+    mois = "Jan";
+  }
+  if (mois === 1) {
+    mois = "Fev";
+  }
+  if (mois === 2) {
+    mois = "Mar";
+  }
+  if (mois === 3) {
+    mois = "Avr";
+  }
+  if (mois === 4) {
+    mois = "Mai";
+  }
+  if (mois === 5) {
+    mois = "Jun";
+  }
+  if (mois === 6) {
+    mois = "Jui";
+  }
+  if (mois === 7) {
+    mois = "Aou";
+  }
+  if (mois === 8) {
+    mois = "Sep";
+  }
+  if (mois === 9) {
+    mois = "Oct";
+  }
+  if (mois === 10) {
+    mois = "Nov";
+  }
+  if (mois === 11) {
+    mois = "Dec";
+  }
+  return jour + "-" + mois + "-" + annee + ", " + heure + ":" + minute;
+};
 
+String.prototype.upAndDownCase = function() {
+  return this.charAt(0).toUpperCase() + this.slice(1).toLowerCase();
+};
 
-window.listToReorder = function(listToReorder,listitems){
-    listitems.sort(function(a, b) {
-       return $(a).text().toUpperCase().localeCompare($(b).text().toUpperCase());
-    })
-    $.each(listitems, function(idx, itm) { listToReorder.append(itm); });
-}
+window.listToReorder = function(listToReorder, listitems) {
+  listitems.sort(function(a, b) {
+    return $(a).text().toUpperCase().localeCompare($(b).text().toUpperCase());
+  });
+  $.each(listitems, function(idx, itm) {
+    listToReorder.append(itm);
+  });
+};
 });
 
 ;require.register("models/receipt", function(exports, require, module) {
-module.exports = Receipt = Backbone.Model.extend({
+var Receipt;
 
-})
+module.exports = Receipt = Backbone.Model.extend({});
 });
 
 ;require.register("models/receiptdetail", function(exports, require, module) {
-module.exports = ReceiptDetail = Backbone.Model.extend({
+var ReceiptDetail;
 
-})
+module.exports = ReceiptDetail = Backbone.Model.extend({});
 });
 
 ;require.register("models/section", function(exports, require, module) {
-module.exports = Section = Backbone.Model.extend({
+var Section;
 
-});
+module.exports = Section = Backbone.Model.extend({});
 });
 
 ;require.register("models/transaction", function(exports, require, module) {
-module.exports = Transaction = Backbone.Model.extend({
-});
+var Transaction;
+
+module.exports = Transaction = Backbone.Model.extend({});
 });
 
 ;require.register("router", function(exports, require, module) {
-var AppView = require('views/app');
-var TransactionCollection = require('collections/transactions');
-var ReceiptDetailCollection = require('collections/receiptdetails');
+var AppView, ReceiptDetailCollection, Router, TransactionCollection, receiptdetails, transactions;
 
-var transactions = new TransactionCollection();
-var receiptdetails = new ReceiptDetailCollection();
+AppView = require("views/app");
+
+TransactionCollection = require("collections/transactions");
+
+ReceiptDetailCollection = require("collections/receiptdetails");
+
+transactions = new TransactionCollection();
+
+receiptdetails = new ReceiptDetailCollection();
 
 module.exports = Router = Backbone.Router.extend({
-
-    routes: {
-        '': 'main'
-    },
-
-    main: function() {
-        var mainView = new AppView({
-            collection: transactions,
-            receiptcollection: receiptdetails
-        });
-        mainView.render();
-    }
+  routes: {
+    "": "main"
+  },
+  main: function() {
+    var mainView;
+    mainView = new AppView({
+      collection: transactions,
+      receiptcollection: receiptdetails
+    });
+    mainView.render();
+  }
 });
 });
 
@@ -411,237 +433,182 @@ return buf.join("");
 });
 
 ;require.register("views/app", function(exports, require, module) {
-var TransactionView = require('./transaction');
-var Step1 = require('./modal_step1')
+var AppView, Step1, TransactionView;
+
+TransactionView = require("./transaction");
+
+Step1 = require("./modal_step1");
 
 module.exports = AppView = Backbone.View.extend({
-
-    el: 'body',
-    template: require('../templates/app'),
-    events: {
-        "click #add-transaction": "createTransaction",
-    },
-
-    // initialize is automatically called once after the view is contructed
-    initialize: function() {
-        this.listenTo(this.collection, "add", this.onTransactionAdded);
-    },
-
-    render: function() {
-
-        // we render the template
-        this.$el.html(this.template());
-        var step1 = new Step1()
-        step1.render()
-        // fetch the transactions from the database
-        this.collection.fetch();
-        // this.collection.seed()
-        var appjs = this
-        $(document).on('opened', '[data-reveal]', function () {
-          appjs.fillFields()
-        });
-    },
-
-    createTransaction: function(event) {
-        // submit button reload the page, we don't want that
-        event.preventDefault();
-
-        // add it to the collection
-        this.collection.create({
-            title: this.$el.find('input[name="title"]').val(),
-            comment: this.$el.find('textarea[name="comment"]').val(),
-            // trace: {
-
-            //         this.$el.find('select[name="proof_source"]').val()
-            //         // window.local.selectedItem.origin
-            //     ],
-            // }
-            category: this.$el.find('select[name="cat"]').val(),
-            subcategory: this.$el.find('select[name="subcat"]').val(),
-            subsubcategory: this.$el.find('select[name="subsubcat"]').val(),
-            barcode: this.$el.find('input[name="barcode"]').val() || local.selectedItem.barcode,
-            url: this.$el.find('input[name="url"]').val()
-
-        });
-        $('#step2').foundation('reveal', 'close');
-    },
-
-    // updateTransaction: function(event) {
-    //     var that = this
-    //     this.model.save({
-    //         barcode: this.$el.find('input[name="barcode"]').val() // ou qqch comme ça
-    //     },
-    //     // alternative: ajouter un change listner qui rerender le bouzin
-    //     {
-    //         success: function(){
-    //             that.render()
-    //         },
-    //         error: function(){
-    //             console.log('doh!')
-    //         }
-    //     })
-    // },
-
-    onTransactionAdded: function(transaction) {
-        // render the specific element
-        transactionView = new TransactionView({
-            model: transaction
-        });
-        transactionView.render();
-        this.$el.find('tbody').append(transactionView.$el);
-    },
-
-    fillFields: function(){
-        // BARCODE
-        if(local.selectedItem && local.selectedItem.barcode){
-            $('#barcode input').remove()
-            $('#barcode').append(local.selectedItem.barcode)
-            // $.getJSON()
-        }
-
-        if(local.selectedItem && local.selectedItem.name){
-            $('#title input').val(local.selectedItem.name)
-        }
+  el: "body",
+  template: require("../templates/app"),
+  events: {
+    "click #add-transaction": "createTransaction"
+  },
+  initialize: function() {
+    return this.listenTo(this.collection, "add", this.onTransactionAdded);
+  },
+  render: function() {
+    var appjs, step1;
+    this.$el.html(this.template());
+    step1 = new Step1();
+    step1.render();
+    this.collection.fetch();
+    appjs = this;
+    return $(document).on("opened", "[data-reveal]", function() {
+      return appjs.fillFields();
+    });
+  },
+  createTransaction: function(event) {
+    event.preventDefault();
+    this.collection.create({
+      title: this.$el.find("input[name=\"title\"]").val(),
+      comment: this.$el.find("textarea[name=\"comment\"]").val(),
+      category: this.$el.find("select[name=\"cat\"]").val(),
+      subcategory: this.$el.find("select[name=\"subcat\"]").val(),
+      subsubcategory: this.$el.find("select[name=\"subsubcat\"]").val(),
+      barcode: this.$el.find("input[name=\"barcode\"]").val() || local.selectedItem.barcode,
+      url: this.$el.find("input[name=\"url\"]").val()
+    });
+    return $("#step2").foundation("reveal", "close");
+  },
+  onTransactionAdded: function(transaction) {
+    var transactionView;
+    transactionView = new TransactionView({
+      model: transaction
+    });
+    transactionView.render();
+    return this.$el.find("tbody").append(transactionView.$el);
+  },
+  fillFields: function() {
+    if (local.selectedItem && local.selectedItem.barcode) {
+      $("#barcode input").remove();
+      $("#barcode").append(local.selectedItem.barcode);
     }
+    if (local.selectedItem && local.selectedItem.name) {
+      return $("#title input").val(local.selectedItem.name);
+    }
+  }
 });
 });
 
 ;require.register("views/modal_step1", function(exports, require, module) {
-ReceiptDetailsCollection = require('../collections/receiptdetails')
-SectionCollection = require('../collections/sections');
-ReceiptDetailsCollection = require('../collections/receiptdetails')
-ReceiptsCollection = require('../collections/receipts')
-Preview = require('./preview')
+var Preview, ReceiptDetail, ReceiptDetailsCollection, ReceiptsCollection, SectionCollection;
 
+ReceiptDetailsCollection = require("../collections/receiptdetails");
+
+SectionCollection = require("../collections/sections");
+
+ReceiptDetailsCollection = require("../collections/receiptdetails");
+
+ReceiptsCollection = require("../collections/receipts");
+
+Preview = require("./preview");
 
 module.exports = ReceiptDetail = Backbone.View.extend({
-
-    el: '#step1',
-    template: require('../templates/modal_step1'),
-
-     events: {
-        'change #source': 'getProofOptions',
-        'change #receipt': 'getReceiptSections',
-        'change #receiptelements': 'updateDetailsPreview',
-    },
-
-    render: function() {
-        this.$el.html(this.template({}))
-        $('#sources').fadeIn(1000)
-    },
-
-    getProofOptions: function(){
-        $('#receiptelements').hide()
-        $('#receipts').hide()
-        $('#detailspreview').hide()
-        reinitilizeLocalValues()
-
-        switch($('#source').val()){
-            case 'intermarche':
-                $('#receipts').fadeIn(1500)
-                this.receiptsCollection = new ReceiptsCollection
-                this.receiptsCollection.fetch()
-                this.listenTo(this.receiptsCollection, "add", this.onReceiptsAdded);
-                break;
-            case 'manuel':
-                $('#next').trigger('click')
-                break;
-        }
-    },
-
-
-
-
-    // SPECIFIQUE INTERMARCHE
-
-    onReceiptsAdded: function(model) {
-        opt = $('<option>').val(model.get('receiptId')).text(prettyDate(model.get('timestamp'))+ ' - ' + model.get('articlesCount') + " articles")
-        this.$('#receipts select').append(opt)
-    },
-
-    getReceiptSections: function(){
-        $('#receiptelements option').remove()
-        $('#detailspreview').hide().html('')
-
-        this.selectedReceiptId = $('#receipt').val()
-        this.sectionCollection = new SectionCollection([],{receiptId: this.selectedReceiptId})
-        this.sectionCollection.fetch()
-        this.listenTo(this.sectionCollection, "add", this.onReceiptSections);
-        window.local.selectedTicket = {}
-    },
-
-    onReceiptSections: function(model) {
-        $('#receiptelements')
-        $('#receiptelements').fadeIn(1500)
-        $('#receiptelements div').fadeIn(1500)
-        opt = $('<option>').val(model.id).text((model.get('sectionLabel').upAndDownCase())+' - ' + model.get('name')+' - '+ model.get('price')+'€' )
-        this.$('#receiptelements select').append(opt)
-        window.local.selectedTicket[model.id] = model.attributes
-
-        listToReorder($('#receiptelements select'),$('#receiptelements select').children('option').get())
-
-    },
-
-    updateDetailsPreview: function(){
-        $('#detailspreview').hide().html('')
-
-        window.local.selectedItemId = $('#receiptelements select').val()
-        window.local.selectedItem = window.local.selectedTicket[window.local.selectedItemId]
-        window.local.selectedItem
-        preview = new Preview({
-            model: window.local.selectedItem
-        })
-        preview.render()
-        $('#detailspreview').fadeIn(500)
-        $('#detailspreview div').fadeIn(500)
-        // $('#preview_image').error(this.$('#preview_image').hide())
+  el: "#step1",
+  template: require("../templates/modal_step1"),
+  events: {
+    "change #source": "getProofOptions",
+    "change #receipt": "getReceiptSections",
+    "change #receiptelements": "updateDetailsPreview"
+  },
+  render: function() {
+    this.$el.html(this.template({}));
+    $("#sources").fadeIn(1000);
+  },
+  getProofOptions: function() {
+    $("#receiptelements").hide();
+    $("#receipts").hide();
+    $("#detailspreview").hide();
+    reinitilizeLocalValues();
+    switch ($("#source").val()) {
+      case "intermarche":
+        $("#receipts").fadeIn(1500);
+        this.receiptsCollection = new ReceiptsCollection;
+        this.receiptsCollection.fetch();
+        return this.listenTo(this.receiptsCollection, "add", this.onReceiptsAdded);
+      case "manuel":
+        return $("#next").trigger("click");
     }
+  },
+  onReceiptsAdded: function(model) {
+    var opt;
+    opt = $("<option>").val(model.get("receiptId")).text(prettyDate(model.get("timestamp")) + " - " + model.get("articlesCount") + " articles");
+    this.$("#receipts select").append(opt);
+  },
+  getReceiptSections: function() {
+    $("#receiptelements option").remove();
+    $("#detailspreview").hide().html("");
+    this.selectedReceiptId = $("#receipt").val();
+    this.sectionCollection = new SectionCollection([], {
+      receiptId: this.selectedReceiptId
+    });
+    this.sectionCollection.fetch();
+    this.listenTo(this.sectionCollection, "add", this.onReceiptSections);
+    window.local.selectedTicket = {};
+  },
+  onReceiptSections: function(model) {
+    var opt;
+    $("#receiptelements");
+    $("#receiptelements").fadeIn(1500);
+    $("#receiptelements div").fadeIn(1500);
+    opt = $("<option>").val(model.id).text((model.get("sectionLabel").upAndDownCase()) + " - " + model.get("name") + " - " + model.get("price") + "€");
+    this.$("#receiptelements select").append(opt);
+    window.local.selectedTicket[model.id] = model.attributes;
+    listToReorder($("#receiptelements select"), $("#receiptelements select").children("option").get());
+  },
+  updateDetailsPreview: function() {
+    var preview;
+    $("#detailspreview").hide().html("");
+    window.local.selectedItemId = $("#receiptelements select").val();
+    window.local.selectedItem = window.local.selectedTicket[window.local.selectedItemId];
+    window.local.selectedItem;
+    preview = new Preview({
+      model: window.local.selectedItem
+    });
+    preview.render();
+    $("#detailspreview").fadeIn(500);
+    $("#detailspreview div").fadeIn(500);
+  }
 });
 });
 
 ;require.register("views/preview", function(exports, require, module) {
+var ReceiptDetailPreview;
+
 module.exports = ReceiptDetailPreview = Backbone.View.extend({
-
-    el: 'div',
-    template: require('../templates/preview'),
-
-     // events: {
-        // 'change #proof_source': 'getProofOptions',
-        // 'change #receipt': 'getReceiptSections',
-        // 'change #receiptelements': 'updateDetailsPreview'
-    // },
-
-    render: function() {
-        $('#detailspreview').html(this.template(this.model));
-        return this;
-    }
-})
+  el: "div",
+  template: require("../templates/preview"),
+  render: function() {
+    $("#detailspreview").html(this.template(this.model));
+    return this;
+  }
+});
 });
 
 ;require.register("views/transaction", function(exports, require, module) {
+var Transaction;
+
 module.exports = Transaction = Backbone.View.extend({
-
-    tagName: 'tr',
-    template: require('../templates/transaction'),
-    events: {
-        'click a.delete': 'deleteTransaction',
-        'click a.edit': 'editTransaction'
-    },
-
-    render: function() {
-        this.$el.html(this.template({
-            transaction: this.model.toJSON()
-        }));
-    },
-
-    deleteTransaction: function() {
-        this.model.destroy();
-        this.remove();
-    },
-
-    editTransaction: function(){
-        alert('fonctionnalité à venir')
-    }
+  tagName: "tr",
+  template: require("../templates/transaction"),
+  events: {
+    "click a.delete": "deleteTransaction",
+    "click a.edit": "editTransaction"
+  },
+  render: function() {
+    this.$el.html(this.template({
+      transaction: this.model.toJSON()
+    }));
+  },
+  deleteTransaction: function() {
+    this.model.destroy();
+    this.remove();
+  },
+  editTransaction: function() {
+    alert("fonctionnalité à venir");
+  }
 });
 });
 
