@@ -23,6 +23,11 @@ exports.config = {
         "stylesheets": {
             "defaultExtension": 'scss',
             "joinTo": 'stylesheets/app.css'
+        },
+          "plugins": {
+            "coffeescript": {
+                "bare": true
+            }
         }
     }
 }

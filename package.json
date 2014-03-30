@@ -6,7 +6,7 @@
     "type": "git",
     "url": "https://github.com/maxlath/cozy-tutorial.git"
   },
-  "main": "server.js",
+  "main": "server.coffee",
   "dependencies": {
     "jade": "~0.35.0",
     "americano": "~0.2.10",
@@ -16,7 +16,7 @@
     "node = 0.8.x"
   ],
   "scripts": {
-    "start": "node server.js"
+    "start": "coffee server.coffee"
   },
   "cozy-displayName": "Mes Transactions",
   "cozy-permissions": {
