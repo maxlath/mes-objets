@@ -3,7 +3,6 @@ $(document).ready ->
   app = require("application")
   app.initialize()
   $(document).foundation()
-  return
 
 window.reinitilizeLocalValues = ->
   window.local =
@@ -13,7 +12,6 @@ window.reinitilizeLocalValues = ->
 
   $(".dynOption option").remove()
   $(".dynOption").append "<option class=\"option_placeholder\">- Choisissez une option -<option>"
-  return
 
 reinitilizeLocalValues()
 window.prettyDate = (rawDate) ->
@@ -51,3 +49,4 @@ window.listToReorder = (listToReorder, listitems) ->
     return
 
   return
+

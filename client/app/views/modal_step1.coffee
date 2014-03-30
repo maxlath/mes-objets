@@ -3,6 +3,7 @@ SectionCollection = require("../collections/sections")
 ReceiptDetailsCollection = require("../collections/receiptdetails")
 ReceiptsCollection = require("../collections/receipts")
 Preview = require("./preview")
+
 module.exports = ReceiptDetail = Backbone.View.extend(
   el: "#step1"
   template: require("../templates/modal_step1")
@@ -26,16 +27,17 @@ module.exports = ReceiptDetail = Backbone.View.extend(
         $("#receipts").fadeIn 1500
         @receiptsCollection = new ReceiptsCollection
         @receiptsCollection.fetch()
+        $('.loading').fadeIn()
         @listenTo @receiptsCollection, "add", @onReceiptsAdded
       when "manuel"
         $("#next").trigger "click"
 
-  
+
   # SPECIFIQUE INTERMARCHE
   onReceiptsAdded: (model) ->
     opt = $("<option>").val(model.get("receiptId")).text(prettyDate(model.get("timestamp")) + " - " + model.get("articlesCount") + " articles")
     @$("#receipts select").append opt
-    return
+    $('.loading').fadeOut()
 
   getReceiptSections: ->
     $("#receiptelements option").remove()
@@ -45,6 +47,7 @@ module.exports = ReceiptDetail = Backbone.View.extend(
       receiptId: @selectedReceiptId
     )
     @sectionCollection.fetch()
+    $('.loading').fadeIn()
     @listenTo @sectionCollection, "add", @onReceiptSections
     window.local.selectedTicket = {}
     return
@@ -57,7 +60,7 @@ module.exports = ReceiptDetail = Backbone.View.extend(
     @$("#receiptelements select").append opt
     window.local.selectedTicket[model.id] = model.attributes
     listToReorder $("#receiptelements select"), $("#receiptelements select").children("option").get()
-    return
+    $('.loading').fadeOut()
 
   updateDetailsPreview: ->
     $("#detailspreview").hide().html ""
