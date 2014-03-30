@@ -549,7 +549,7 @@ module.exports = ReceiptDetail = Backbone.View.extend({
     this.sectionCollection.fetch();
     $('.loading').fadeIn();
     this.listenTo(this.sectionCollection, "add", this.onReceiptSections);
-    window.local.selectedTicket = {};
+    return window.local.selectedTicket = {};
   },
   onReceiptSections: function(model) {
     var opt;
@@ -573,7 +573,7 @@ module.exports = ReceiptDetail = Backbone.View.extend({
     });
     preview.render();
     $("#detailspreview").fadeIn(500);
-    $("#detailspreview div").fadeIn(500);
+    return $("#detailspreview div").fadeIn(500);
   }
 });
 });

@@ -50,7 +50,6 @@ module.exports = ReceiptDetail = Backbone.View.extend(
     $('.loading').fadeIn()
     @listenTo @sectionCollection, "add", @onReceiptSections
     window.local.selectedTicket = {}
-    return
 
   onReceiptSections: (model) ->
     $ "#receiptelements"
@@ -71,7 +70,6 @@ module.exports = ReceiptDetail = Backbone.View.extend(
     preview.render()
     $("#detailspreview").fadeIn 500
     $("#detailspreview div").fadeIn 500
-    return
 )
 
 # $('#preview_image').error(this.$('#preview_image').hide())
