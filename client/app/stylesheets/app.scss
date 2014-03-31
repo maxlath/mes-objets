@@ -15,7 +15,7 @@ $smallscreen: 600px;
     }
 }
 
-
+E
 #step1{
     div{
         display: none;
@@ -52,4 +52,18 @@ $smallscreen: 600px;
 
 .fa{
     margin: 5px;
+}
+
+
+main{
+    min-height: 85vh;
+}
+footer{
+    background-color: #ddd;
+    width: 100%;
+    div{
+        padding: 15px;
+        margin: 15px;
+    }
+    min-height: 10vh;
 }

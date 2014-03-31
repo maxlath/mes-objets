@@ -6,15 +6,15 @@
   #menu a {
     margin: 20px; } }
 
-#step1 div {
+E #step1 div {
   display: none; }
-#step1 table {
+E #step1 table {
   list-style-type: none; }
-#step1 th {
+E #step1 th {
   text-align: left;
   padding-left: 10px;
   padding-right: 20px; }
-#step1 label {
+E #step1 label {
   margin-top: 15px;
   color: #555555;
   font-size: 1.3em; }
@@ -29,6 +29,17 @@
 
 .fa {
   margin: 5px; }
+
+main {
+  min-height: 85vh; }
+
+footer {
+  background-color: #dddddd;
+  width: 100%;
+  min-height: 10vh; }
+  footer div {
+    padding: 15px;
+    margin: 15px; }
 
 
 .loading {
