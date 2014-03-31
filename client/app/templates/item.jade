@@ -1,0 +1,22 @@
+td
+    a(href="item#show/#{item.id}")= item.title
+td
+    span= item.category
+    br
+    span= item.subcategory
+    br
+    span= item.subsubcategory
+    br
+td
+    span= item.barcode
+td
+    span= item.url
+td
+    //- span= item.trace[0]
+td
+    span= item.comment
+td
+    a.edit(title="Editer")
+        i.fa.fa-pencil
+    a.delete(title="Supprimer")
+        i.fa.fa-times

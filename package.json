@@ -1,10 +1,10 @@
 {
-  "name": "mes-transactions",
+  "name": "mes-objets",
   "version": "0.0.1",
-  "description": "An application to get you started with web app development and Cozy.",
+  "description": "An application to help you gather informations on your belongings.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/maxlath/cozy-tutorial.git"
+    "url": "https://github.com/maxlath/mes-objets.git"
   },
   "main": "server.coffee",
   "dependencies": {
@@ -18,13 +18,16 @@
   "scripts": {
     "start": "coffee server.coffee"
   },
-  "cozy-displayName": "Mes Transactions",
+  "cozy-displayName": "Mes Objets",
   "cozy-permissions": {
-    "Transactions": {
-      "description": "Réunissez toutes les informations disponibles sur vos transactions."
+    "Items": {
+      "description": "Réunissez toutes les informations disponibles sur vos objets."
+    },
+    "Receipt": {
+      "description": "Ajoutez les références de vos tickets de caisse à vos objets."
     },
     "ReceiptDetail": {
-      "description": "Ajouter les référence de vos tickets de caisse à vos transactions."
+      "description": "Enrichissez l'information sur vos objets à l'aide des détails de votre ticket de caisse."
     }
   }
 }

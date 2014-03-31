@@ -1,7 +1,7 @@
-Transaction = require("../models/transaction")
-module.exports = Transactions = Backbone.Collection.extend(
-  model: Transaction
-  url: "transactions"
+Item = require("../models/item")
+module.exports = Items = Backbone.Collection.extend(
+  model: Item
+  url: "items"
 )
 
 # seed: function(){

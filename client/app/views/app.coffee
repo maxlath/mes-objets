@@ -1,15 +1,15 @@
-TransactionView = require("./transaction")
+ItemView = require("./item")
 Step1 = require("./modal_step1")
 module.exports = AppView = Backbone.View.extend(
   el: "body"
   template: require("../templates/app")
   events:
-    "click #add-transaction": "createTransaction"
+    "click #add-item": "createItem"
 
 
   # initialize is automatically called once after the view is contructed
   initialize: ->
-    @listenTo @collection, "add", @onTransactionAdded
+    @listenTo @collection, "add", @onItemAdded
 
   render: ->
 
@@ -18,9 +18,9 @@ module.exports = AppView = Backbone.View.extend(
     step1 = new Step1()
     step1.render()
 
-    # fetch the transactions from the database
+    # fetch the items from the database
     @collection.fetch()
-    $('.loading').fadeIn()
+    loaderStart()
 
     # this.collection.seed()
     appjs = this
@@ -28,7 +28,7 @@ module.exports = AppView = Backbone.View.extend(
       appjs.fillFields()
 
 
-  createTransaction: (event) ->
+  createItem: (event) ->
 
     # submit button reload the page, we don't want that
     event.preventDefault()
@@ -52,7 +52,7 @@ module.exports = AppView = Backbone.View.extend(
     $("#step2").foundation "reveal", "close"
 
 
-  # updateTransaction: function(event) {
+  # updateItem: function(event) {
   #     var that = this
   #     this.model.save({
   #         barcode: this.$el.find('input[name="barcode"]').val() // ou qqch comme ça
@@ -67,13 +67,13 @@ module.exports = AppView = Backbone.View.extend(
   #         }
   #     })
   # },
-  onTransactionAdded: (transaction) ->
+  onItemAdded: (item) ->
 
     # render the specific element
     $('.loading').fadeOut()
-    transactionView = new TransactionView(model: transaction)
-    transactionView.render()
-    @$el.find("tbody").append transactionView.$el
+    itemView = new ItemView(model: item)
+    itemView.render()
+    @$el.find("tbody").append itemView.$el
 
   fillFields: ->
 

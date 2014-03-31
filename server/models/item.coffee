@@ -1,7 +1,7 @@
 americano = require("americano")
 
 # The americano plugin wraps the "db.define" JugglingDB function in a simpler "getModel" call
-module.exports = Transaction = americano.getModel("transactions",
+module.exports = Item = americano.getModel("items",
   id: String
   title: String
   tags: Object
@@ -15,10 +15,10 @@ module.exports = Transaction = americano.getModel("transactions",
     default: ""
 )
 
-# You can easily define here some helpers or method for transactionsTransaction.all = function(callback) {
-Transaction.all = (callback) ->
-  Transaction.request "all", {}, (err, transactions) ->
-    callback null, transactions
+# You can easily define here some helpers or method for itemsItem.all = function(callback) {
+Item.all = (callback) ->
+  Item.request "all", {}, (err, items) ->
+    callback null, items
     return
 
   return

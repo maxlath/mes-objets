@@ -10,7 +10,7 @@ byMonth = (doc) ->
   return
 
 module.exports =
-  transaction:
+  item:
     all: americano.defaultRequests.all
 
   receiptdetail:

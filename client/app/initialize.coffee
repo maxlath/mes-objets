@@ -51,3 +51,6 @@ window.listToReorder = (listToReorder, listitems) ->
 
   return
 
+window.loaderStart = ->
+  $('.loading').fadeIn()
+  setTimeout($('.loading').fadeOut(), 5000)

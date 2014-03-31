@@ -1,7 +1,7 @@
 AppView = require("views/app")
-TransactionCollection = require("collections/transactions")
+ItemCollection = require("collections/items")
 ReceiptDetailCollection = require("collections/receiptdetails")
-transactions = new TransactionCollection()
+items = new ItemCollection()
 receiptdetails = new ReceiptDetailCollection()
 module.exports = Router = Backbone.Router.extend(
   routes:
@@ -9,7 +9,7 @@ module.exports = Router = Backbone.Router.extend(
 
   main: ->
     mainView = new AppView(
-      collection: transactions
+      collection: items
       receiptcollection: receiptdetails
     )
     mainView.render()

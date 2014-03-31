@@ -4,7 +4,7 @@ div.row
         p Centralisez les données de vos achats et objets !
 
     #menu.large-4.columns
-        a#addtransacbutton.success.radius.button(href='#', data-reveal-id='step1') Ajouter un objet
+        a#additembutton.success.radius.button(href='#', data-reveal-id='step1') Ajouter un objet
 
 .row
   table
@@ -18,7 +18,7 @@ div.row
             th Commentaire
             th Action
       tbody
-          //- transactions
+          //- items
   #preview.panel
     p
       em Selectionnez un objet
@@ -90,7 +90,7 @@ footer
             label Url: (optionel)
             input(type="text", name="url", pattern="url")
                 small.error Une URL valide doit commencer par http(s)
-        a.success.radius.button.right(href='#', id="add-transaction", type="submit") Ajouter l'objet à l'inventaire
+        a.success.radius.button.right(href='#', id="add-item", type="submit") Ajouter l'objet à l'inventaire
         a.radius.button(href='#', data-reveal-id='step1', type="submit", id="prev") Retour à l'étape 1
 
       a.close-reveal-modal ×

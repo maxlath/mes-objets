@@ -1,11 +1,11 @@
 {
-  "name": "cozy-transaction",
+  "name": "mes-objets",
   "version": "0.0.0",
-  "homepage": "https://github.com/maxlath/cozy-tutorial",
+  "homepage": "https://github.com/maxlath/mes-objets",
   "authors": [
     "maxlath <k@maxlath.eu>"
   ],
-  "license": "MIT",
+  "license": "AGPL3",
   "private": true,
   "ignore": [
     "**/.*",

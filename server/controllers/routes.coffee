@@ -1,15 +1,15 @@
-transactions = require("./transactions")
+items = require("./items")
 receiptdetails = require("./receiptdetails")
 receipts = require("./receipts")
 
 module.exports =
-  "transactions":
-    get: transactions.list
-    post: transactions.add
+  "items":
+    get: items.list
+    post: items.add
 
-  "transactions/:id":
-    # get: transactions.show,
-    del: transactions.del
+  "items/:id":
+    # get: items.show,
+    del: items.del
 
   "receipts":
     get: receipts.newest

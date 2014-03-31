@@ -101,6 +101,17 @@ module.exports = {
 };
 });
 
+;require.register("collections/items", function(exports, require, module) {
+var Item, Items;
+
+Item = require("../models/item");
+
+module.exports = Items = Backbone.Collection.extend({
+  model: Item,
+  url: "items"
+});
+});
+
 ;require.register("collections/receipt", function(exports, require, module) {
 
 });
@@ -147,17 +158,6 @@ module.exports = Sections = Backbone.Collection.extend({
     return "receipts/" + this.receiptId + "/sections";
   },
   model: Section
-});
-});
-
-;require.register("collections/transactions", function(exports, require, module) {
-var Transaction, Transactions;
-
-Transaction = require("../models/transaction");
-
-module.exports = Transactions = Backbone.Collection.extend({
-  model: Transaction,
-  url: "transactions"
 });
 });
 
@@ -247,6 +247,17 @@ window.listToReorder = function(listToReorder, listitems) {
     listToReorder.append(itm);
   });
 };
+
+window.loaderStart = function() {
+  $('.loading').fadeIn();
+  return setTimeout($('.loading').fadeOut(), 5000);
+};
+});
+
+;require.register("models/item", function(exports, require, module) {
+var Item;
+
+module.exports = Item = Backbone.Model.extend({});
 });
 
 ;require.register("models/receipt", function(exports, require, module) {
@@ -267,22 +278,16 @@ var Section;
 module.exports = Section = Backbone.Model.extend({});
 });
 
-;require.register("models/transaction", function(exports, require, module) {
-var Transaction;
-
-module.exports = Transaction = Backbone.Model.extend({});
-});
-
 ;require.register("router", function(exports, require, module) {
-var AppView, ReceiptDetailCollection, Router, TransactionCollection, receiptdetails, transactions;
+var AppView, ItemCollection, ReceiptDetailCollection, Router, items, receiptdetails;
 
 AppView = require("views/app");
 
-TransactionCollection = require("collections/transactions");
+ItemCollection = require("collections/items");
 
 ReceiptDetailCollection = require("collections/receiptdetails");
 
-transactions = new TransactionCollection();
+items = new ItemCollection();
 
 receiptdetails = new ReceiptDetailCollection();
 
@@ -293,7 +298,7 @@ module.exports = Router = Backbone.Router.extend({
   main: function() {
     var mainView;
     mainView = new AppView({
-      collection: transactions,
+      collection: items,
       receiptcollection: receiptdetails
     });
     mainView.render();
@@ -307,7 +312,42 @@ attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow |
 var buf = [];
 with (locals || {}) {
 var interp;
-buf.push('<div class="row"><div class="large-8 columns"><h1>Mes Objets</h1><p>Centralisez les données de vos achats et objets !</p></div><div id="menu" class="large-4 columns"><a id="addtransacbutton" href="#" data-reveal-id="step1" class="success radius button">Ajouter un objet</a></div></div><div class="row"><table><thead><tr><th width="100%">Titre</th><th>Catégories</th><th>(code barre)</th><th>Sur le web</th><th>Pièce jointes</th><th>Commentaire</th><th>Action</th></tr></thead><tbody></tbody></table><div id="preview" class="panel"><p><em>Selectionnez un objet</em></p></div></div><footer><div class="row"><div class="text-center columns"><a id="tour" href="#" class="radius button">Visite guidée</a></div><!--<Reveal>Modals begin</Reveal>--><div id="step1" data-reveal="data-reveal" class="reveal-modal"></div><div id="step2" data-reveal="data-reveal" class="reveal-modal"><form data-abide="data-abide"><h2>Etape 2 : Compléter les données récoltées</h2><p>Ajoutez des informations ou éditez celles collectées</p><div id="title"><label>Titre:</label><input type="text" name="title" required="required"/></div><div id="barcode"><label>Code barre:</label><input type="text" name="barcode" required pattern="number"/></div><div id="comment"><label>Comment: (optionel)</label><textarea name="comment"></textarea></div><div id="url"><label>Url: (optionel)</label><input type="text" name="url" pattern="url"/></div><a href="#" id="add-transaction" type="submit" class="success radius button right">Ajouter l\'objet à l\'inventaire</a><a href="#" data-reveal-id="step1" type="submit" id="prev" class="radius button">Retour à l\'étape 1</a></form><a class="close-reveal-modal">×</a></div><!--<Reveal>Modals end</Reveal>--></div></footer><div id="loadbg" class="loading"></div><div class="row loading"><div class="large-offset-5 large-2 small-offset-5 small-2"><div id="circleG"><div id="circleG_1" class="circleG"></div><div id="circleG_2" class="circleG"></div><div id="circleG_3" class="circleG"></div></div></div></div>');
+buf.push('<div class="row"><div class="large-8 columns"><h1>Mes Objets</h1><p>Centralisez les données de vos achats et objets !</p></div><div id="menu" class="large-4 columns"><a id="additembutton" href="#" data-reveal-id="step1" class="success radius button">Ajouter un objet</a></div></div><div class="row"><table><thead><tr><th width="100%">Titre</th><th>Catégories</th><th>(code barre)</th><th>Sur le web</th><th>Pièce jointes</th><th>Commentaire</th><th>Action</th></tr></thead><tbody></tbody></table><div id="preview" class="panel"><p><em>Selectionnez un objet</em></p></div></div><footer><div class="row"><div class="text-center columns"><a id="tour" href="#" class="radius button">Visite guidée</a></div><!--<Reveal>Modals begin</Reveal>--><div id="step1" data-reveal="data-reveal" class="reveal-modal"></div><div id="step2" data-reveal="data-reveal" class="reveal-modal"><form data-abide="data-abide"><h2>Etape 2 : Compléter les données récoltées</h2><p>Ajoutez des informations ou éditez celles collectées</p><div id="title"><label>Titre:</label><input type="text" name="title" required="required"/></div><div id="barcode"><label>Code barre:</label><input type="text" name="barcode" required pattern="number"/></div><div id="comment"><label>Comment: (optionel)</label><textarea name="comment"></textarea></div><div id="url"><label>Url: (optionel)</label><input type="text" name="url" pattern="url"/></div><a href="#" id="add-item" type="submit" class="success radius button right">Ajouter l\'objet à l\'inventaire</a><a href="#" data-reveal-id="step1" type="submit" id="prev" class="radius button">Retour à l\'étape 1</a></form><a class="close-reveal-modal">×</a></div><!--<Reveal>Modals end</Reveal>--></div></footer><div id="loadbg" class="loading"></div><div class="row loading"><div class="large-offset-5 large-2 small-offset-5 small-2"><div id="circleG"><div id="circleG_1" class="circleG"></div><div id="circleG_2" class="circleG"></div><div id="circleG_3" class="circleG"></div></div></div></div>');
+}
+return buf.join("");
+};
+});
+
+;require.register("templates/item", function(exports, require, module) {
+module.exports = function anonymous(locals, attrs, escape, rethrow, merge) {
+attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow || jade.rethrow; merge = merge || jade.merge;
+var buf = [];
+with (locals || {}) {
+var interp;
+buf.push('<td><a');
+buf.push(attrs({ 'href':("item#show/" + (item.id) + "") }, {"href":true}));
+buf.push('>');
+var __val__ = item.title
+buf.push(escape(null == __val__ ? "" : __val__));
+buf.push('</a></td><td><span>');
+var __val__ = item.category
+buf.push(escape(null == __val__ ? "" : __val__));
+buf.push('</span><br/><span>');
+var __val__ = item.subcategory
+buf.push(escape(null == __val__ ? "" : __val__));
+buf.push('</span><br/><span>');
+var __val__ = item.subsubcategory
+buf.push(escape(null == __val__ ? "" : __val__));
+buf.push('</span><br/></td><td><span>');
+var __val__ = item.barcode
+buf.push(escape(null == __val__ ? "" : __val__));
+buf.push('</span></td><td><span>');
+var __val__ = item.url
+buf.push(escape(null == __val__ ? "" : __val__));
+buf.push('</span></td><td></td><td><span>');
+var __val__ = item.comment
+buf.push(escape(null == __val__ ? "" : __val__));
+buf.push('</span></td><td><a title="Editer" class="edit"><i class="fa fa-pencil"></i></a><a title="Supprimer" class="delete"><i class="fa fa-times"></i></a></td>');
 }
 return buf.join("");
 };
@@ -398,45 +438,10 @@ return buf.join("");
 };
 });
 
-;require.register("templates/transaction", function(exports, require, module) {
-module.exports = function anonymous(locals, attrs, escape, rethrow, merge) {
-attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow || jade.rethrow; merge = merge || jade.merge;
-var buf = [];
-with (locals || {}) {
-var interp;
-buf.push('<td><a');
-buf.push(attrs({ 'href':("transaction#show/" + (transaction.id) + "") }, {"href":true}));
-buf.push('>');
-var __val__ = transaction.title
-buf.push(escape(null == __val__ ? "" : __val__));
-buf.push('</a></td><td><span>');
-var __val__ = transaction.category
-buf.push(escape(null == __val__ ? "" : __val__));
-buf.push('</span><br/><span>');
-var __val__ = transaction.subcategory
-buf.push(escape(null == __val__ ? "" : __val__));
-buf.push('</span><br/><span>');
-var __val__ = transaction.subsubcategory
-buf.push(escape(null == __val__ ? "" : __val__));
-buf.push('</span><br/></td><td><span>');
-var __val__ = transaction.barcode
-buf.push(escape(null == __val__ ? "" : __val__));
-buf.push('</span></td><td><span>');
-var __val__ = transaction.url
-buf.push(escape(null == __val__ ? "" : __val__));
-buf.push('</span></td><td></td><td><span>');
-var __val__ = transaction.comment
-buf.push(escape(null == __val__ ? "" : __val__));
-buf.push('</span></td><td><a title="Editer" class="edit"><i class="fa fa-pencil"></i></a><a title="Supprimer" class="delete"><i class="fa fa-times"></i></a></td>');
-}
-return buf.join("");
-};
-});
-
 ;require.register("views/app", function(exports, require, module) {
-var AppView, Step1, TransactionView;
+var AppView, ItemView, Step1;
 
-TransactionView = require("./transaction");
+ItemView = require("./item");
 
 Step1 = require("./modal_step1");
 
@@ -444,10 +449,10 @@ module.exports = AppView = Backbone.View.extend({
   el: "body",
   template: require("../templates/app"),
   events: {
-    "click #add-transaction": "createTransaction"
+    "click #add-item": "createItem"
   },
   initialize: function() {
-    return this.listenTo(this.collection, "add", this.onTransactionAdded);
+    return this.listenTo(this.collection, "add", this.onItemAdded);
   },
   render: function() {
     var appjs, step1;
@@ -455,13 +460,13 @@ module.exports = AppView = Backbone.View.extend({
     step1 = new Step1();
     step1.render();
     this.collection.fetch();
-    $('.loading').fadeIn();
+    loaderStart();
     appjs = this;
     return $(document).on("opened", "[data-reveal]", function() {
       return appjs.fillFields();
     });
   },
-  createTransaction: function(event) {
+  createItem: function(event) {
     event.preventDefault();
     this.collection.create({
       title: this.$el.find("input[name=\"title\"]").val(),
@@ -474,14 +479,14 @@ module.exports = AppView = Backbone.View.extend({
     });
     return $("#step2").foundation("reveal", "close");
   },
-  onTransactionAdded: function(transaction) {
-    var transactionView;
+  onItemAdded: function(item) {
+    var itemView;
     $('.loading').fadeOut();
-    transactionView = new TransactionView({
-      model: transaction
+    itemView = new ItemView({
+      model: item
     });
-    transactionView.render();
-    return this.$el.find("tbody").append(transactionView.$el);
+    itemView.render();
+    return this.$el.find("tbody").append(itemView.$el);
   },
   fillFields: function() {
     if (local.selectedItem && local.selectedItem.barcode) {
@@ -492,6 +497,31 @@ module.exports = AppView = Backbone.View.extend({
     if (local.selectedItem && local.selectedItem.name) {
       return $("#title input").val(local.selectedItem.name);
     }
+  }
+});
+});
+
+;require.register("views/item", function(exports, require, module) {
+var Item;
+
+module.exports = Item = Backbone.View.extend({
+  tagName: "tr",
+  template: require("../templates/item"),
+  events: {
+    "click a.delete": "deleteItem",
+    "click a.edit": "editItem"
+  },
+  render: function() {
+    return this.$el.html(this.template({
+      item: this.model.toJSON()
+    }));
+  },
+  deleteItem: function() {
+    this.model.destroy();
+    return this.remove();
+  },
+  editItem: function() {
+    return alert("fonctionnalité à venir");
   }
 });
 });
@@ -591,31 +621,6 @@ module.exports = ReceiptDetailPreview = Backbone.View.extend({
   render: function() {
     $("#detailspreview").html(this.template(this.model));
     return this;
-  }
-});
-});
-
-;require.register("views/transaction", function(exports, require, module) {
-var Transaction;
-
-module.exports = Transaction = Backbone.View.extend({
-  tagName: "tr",
-  template: require("../templates/transaction"),
-  events: {
-    "click a.delete": "deleteTransaction",
-    "click a.edit": "editTransaction"
-  },
-  render: function() {
-    this.$el.html(this.template({
-      transaction: this.model.toJSON()
-    }));
-  },
-  deleteTransaction: function() {
-    this.model.destroy();
-    this.remove();
-  },
-  editTransaction: function() {
-    alert("fonctionnalité à venir");
   }
 });
 });
