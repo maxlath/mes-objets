@@ -1,21 +1,23 @@
-td
-    a(href="item#show/#{item.id}")= item.title
-td
-    span= item.category
-    br
-    span= item.subcategory
-    br
-    span= item.subsubcategory
-    br
-td
-    span= item.barcode
-td
-    span= item.url
-td
+td.pic
+    each value, key in item.attachements.pictures
+      img(src="#{value}", alt="#{key}")
+td.title
+    a(href="item#show/#{item.id}")= item.item.label
+td.tags
+    ul
+        each value, key in item.tags.wikidata.P31
+          each v, k in value
+            a(href="#{key}")
+                = v.fr
+td.source
+    span= item.history.last.from.label.fr
+    span= item.history.last.date
+
+td.attachements
     //- span= item.trace[0]
-td
+td.comment
     span= item.comment
-td
+td.actions
     a.edit(title="Editer")
         i.fa.fa-pencil
     a.delete(title="Supprimer")

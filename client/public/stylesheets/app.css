@@ -6,18 +6,21 @@
   #menu a {
     margin: 20px; } }
 
-E #step1 div {
+#step1 div {
   display: none; }
-E #step1 table {
+#step1 table {
   list-style-type: none; }
-E #step1 th {
+#step1 th {
   text-align: left;
   padding-left: 10px;
   padding-right: 20px; }
-E #step1 label {
+#step1 label {
   margin-top: 15px;
   color: #555555;
   font-size: 1.3em; }
+#step1 img {
+  min-width: 32px;
+  min-width: 32px; }
 
 .reveal-modal {
   top: 0 !important; }
@@ -40,6 +43,9 @@ footer {
   footer div {
     padding: 15px;
     margin: 15px; }
+
+ul {
+  list-style: none; }
 
 
 .loading {

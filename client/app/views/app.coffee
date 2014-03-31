@@ -6,7 +6,6 @@ module.exports = AppView = Backbone.View.extend(
   events:
     "click #add-item": "createItem"
 
-
   # initialize is automatically called once after the view is contructed
   initialize: ->
     @listenTo @collection, "add", @onItemAdded
@@ -21,6 +20,9 @@ module.exports = AppView = Backbone.View.extend(
     # fetch the items from the database
     @collection.fetch()
     loaderStart()
+    setTimeout (=>
+      @collection.seed() if @collection.length is 0
+      ), 3000
 
     # this.collection.seed()
     appjs = this

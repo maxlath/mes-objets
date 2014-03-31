@@ -1,7 +1,7 @@
 module.exports = ReceiptDetailPreview = Backbone.View.extend(
   el: "div"
   template: require("../templates/preview")
-  
+
   # events: {
   # 'change #proof_source': 'getProofOptions',
   # 'change #receipt': 'getReceiptSections',
@@ -9,5 +9,5 @@ module.exports = ReceiptDetailPreview = Backbone.View.extend(
   # },
   render: ->
     $("#detailspreview").html @template(@model)
-    this
+    return @
 )

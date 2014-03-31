@@ -108,12 +108,64 @@ Item = require("../models/item");
 
 module.exports = Items = Backbone.Collection.extend({
   model: Item,
-  url: "items"
+  url: "items",
+  seed: function() {
+    console.log("receipt seeding :D");
+    return this.create({
+      item: {
+        context: "http://respublica.io/schema/items.jsonld",
+        label: "Pour l'exemple",
+        wikidata: {
+          Q1570277: {
+            label: {
+              fr: "Pour l'exemple",
+              en: "King & Country"
+            }
+          }
+        },
+        barcode: "1234567890"
+      },
+      tags: {
+        wikidata: {
+          P31: {
+            Q5294: {
+              label: {
+                fr: "DVD",
+                en: "DVD"
+              }
+            }
+          }
+        }
+      },
+      attachements: {
+        pictures: {
+          thumbnail: "http://static.fnac-static.com/multimedia/FR/Images_Produits/FR/fnac.com/Visual_Principal_340/1/6/1/5050582876161.jpg"
+        }
+      },
+      history: {
+        context: "http://respublica.io/schema/transaction-history.jsonld",
+        last: {
+          from: {
+            label: {
+              fr: 'Intermarché'
+            },
+            wikidata: 'Q3153200'
+          },
+          transaction: {
+            type: {
+              label: {
+                fr: "vente"
+              },
+              wikidata: "Q194189"
+            },
+            date: (new Date).toJSON()
+          }
+        }
+      },
+      comment: "voici un exemple d'objet ajouté à votre inventaire personnel !"
+    });
+  }
 });
-});
-
-;require.register("collections/receipt", function(exports, require, module) {
-
 });
 
 ;require.register("collections/receiptdetails", function(exports, require, module) {
@@ -252,6 +304,10 @@ window.loaderStart = function() {
   $('.loading').fadeIn();
   return setTimeout($('.loading').fadeOut(), 5000);
 };
+
+window.loaderStop = function() {
+  return $('.loading').fadeOut();
+};
 });
 
 ;require.register("models/item", function(exports, require, module) {
@@ -312,7 +368,7 @@ attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow |
 var buf = [];
 with (locals || {}) {
 var interp;
-buf.push('<main><div class="row"><div class="large-8 columns"><h1>Mes Objets</h1><p>Centralisez les données de vos achats et objets !</p></div><div id="menu" class="large-4 columns"><a id="additembutton" href="#" data-reveal-id="step1" class="success radius button">Ajouter un objet</a></div></div><div class="row"><table><thead><tr><th width="100%">Titre</th><th>Catégories</th><th>(code barre)</th><th>Sur le web</th><th>Pièce jointes</th><th>Commentaire</th><th>Action</th></tr></thead><tbody></tbody></table><div id="preview" class="panel"><p><em>Selectionnez un objet</em></p></div></div></main><footer><div class="row"><div class="text-center columns"><a id="tour" href="#" class="radius button">Visite guidée</a></div><!--<Reveal>Modals begin</Reveal>--><div id="step1" data-reveal="data-reveal" class="reveal-modal"></div><div id="step2" data-reveal="data-reveal" class="reveal-modal"><form data-abide="data-abide"><h2>Etape 2 : Compléter les données récoltées</h2><p>Ajoutez des informations ou éditez celles collectées</p><div id="title"><label>Titre:</label><input type="text" name="title" required="required"/></div><div id="barcode"><label>Code barre:</label><input type="text" name="barcode" required pattern="number"/></div><div id="comment"><label>Comment: (optionel)</label><textarea name="comment"></textarea></div><div id="url"><label>Url: (optionel)</label><input type="text" name="url" pattern="url"/></div><a href="#" id="add-item" type="submit" class="success radius button right">Ajouter l\'objet à l\'inventaire</a><a href="#" data-reveal-id="step1" type="submit" id="prev" class="radius button">Retour à l\'étape 1</a></form><a class="close-reveal-modal">×</a></div><!--<Reveal>Modals end</Reveal>--></div></footer><div id="loadbg" class="loading"></div><div class="row loading"><div class="large-offset-5 large-2 small-offset-5 small-2"><div id="circleG"><div id="circleG_1" class="circleG"></div><div id="circleG_2" class="circleG"></div><div id="circleG_3" class="circleG"></div></div></div></div>');
+buf.push('<main><div class="row"><div class="large-8 columns"><h1>Mes Objets</h1><p>Centralisez les données de vos achats et objets !</p></div><div id="menu" class="large-4 columns"><a id="additembutton" href="#" data-reveal-id="step1" class="success radius button">Ajouter un objet</a></div></div><div class="row"><table><thead><tr><th>Image</th><th>Titre</th><th>Catégories</th><th>Source</th><th>Pièce jointes</th><th>Commentaire</th><th>Action</th></tr></thead><tbody></tbody></table><div id="preview" class="panel"><p><em>Selectionnez un objet pour voir ces informations</em></p></div></div></main><footer><div class="row"><div class="text-center columns"><a id="tour" href="#" class="radius button">Visite guidée</a></div><!--<Reveal>Modals begin</Reveal>--><div id="step1" data-reveal="data-reveal" class="reveal-modal"></div><div id="step2" data-reveal="data-reveal" class="reveal-modal"><form data-abide="data-abide"><h2>Etape 2 : Compléter les données récoltées</h2><p>Ajoutez des informations ou éditez celles collectées</p><div id="title"><label>Titre:</label><input type="text" name="title" required="required"/></div><div id="barcode"><label>Code barre:</label><input type="text" name="barcode" required pattern="number"/></div><div id="comment"><label>Comment: (optionel)</label><textarea name="comment"></textarea></div><div id="url"><label>Url: (optionel)</label><input type="text" name="url" pattern="url"/></div><a href="#" id="add-item" type="submit" class="success radius button right">Ajouter l\'objet à l\'inventaire</a><a href="#" data-reveal-id="step1" type="submit" id="prev" class="radius button">Retour à l\'étape 1</a></form><a class="close-reveal-modal">×</a></div><!--<Reveal>Modals end</Reveal>--></div></footer><div id="loadbg" class="loading"></div><div class="row loading"><div class="large-offset-5 large-2 small-offset-5 small-2"><div id="circleG"><div id="circleG_1" class="circleG"></div><div id="circleG_2" class="circleG"></div><div id="circleG_3" class="circleG"></div></div></div></div>');
 }
 return buf.join("");
 };
@@ -324,30 +380,129 @@ attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow |
 var buf = [];
 with (locals || {}) {
 var interp;
-buf.push('<td><a');
+buf.push('<td class="pic">');
+// iterate item.attachements.pictures
+;(function(){
+  if ('number' == typeof item.attachements.pictures.length) {
+
+    for (var key = 0, $$l = item.attachements.pictures.length; key < $$l; key++) {
+      var value = item.attachements.pictures[key];
+
+buf.push('<img');
+buf.push(attrs({ 'src':("" + (value) + ""), 'alt':("" + (key) + "") }, {"src":true,"alt":true}));
+buf.push('/>');
+    }
+
+  } else {
+    var $$l = 0;
+    for (var key in item.attachements.pictures) {
+      $$l++;      var value = item.attachements.pictures[key];
+
+buf.push('<img');
+buf.push(attrs({ 'src':("" + (value) + ""), 'alt':("" + (key) + "") }, {"src":true,"alt":true}));
+buf.push('/>');
+    }
+
+  }
+}).call(this);
+
+buf.push('</td><td class="title"><a');
 buf.push(attrs({ 'href':("item#show/" + (item.id) + "") }, {"href":true}));
 buf.push('>');
-var __val__ = item.title
+var __val__ = item.item.label
 buf.push(escape(null == __val__ ? "" : __val__));
-buf.push('</a></td><td><span>');
-var __val__ = item.category
+buf.push('</a></td><td class="tags"><ul>');
+// iterate item.tags.wikidata.P31
+;(function(){
+  if ('number' == typeof item.tags.wikidata.P31.length) {
+
+    for (var key = 0, $$l = item.tags.wikidata.P31.length; key < $$l; key++) {
+      var value = item.tags.wikidata.P31[key];
+
+// iterate value
+;(function(){
+  if ('number' == typeof value.length) {
+
+    for (var k = 0, $$l = value.length; k < $$l; k++) {
+      var v = value[k];
+
+buf.push('<a');
+buf.push(attrs({ 'href':("" + (key) + "") }, {"href":true}));
+buf.push('>');
+var __val__ = v.fr
 buf.push(escape(null == __val__ ? "" : __val__));
-buf.push('</span><br/><span>');
-var __val__ = item.subcategory
+buf.push('</a>');
+    }
+
+  } else {
+    var $$l = 0;
+    for (var k in value) {
+      $$l++;      var v = value[k];
+
+buf.push('<a');
+buf.push(attrs({ 'href':("" + (key) + "") }, {"href":true}));
+buf.push('>');
+var __val__ = v.fr
 buf.push(escape(null == __val__ ? "" : __val__));
-buf.push('</span><br/><span>');
-var __val__ = item.subsubcategory
+buf.push('</a>');
+    }
+
+  }
+}).call(this);
+
+    }
+
+  } else {
+    var $$l = 0;
+    for (var key in item.tags.wikidata.P31) {
+      $$l++;      var value = item.tags.wikidata.P31[key];
+
+// iterate value
+;(function(){
+  if ('number' == typeof value.length) {
+
+    for (var k = 0, $$l = value.length; k < $$l; k++) {
+      var v = value[k];
+
+buf.push('<a');
+buf.push(attrs({ 'href':("" + (key) + "") }, {"href":true}));
+buf.push('>');
+var __val__ = v.fr
 buf.push(escape(null == __val__ ? "" : __val__));
-buf.push('</span><br/></td><td><span>');
-var __val__ = item.barcode
+buf.push('</a>');
+    }
+
+  } else {
+    var $$l = 0;
+    for (var k in value) {
+      $$l++;      var v = value[k];
+
+buf.push('<a');
+buf.push(attrs({ 'href':("" + (key) + "") }, {"href":true}));
+buf.push('>');
+var __val__ = v.fr
 buf.push(escape(null == __val__ ? "" : __val__));
-buf.push('</span></td><td><span>');
-var __val__ = item.url
+buf.push('</a>');
+    }
+
+  }
+}).call(this);
+
+    }
+
+  }
+}).call(this);
+
+buf.push('</ul></td><td class="source"><span>');
+var __val__ = item.history.last.from.label.fr
 buf.push(escape(null == __val__ ? "" : __val__));
-buf.push('</span></td><td></td><td><span>');
+buf.push('</span><span>');
+var __val__ = item.history.last.date
+buf.push(escape(null == __val__ ? "" : __val__));
+buf.push('</span></td><td class="attachements"></td><td class="comment"><span>');
 var __val__ = item.comment
 buf.push(escape(null == __val__ ? "" : __val__));
-buf.push('</span></td><td><a title="Editer" class="edit"><i class="fa fa-pencil"></i></a><a title="Supprimer" class="delete"><i class="fa fa-times"></i></a></td>');
+buf.push('</span></td><td class="actions"><a title="Editer" class="edit"><i class="fa fa-pencil"></i></a><a title="Supprimer" class="delete"><i class="fa fa-times"></i></a></td>');
 }
 return buf.join("");
 };
@@ -432,7 +587,7 @@ buf.push('<img');
 buf.push(attrs({ 'src':('http://drive.intermarche.com/ressources/images/produit/zoom/0' + (barcode) + '.jpg'), 'alt':('' + (name) + ''), 'id':('preview_image') }, {"src":true,"alt":true,"id":true}));
 buf.push('/>');
 }
-buf.push('</div></div>');
+buf.push('</div></div><div class="row"><div class="large-12 small-12 columns respublicaio"><h3>Données Respublica.io</h3></div><div class="large-12 small-12 columns"></div></div>');
 }
 return buf.join("");
 };
@@ -461,6 +616,13 @@ module.exports = AppView = Backbone.View.extend({
     step1.render();
     this.collection.fetch();
     loaderStart();
+    setTimeout(((function(_this) {
+      return function() {
+        if (_this.collection.length === 0) {
+          return _this.collection.seed();
+        }
+      };
+    })(this)), 3000);
     appjs = this;
     return $(document).on("opened", "[data-reveal]", function() {
       return appjs.fillFields();
@@ -561,7 +723,7 @@ module.exports = ReceiptDetail = Backbone.View.extend({
         $("#receipts").fadeIn(1500);
         this.receiptsCollection = new ReceiptsCollection;
         this.receiptsCollection.fetch();
-        $('.loading').fadeIn();
+        loaderStart();
         return this.listenTo(this.receiptsCollection, "add", this.onReceiptsAdded);
       case "manuel":
         return $("#next").trigger("click");
@@ -571,7 +733,7 @@ module.exports = ReceiptDetail = Backbone.View.extend({
     var opt;
     opt = $("<option>").val(model.get("receiptId")).text(prettyDate(model.get("timestamp")) + " - " + model.get("articlesCount") + " articles");
     this.$("#receipts select").append(opt);
-    return $('.loading').fadeOut();
+    return loaderStop();
   },
   getReceiptSections: function() {
     $("#receiptelements option").remove();
@@ -581,7 +743,7 @@ module.exports = ReceiptDetail = Backbone.View.extend({
       receiptId: this.selectedReceiptId
     });
     this.sectionCollection.fetch();
-    $('.loading').fadeIn();
+    loaderStart();
     this.listenTo(this.sectionCollection, "add", this.onReceiptSections);
     return window.local.selectedTicket = {};
   },
@@ -594,7 +756,7 @@ module.exports = ReceiptDetail = Backbone.View.extend({
     this.$("#receiptelements select").append(opt);
     window.local.selectedTicket[model.id] = model.attributes;
     listToReorder($("#receiptelements select"), $("#receiptelements select").children("option").get());
-    return $('.loading').fadeOut();
+    return loaderStop();
   },
   updateDetailsPreview: function() {
     var preview;
