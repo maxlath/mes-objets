@@ -16,15 +16,7 @@ td
 td
     span= transaction.comment
 td
-    a.edit Editer /
-    a.delete Supprimer /
-    a.dropdown(href='#', data-dropdown='drop1')
-        | Dropdown Button
-        i.fa.fa-caret-down
-        ul#drop1.f-dropdown(data-dropdown-content='data-dropdown-content')
-          li
-            a.delete Supprimer
-            li
-                a(href='#') This is another
-                li
-                    a(href='#') Yet another
+    a.edit(title="Editer")
+        i.fa.fa-pencil
+    a.delete(title="Supprimer")
+        i.fa.fa-times

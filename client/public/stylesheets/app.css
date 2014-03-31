@@ -27,6 +27,9 @@
   color: #555555;
   font-size: 1.3em; }
 
+.fa {
+  margin: 5px; }
+
 
 .loading {
   display: none; }
