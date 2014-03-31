@@ -78,8 +78,9 @@ module.exports = AppView = Backbone.View.extend(
 
     # BARCODE
     if local.selectedItem and local.selectedItem.barcode
-      $("#barcode input").remove()
-      $("#barcode").append local.selectedItem.barcode
+      $("#barcode").children('input').remove()
+      $("#barcode").children('p').remove()
+      $("#barcode").append '<p>' + local.selectedItem.barcode + '<p>'
 
     # $.getJSON()
     $("#title input").val local.selectedItem.name  if local.selectedItem and local.selectedItem.name

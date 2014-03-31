@@ -483,8 +483,9 @@ module.exports = AppView = Backbone.View.extend({
   },
   fillFields: function() {
     if (local.selectedItem && local.selectedItem.barcode) {
-      $("#barcode input").remove();
-      $("#barcode").append(local.selectedItem.barcode);
+      $("#barcode").children('input').remove();
+      $("#barcode").children('p').remove();
+      $("#barcode").append('<p>' + local.selectedItem.barcode + '<p>');
     }
     if (local.selectedItem && local.selectedItem.name) {
       return $("#title input").val(local.selectedItem.name);
