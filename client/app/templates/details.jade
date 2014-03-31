@@ -1,0 +1,111 @@
+.row
+    .large-6.small-12.columns
+        h4 Objet
+        if item.label
+            strong Nom
+            p= item.label
+        if comment
+            strong Commentaire
+            p= comment
+        if item.gtin
+            strong Code barre
+            p= item.gtin
+
+        hr
+
+        h4 Transaction
+        p
+        if history && history.last
+            if history.last.from && history.last.from.label && history.last.from.label.fr
+                strong Précedent propriétaire
+                p= history.last.from.label.fr
+            if history.last.date
+                strong date
+                p= history.last.date
+            if history.last.type && history.last.type.label
+                strong Type de transaction
+                p= history.last.type.label.fr
+            if history.last.price
+                strong Prix
+                p= history.last.price
+        hr
+        strong Cet objet sur Wikidata
+        p
+        if item.wikidata
+            if item.wikidata.Q1570277.label.fr
+                a(href="https://www.wikidata.org/wiki/Q1570277") #{item.wikidata.Q1570277.label.fr}
+            each k,v in item.wikidata
+                a(href="https://www.wikidata.org/wiki/#{k}")
+                    | #{v.fr}
+        if tags.wikidata
+            each P31,wdid in tags.wikidata
+                if wdid.label
+                    label Catégories
+                    a(href="https://www.wikidata.org/wiki/#{wdid}")
+                        | #{wdid.label.fr}
+        hr
+        strong Cet objet sur OpenFoodFact
+
+        hr
+        strong Cet objet sur ProductOpenData
+
+        hr
+        strong Cet objet sur Respublica.io
+
+
+
+
+        //-     each value, key in item
+        //-             p
+        //-                 strong #{key}
+        //-         .large-6.small-12.columns
+        //-             p #{value}
+        //- h4 Historique
+        //- .row
+        //-     each value, key in history
+        //-         .large-6.small-12.columns
+        //-             p
+        //-                 strong #{key}
+        //-         .large-6.small-12.columns
+        //-             p #{value}
+        //- h4 Catégories
+        //- .row
+        //-     each value, key in tags
+        //-         .large-6.small-12.columns
+        //-             p
+        //-                 strong #{key}
+        //-         .large-6.small-12.columns
+        //-             p #{value}
+        //- h4
+        //- .row
+        //-     each value, key in attachements
+        //-         .large-6.small-12.columns
+        //-             p
+        //-                 strong #{key}
+        //-         .large-6.small-12.columns
+        //-             p #{value}
+
+
+    .large-4.large-offset-2.small-12.columns
+        if attachements && attachements.pictures
+            each value, key in attachements.pictures
+                img(src="#{value}", alt="#{key}")
+
+//-         .row
+//-             .large-6.small-12.columns
+//-                 span
+//-                     strong Nom de l'article
+//-             .large-6.small-12.columns
+//-                 span
+//-                     if typeof name !== "undefined"
+//-                         = name
+
+
+//-     .large-4.small-12.columns
+//-         if barcode.lenght = 13
+//-             img(src='http://drive.intermarche.com/ressources/images/produit/zoom/0#{barcode}.jpg', alt='#{name}', id='preview_image')
+
+//- .row
+//-     .large-12.small-12.columns.respublicaio
+//-         h4 Données Respublica.io
+//-     .large-12.small-12.columns

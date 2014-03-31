@@ -4,7 +4,7 @@ td.pic
       img(src="#{value}", alt="#{key}")
 td.title
   if item.item.label
-    a(href="item#show/#{item.id}")= item.item.label
+    a(href="item#show/#{item.id}", class="itemId", id="#{item.id}")= item.item.label
 td.tags
     ul
       if item.tags && item.tags.wikidata && item.tags.wikidata.P31

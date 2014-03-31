@@ -56,6 +56,9 @@ a.delete {
 td.comment {
   width: "100%"; }
 
+h3.name {
+  font-weight: bold; }
+
 
 .loading {
   display: none; }

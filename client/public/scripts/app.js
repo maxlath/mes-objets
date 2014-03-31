@@ -371,7 +371,169 @@ attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow |
 var buf = [];
 with (locals || {}) {
 var interp;
-buf.push('<main><div class="row"><div class="large-8 columns"><h1>Mes Objets</h1><p>Centralisez les données de vos achats et objets !</p></div><div id="menu" class="large-4 columns"><a id="additembutton" href="#" data-reveal-id="step1" class="success radius button">Ajouter un objet</a></div></div><div class="row"><table width="100%"><thead><tr><th>Image</th><th>Titre</th><th>Catégories</th><th>Source</th><th>Pièce jointes</th><th>Commentaire</th><th>Action</th></tr></thead><tbody></tbody></table><div id="preview" class="panel"><p><em>Selectionnez un objet pour voir ces informations</em></p></div></div></main><footer><div class="row"><div class="text-center columns"><a id="tour" href="#" class="radius button">Visite guidée</a></div><!--<Reveal>Modals begin</Reveal>--><div id="step1" data-reveal="data-reveal" class="reveal-modal"></div><div id="step2" data-reveal="data-reveal" class="reveal-modal"><form data-abide="data-abide"><h2>Etape 2 : Compléter les données récoltées</h2><p>Ajoutez des informations ou éditez celles collectées</p><div id="title"><label>Titre:</label><input type="text" name="title" required="required"/></div><div id="barcode"><label>Code barre:</label><input type="text" name="barcode" required pattern="number"/></div><div id="vendor"><label>Vendeur</label><input type="text" name="vendor"/></div><div id="price"><label>Prix</label><input type="text" name="price"/></div><div id="comment"><label>Comment: (optionel)</label><textarea name="comment"></textarea></div><a href="#" id="add-item" type="submit" class="success radius button right">Ajouter l\'objet à l\'inventaire</a><a href="#" data-reveal-id="step1" type="submit" id="prev" class="radius button">Retour à l\'étape 1</a></form><a class="close-reveal-modal">×</a></div><!--<Reveal>Modals end</Reveal>--></div></footer><div id="loadbg" class="loading"></div><div class="row loading"><div class="large-offset-5 large-2 small-offset-5 small-2"><div id="circleG"><div id="circleG_1" class="circleG"></div><div id="circleG_2" class="circleG"></div><div id="circleG_3" class="circleG"></div></div></div></div>');
+buf.push('<main><div class="row"><div class="large-8 columns"><h1>Mes Objets</h1><p>Centralisez les données de vos achats et objets !</p></div><div id="menu" class="large-4 columns"><a id="additembutton" href="#" data-reveal-id="step1" class="success radius button">Ajouter un objet</a></div></div><div class="row"><table width="100%"><thead><tr><th>Image</th><th>Titre</th><th>Catégories</th><th>Source</th><th>Pièce jointes</th><th>Commentaire</th><th>Action</th></tr></thead><tbody></tbody></table><div id="details" class="panel"><p><em>Selectionnez un objet pour voir ces informations</em></p></div></div></main><footer><div class="row"><div class="text-center columns"><a id="tour" href="#" class="radius button">Visite guidée</a></div><!--<Reveal>Modals begin</Reveal>--><div id="step1" data-reveal="data-reveal" class="reveal-modal"></div><div id="step2" data-reveal="data-reveal" class="reveal-modal"><form data-abide="data-abide"><h2>Etape 2 : Compléter les données récoltées</h2><p>Ajoutez des informations ou éditez celles collectées</p><div id="title"><label>Titre:</label><input type="text" name="title" required="required"/></div><div id="barcode"><label>Code barre:</label><input type="text" name="barcode" required pattern="number"/></div><div id="vendor"><label>Vendeur</label><input type="text" name="vendor"/></div><div id="price"><label>Prix</label><input type="text" name="price"/></div><div id="comment"><label>Comment: (optionel)</label><textarea name="comment"></textarea></div><a href="#" id="add-item" type="submit" class="success radius button right">Ajouter l\'objet à l\'inventaire</a><a href="#" data-reveal-id="step1" type="submit" id="prev" class="radius button">Retour à l\'étape 1</a></form><a class="close-reveal-modal">×</a></div><!--<Reveal>Modals end</Reveal>--></div></footer><div id="loadbg" class="loading"></div><div class="row loading"><div class="large-offset-5 large-2 small-offset-5 small-2"><div id="circleG"><div id="circleG_1" class="circleG"></div><div id="circleG_2" class="circleG"></div><div id="circleG_3" class="circleG"></div></div></div></div>');
+}
+return buf.join("");
+};
+});
+
+;require.register("templates/details", function(exports, require, module) {
+module.exports = function anonymous(locals, attrs, escape, rethrow, merge) {
+attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow || jade.rethrow; merge = merge || jade.merge;
+var buf = [];
+with (locals || {}) {
+var interp;
+buf.push('<div class="row"><div class="large-6 small-12 columns"><h4>Objet</h4>');
+if ( item.label)
+{
+buf.push('<strong>Nom</strong><p>');
+var __val__ = item.label
+buf.push(escape(null == __val__ ? "" : __val__));
+buf.push('</p>');
+}
+if ( comment)
+{
+buf.push('<strong>Commentaire</strong><p>');
+var __val__ = comment
+buf.push(escape(null == __val__ ? "" : __val__));
+buf.push('</p>');
+}
+if ( item.gtin)
+{
+buf.push('<strong>Code barre</strong><p>');
+var __val__ = item.gtin
+buf.push(escape(null == __val__ ? "" : __val__));
+buf.push('</p>');
+}
+buf.push('<hr/><h4>Transaction</h4><p></p>');
+if ( history && history.last)
+{
+if ( history.last.from && history.last.from.label && history.last.from.label.fr)
+{
+buf.push('<strong>Précedent propriétaire</strong><p>');
+var __val__ = history.last.from.label.fr
+buf.push(escape(null == __val__ ? "" : __val__));
+buf.push('</p>');
+}
+if ( history.last.date)
+{
+buf.push('<strong>date</strong><p>');
+var __val__ = history.last.date
+buf.push(escape(null == __val__ ? "" : __val__));
+buf.push('</p>');
+}
+if ( history.last.type && history.last.type.label)
+{
+buf.push('<strong>Type de transaction</strong><p>');
+var __val__ = history.last.type.label.fr
+buf.push(escape(null == __val__ ? "" : __val__));
+buf.push('</p>');
+}
+if ( history.last.price)
+{
+buf.push('<strong>Prix</strong><p>');
+var __val__ = history.last.price
+buf.push(escape(null == __val__ ? "" : __val__));
+buf.push('</p>');
+}
+}
+buf.push('<hr/><strong>Cet objet sur Wikidata</strong><p></p>');
+if ( item.wikidata)
+{
+if ( item.wikidata.Q1570277.label.fr)
+{
+buf.push('<a href="https://www.wikidata.org/wiki/Q1570277">' + escape((interp = item.wikidata.Q1570277.label.fr) == null ? '' : interp) + '</a>');
+}
+// iterate item.wikidata
+;(function(){
+  if ('number' == typeof item.wikidata.length) {
+
+    for (var v = 0, $$l = item.wikidata.length; v < $$l; v++) {
+      var k = item.wikidata[v];
+
+buf.push('<a');
+buf.push(attrs({ 'href':("https://www.wikidata.org/wiki/" + (k) + "") }, {"href":true}));
+buf.push('>' + escape((interp = v.fr) == null ? '' : interp) + '</a>');
+    }
+
+  } else {
+    var $$l = 0;
+    for (var v in item.wikidata) {
+      $$l++;      var k = item.wikidata[v];
+
+buf.push('<a');
+buf.push(attrs({ 'href':("https://www.wikidata.org/wiki/" + (k) + "") }, {"href":true}));
+buf.push('>' + escape((interp = v.fr) == null ? '' : interp) + '</a>');
+    }
+
+  }
+}).call(this);
+
+}
+if ( tags.wikidata)
+{
+// iterate tags.wikidata
+;(function(){
+  if ('number' == typeof tags.wikidata.length) {
+
+    for (var wdid = 0, $$l = tags.wikidata.length; wdid < $$l; wdid++) {
+      var P31 = tags.wikidata[wdid];
+
+if ( wdid.label)
+{
+buf.push('<label>Catégories</label><a');
+buf.push(attrs({ 'href':("https://www.wikidata.org/wiki/" + (wdid) + "") }, {"href":true}));
+buf.push('>' + escape((interp = wdid.label.fr) == null ? '' : interp) + '</a>');
+}
+    }
+
+  } else {
+    var $$l = 0;
+    for (var wdid in tags.wikidata) {
+      $$l++;      var P31 = tags.wikidata[wdid];
+
+if ( wdid.label)
+{
+buf.push('<label>Catégories</label><a');
+buf.push(attrs({ 'href':("https://www.wikidata.org/wiki/" + (wdid) + "") }, {"href":true}));
+buf.push('>' + escape((interp = wdid.label.fr) == null ? '' : interp) + '</a>');
+}
+    }
+
+  }
+}).call(this);
+
+}
+buf.push('<hr/><strong>Cet objet sur OpenFoodFact</strong><hr/><strong>Cet objet sur ProductOpenData</strong><hr/><strong>Cet objet sur Respublica.io</strong></div><div class="large-4 large-offset-2 small-12 columns">');
+if ( attachements && attachements.pictures)
+{
+// iterate attachements.pictures
+;(function(){
+  if ('number' == typeof attachements.pictures.length) {
+
+    for (var key = 0, $$l = attachements.pictures.length; key < $$l; key++) {
+      var value = attachements.pictures[key];
+
+buf.push('<img');
+buf.push(attrs({ 'src':("" + (value) + ""), 'alt':("" + (key) + "") }, {"src":true,"alt":true}));
+buf.push('/>');
+    }
+
+  } else {
+    var $$l = 0;
+    for (var key in attachements.pictures) {
+      $$l++;      var value = attachements.pictures[key];
+
+buf.push('<img');
+buf.push(attrs({ 'src':("" + (value) + ""), 'alt':("" + (key) + "") }, {"src":true,"alt":true}));
+buf.push('/>');
+    }
+
+  }
+}).call(this);
+
+}
+buf.push('</div></div>');
 }
 return buf.join("");
 };
@@ -416,7 +578,7 @@ buf.push('</td><td class="title">');
 if ( item.item.label)
 {
 buf.push('<a');
-buf.push(attrs({ 'href':("item#show/" + (item.id) + "") }, {"href":true}));
+buf.push(attrs({ 'href':("item#show/" + (item.id) + ""), 'id':("" + (item.id) + ""), "class": ("itemId") }, {"href":true,"class":true,"id":true}));
 buf.push('>');
 var __val__ = item.item.label
 buf.push(escape(null == __val__ ? "" : __val__));
@@ -606,7 +768,7 @@ buf.push('<img');
 buf.push(attrs({ 'src':('http://drive.intermarche.com/ressources/images/produit/zoom/0' + (barcode) + '.jpg'), 'alt':('' + (name) + ''), 'id':('preview_image') }, {"src":true,"alt":true,"id":true}));
 buf.push('/>');
 }
-buf.push('</div></div><div class="row"><div class="large-12 small-12 columns respublicaio"><h3>Données Respublica.io</h3></div><div class="large-12 small-12 columns"></div></div>');
+buf.push('</div></div>');
 }
 return buf.join("");
 };
@@ -735,15 +897,34 @@ module.exports = AppView = Backbone.View.extend({
 });
 });
 
+;require.register("views/details", function(exports, require, module) {
+var ItemDetails;
+
+module.exports = ItemDetails = Backbone.View.extend({
+  el: "div",
+  template: require("../templates/details"),
+  render: function() {
+    $("#details").html('');
+    console.log(this.model);
+    $("#details").html(this.template(this.model.toJSON()));
+    return this;
+  }
+});
+});
+
 ;require.register("views/item", function(exports, require, module) {
-var Item;
+var Details, Item;
+
+Details = require("./details");
 
 module.exports = Item = Backbone.View.extend({
   tagName: "tr",
   template: require("../templates/item"),
   events: {
     "click a.delete": "deleteItem",
-    "click a.edit": "editItem"
+    "click a.edit": "editItem",
+    "click a.itemId": "showDetails",
+    "click a.edit": "editPan"
   },
   render: function() {
     return this.$el.html(this.template({
@@ -755,7 +936,15 @@ module.exports = Item = Backbone.View.extend({
     return this.remove();
   },
   editItem: function() {
-    return alert("fonctionnalité à venir");
+    return alert("fonctionnalité indisponible pour la version prototype, désolé pour la gène occasionné");
+  },
+  showDetails: function(e) {
+    var details;
+    e.preventDefault();
+    details = new Details({
+      model: this.model
+    });
+    return details.render();
   }
 });
 });
