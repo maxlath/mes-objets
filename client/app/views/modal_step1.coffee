@@ -65,7 +65,10 @@ module.exports = ReceiptDetail = Backbone.View.extend(
     $("#detailspreview").hide().html ""
     window.local.selectedItemId = $("#receiptelements select").val()
     window.local.selectedItem = window.local.selectedTicket[window.local.selectedItemId]
-    window.local.selectedItem
+
+    if window.local.selectedItem.barcode.length < 7
+      delete window.local.selectedItem.barcode
+
     preview = new Preview(model: window.local.selectedItem)
     preview.render()
     $("#detailspreview").fadeIn 500

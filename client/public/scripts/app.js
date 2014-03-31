@@ -123,7 +123,7 @@ module.exports = Items = Backbone.Collection.extend({
             }
           }
         },
-        barcode: "1234567890"
+        gtin: "1234567890"
       },
       tags: {
         wikidata: {
@@ -139,7 +139,7 @@ module.exports = Items = Backbone.Collection.extend({
       },
       attachements: {
         pictures: {
-          thumbnail: "http://static.fnac-static.com/multimedia/FR/Images_Produits/FR/fnac.com/Visual_Principal_340/1/6/1/5050582876161.jpg"
+          thumbnail: "http://ecx.images-amazon.com/images/I/51X7fmX0clL._SY100_.jpg"
         }
       },
       history: {
@@ -175,14 +175,7 @@ ReceiptDetail = require("../models/receiptdetail");
 
 module.exports = ReceiptDetails = Backbone.Collection.extend({
   model: ReceiptDetail,
-  url: "receiptdetails",
-  seed: function() {
-    console.log("receipt seeding :D");
-    this.create({
-      id: "123",
-      barcode: "1234567890"
-    });
-  }
+  url: "receiptdetails"
 });
 });
 
@@ -302,11 +295,17 @@ window.listToReorder = function(listToReorder, listitems) {
 
 window.loaderStart = function() {
   $('.loading').fadeIn();
-  return setTimeout($('.loading').fadeOut(), 5000);
+  return setTimeout(loaderStop, 5000);
 };
 
 window.loaderStop = function() {
   return $('.loading').fadeOut();
+};
+
+window.getRespublicaIoData = function(domain, uri) {
+  var query;
+  query = $.getJSON('http://respublica.io/api/#{domain}/#{uri})');
+  return query.responseJSON;
 };
 });
 
@@ -368,7 +367,7 @@ attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow |
 var buf = [];
 with (locals || {}) {
 var interp;
-buf.push('<main><div class="row"><div class="large-8 columns"><h1>Mes Objets</h1><p>Centralisez les données de vos achats et objets !</p></div><div id="menu" class="large-4 columns"><a id="additembutton" href="#" data-reveal-id="step1" class="success radius button">Ajouter un objet</a></div></div><div class="row"><table><thead><tr><th>Image</th><th>Titre</th><th>Catégories</th><th>Source</th><th>Pièce jointes</th><th>Commentaire</th><th>Action</th></tr></thead><tbody></tbody></table><div id="preview" class="panel"><p><em>Selectionnez un objet pour voir ces informations</em></p></div></div></main><footer><div class="row"><div class="text-center columns"><a id="tour" href="#" class="radius button">Visite guidée</a></div><!--<Reveal>Modals begin</Reveal>--><div id="step1" data-reveal="data-reveal" class="reveal-modal"></div><div id="step2" data-reveal="data-reveal" class="reveal-modal"><form data-abide="data-abide"><h2>Etape 2 : Compléter les données récoltées</h2><p>Ajoutez des informations ou éditez celles collectées</p><div id="title"><label>Titre:</label><input type="text" name="title" required="required"/></div><div id="barcode"><label>Code barre:</label><input type="text" name="barcode" required pattern="number"/></div><div id="comment"><label>Comment: (optionel)</label><textarea name="comment"></textarea></div><div id="url"><label>Url: (optionel)</label><input type="text" name="url" pattern="url"/></div><a href="#" id="add-item" type="submit" class="success radius button right">Ajouter l\'objet à l\'inventaire</a><a href="#" data-reveal-id="step1" type="submit" id="prev" class="radius button">Retour à l\'étape 1</a></form><a class="close-reveal-modal">×</a></div><!--<Reveal>Modals end</Reveal>--></div></footer><div id="loadbg" class="loading"></div><div class="row loading"><div class="large-offset-5 large-2 small-offset-5 small-2"><div id="circleG"><div id="circleG_1" class="circleG"></div><div id="circleG_2" class="circleG"></div><div id="circleG_3" class="circleG"></div></div></div></div>');
+buf.push('<main><div class="row"><div class="large-8 columns"><h1>Mes Objets</h1><p>Centralisez les données de vos achats et objets !</p></div><div id="menu" class="large-4 columns"><a id="additembutton" href="#" data-reveal-id="step1" class="success radius button">Ajouter un objet</a></div></div><div class="row"><table><thead><tr><th>Image</th><th>Titre</th><th>Catégories</th><th>Source</th><th>Pièce jointes</th><th>Commentaire</th><th>Action</th></tr></thead><tbody></tbody></table><div id="preview" class="panel"><p><em>Selectionnez un objet pour voir ces informations</em></p></div></div></main><footer><div class="row"><div class="text-center columns"><a id="tour" href="#" class="radius button">Visite guidée</a></div><!--<Reveal>Modals begin</Reveal>--><div id="step1" data-reveal="data-reveal" class="reveal-modal"></div><div id="step2" data-reveal="data-reveal" class="reveal-modal"><form data-abide="data-abide"><h2>Etape 2 : Compléter les données récoltées</h2><p>Ajoutez des informations ou éditez celles collectées</p><div id="title"><label>Titre:</label><input type="text" name="title" required="required"/></div><div id="barcode"><label>Code barre:</label><input type="text" name="barcode" required pattern="number"/></div><div id="vendor"><label>Vendeur</label><input type="text" name="vendor"/></div><div id="price"><label>Prix</label><input type="text" name="price"/></div><div id="comment"><label>Comment: (optionel)</label><textarea name="comment"></textarea></div><a href="#" id="add-item" type="submit" class="success radius button right">Ajouter l\'objet à l\'inventaire</a><a href="#" data-reveal-id="step1" type="submit" id="prev" class="radius button">Retour à l\'étape 1</a></form><a class="close-reveal-modal">×</a></div><!--<Reveal>Modals end</Reveal>--></div></footer><div id="loadbg" class="loading"></div><div class="row loading"><div class="large-offset-5 large-2 small-offset-5 small-2"><div id="circleG"><div id="circleG_1" class="circleG"></div><div id="circleG_2" class="circleG"></div><div id="circleG_3" class="circleG"></div></div></div></div>');
 }
 return buf.join("");
 };
@@ -381,6 +380,8 @@ var buf = [];
 with (locals || {}) {
 var interp;
 buf.push('<td class="pic">');
+if ( item.attachements && item.attachements.pictures)
+{
 // iterate item.attachements.pictures
 ;(function(){
   if ('number' == typeof item.attachements.pictures.length) {
@@ -406,12 +407,20 @@ buf.push('/>');
   }
 }).call(this);
 
-buf.push('</td><td class="title"><a');
+}
+buf.push('</td><td class="title">');
+if ( item.item.label)
+{
+buf.push('<a');
 buf.push(attrs({ 'href':("item#show/" + (item.id) + "") }, {"href":true}));
 buf.push('>');
 var __val__ = item.item.label
 buf.push(escape(null == __val__ ? "" : __val__));
-buf.push('</a></td><td class="tags"><ul>');
+buf.push('</a>');
+}
+buf.push('</td><td class="tags"><ul>');
+if ( item.tags && item.tags.wikidata && item.tags.wikidata.P31)
+{
 // iterate item.tags.wikidata.P31
 ;(function(){
   if ('number' == typeof item.tags.wikidata.P31.length) {
@@ -493,16 +502,22 @@ buf.push('</a>');
   }
 }).call(this);
 
-buf.push('</ul></td><td class="source"><span>');
+}
+buf.push('</ul></td><td class="source">');
+if ( item.history.last)
+{
+buf.push('<span>');
 var __val__ = item.history.last.from.label.fr
 buf.push(escape(null == __val__ ? "" : __val__));
 buf.push('</span><span>');
 var __val__ = item.history.last.date
 buf.push(escape(null == __val__ ? "" : __val__));
-buf.push('</span></td><td class="attachements"></td><td class="comment"><span>');
+buf.push('</span>');
+}
+buf.push('</td><td class="attachements"></td><td class="comment"><span>');
 var __val__ = item.comment
 buf.push(escape(null == __val__ ? "" : __val__));
-buf.push('</span></td><td class="actions"><a title="Editer" class="edit"><i class="fa fa-pencil"></i></a><a title="Supprimer" class="delete"><i class="fa fa-times"></i></a></td>');
+buf.push('</span></td><td class="actions"><a title="Editer" class="edit disabled"><i class="fa fa-pencil"></i></a><a title="Supprimer" class="delete"><i class="fa fa-times"></i></a></td>');
 }
 return buf.join("");
 };
@@ -629,17 +644,53 @@ module.exports = AppView = Backbone.View.extend({
     });
   },
   createItem: function(event) {
+    var itemData, rpio;
     event.preventDefault();
-    this.collection.create({
-      title: this.$el.find("input[name=\"title\"]").val(),
+    if (local.selectedItem.barcode && local.selectedItem.barcode.length > 7) {
+      rpio = getRespublicaIoData('gtin', local.selectedItem.barcode);
+      window.rpio = rpio;
+    }
+    itemData = {
+      item: {
+        label: this.$el.find("input[name=\"title\"]").val(),
+        gtin: this.$el.find("input[name=\"barcode\"]").val() || local.selectedItem.barcode
+      },
       comment: this.$el.find("textarea[name=\"comment\"]").val(),
-      category: this.$el.find("select[name=\"cat\"]").val(),
-      subcategory: this.$el.find("select[name=\"subcat\"]").val(),
-      subsubcategory: this.$el.find("select[name=\"subsubcat\"]").val(),
-      barcode: this.$el.find("input[name=\"barcode\"]").val() || local.selectedItem.barcode,
-      url: this.$el.find("input[name=\"url\"]").val()
-    });
-    return $("#step2").foundation("reveal", "close");
+      attachement: {
+        receipt: window.local.selectedItem
+      },
+      history: {
+        last: {
+          from: {
+            label: {
+              fr: this.$el.find("input[name=\"vendor\"]").val() || local.selectedItem.origin
+            }
+          },
+          transaction: {
+            price: this.$el.find("input[name=\"price\"]").val() || local.selectedItem.price,
+            type: {
+              label: {
+                fr: "vente"
+              },
+              wikidata: "Q194189"
+            },
+            date: local.selectedItem.timestamp ||  ((new Date).toJSON())
+          }
+        }
+      }
+    };
+    loaderStart();
+    return setTimeout(((function(_this) {
+      return function() {
+        if (rpio != null) {
+          itemData.tags = rpio.item.wikidata.P31;
+          itemData.item.respublica_io = rpio.item['@id'];
+        }
+        _this.collection.create(itemData);
+        $("#step2").foundation("reveal", "close");
+        return loaderStop();
+      };
+    })(this)), 1500);
   },
   onItemAdded: function(item) {
     var itemView;
@@ -651,13 +702,25 @@ module.exports = AppView = Backbone.View.extend({
     return this.$el.find("tbody").append(itemView.$el);
   },
   fillFields: function() {
-    if (local.selectedItem && local.selectedItem.barcode) {
-      $("#barcode").children('input').remove();
-      $("#barcode").children('p').remove();
-      $("#barcode").append('<p>' + local.selectedItem.barcode + '<p>');
+    if (local.selectedItem) {
+      if (local.selectedItem.barcode) {
+        $("#barcode").children('input').remove();
+        $("#barcode").children('p').remove();
+        $("#barcode").append('<p>' + local.selectedItem.barcode + '<p>');
+      }
+      if (local.selectedItem.origin) {
+        $("#vendor").children('input').remove();
+        $("#vendor").children('p').remove();
+        $("#vendor").append('<p>' + local.selectedItem.origin + '<p>');
+      }
+      if (local.selectedItem.price) {
+        $("#price").children('input').remove();
+        $("#price").children('p').remove();
+        $("#price").append('<p>' + local.selectedItem.price + '€ <p>');
+      }
     }
     if (local.selectedItem && local.selectedItem.name) {
-      return $("#title input").val(local.selectedItem.name);
+      return $("#title input").val(local.selectedItem.name.upAndDownCase());
     }
   }
 });
@@ -763,7 +826,9 @@ module.exports = ReceiptDetail = Backbone.View.extend({
     $("#detailspreview").hide().html("");
     window.local.selectedItemId = $("#receiptelements select").val();
     window.local.selectedItem = window.local.selectedTicket[window.local.selectedItemId];
-    window.local.selectedItem;
+    if (window.local.selectedItem.barcode.length < 7) {
+      delete window.local.selectedItem.barcode;
+    }
     preview = new Preview({
       model: window.local.selectedItem
     });

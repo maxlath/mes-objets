@@ -34,25 +34,42 @@ module.exports = AppView = Backbone.View.extend(
 
     # submit button reload the page, we don't want that
     event.preventDefault()
+    if local.selectedItem.barcode && local.selectedItem.barcode.length > 7
+      rpio = getRespublicaIoData('gtin', local.selectedItem.barcode)
+      window.rpio = rpio
 
     # add it to the collection
-    @collection.create
-      title: @$el.find("input[name=\"title\"]").val()
+    itemData =
+      item:
+        label: @$el.find("input[name=\"title\"]").val()
+        gtin: @$el.find("input[name=\"barcode\"]").val() || local.selectedItem.barcode
+
       comment: @$el.find("textarea[name=\"comment\"]").val()
-      # attachement: {
-      #   receipt:
-      #         this.$el.find('select[name="proof_source"]').val()
-      #         // window.local.selectedItem.origin
-      #     ],
-      # }
-      category: @$el.find("select[name=\"cat\"]").val()
-      subcategory: @$el.find("select[name=\"subcat\"]").val()
-      subsubcategory: @$el.find("select[name=\"subsubcat\"]").val()
-      barcode: @$el.find("input[name=\"barcode\"]").val() || local.selectedItem.barcode,
-      url: @$el.find("input[name=\"url\"]").val()
+      attachement:
+        receipt: window.local.selectedItem
+      history:
+        last:
+          from:
+            label:
+              fr: @$el.find("input[name=\"vendor\"]").val() || local.selectedItem.origin
+          transaction:
+            price: @$el.find("input[name=\"price\"]").val() || local.selectedItem.price
+            type:
+              label:
+                fr: "vente"
+              wikidata: "Q194189"
+            date: local.selectedItem.timestamp || ((new Date).toJSON())
 
-    $("#step2").foundation "reveal", "close"
+    loaderStart()
+    setTimeout (=>
+      if rpio?
+        itemData.tags = rpio.item.wikidata.P31
+        itemData.item.respublica_io = rpio.item['@id']
 
+      @collection.create itemData
+      $("#step2").foundation "reveal", "close"
+      loaderStop()
+      ), 1500
 
   # updateItem: function(event) {
   #     var that = this
@@ -80,11 +97,23 @@ module.exports = AppView = Backbone.View.extend(
   fillFields: ->
 
     # BARCODE
-    if local.selectedItem and local.selectedItem.barcode
-      $("#barcode").children('input').remove()
-      $("#barcode").children('p').remove()
-      $("#barcode").append '<p>' + local.selectedItem.barcode + '<p>'
+    if local.selectedItem
+      if local.selectedItem.barcode
+        $("#barcode").children('input').remove()
+        $("#barcode").children('p').remove()
+        $("#barcode").append '<p>' + local.selectedItem.barcode + '<p>'
 
-    # $.getJSON()
-    $("#title input").val local.selectedItem.name  if local.selectedItem and local.selectedItem.name
+    #VENDOR
+      if local.selectedItem.origin
+              $("#vendor").children('input').remove()
+              $("#vendor").children('p').remove()
+              $("#vendor").append '<p>' + local.selectedItem.origin + '<p>'
+    #PRICE
+      if local.selectedItem.price
+              $("#price").children('input').remove()
+              $("#price").children('p').remove()
+              $("#price").append '<p>' + local.selectedItem.price + '€ <p>'
+
+    #TITLE
+    $("#title input").val local.selectedItem.name.upAndDownCase()  if local.selectedItem and local.selectedItem.name
 )

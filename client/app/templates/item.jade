@@ -1,15 +1,19 @@
 td.pic
+  if item.attachements && item.attachements.pictures
     each value, key in item.attachements.pictures
       img(src="#{value}", alt="#{key}")
 td.title
+  if item.item.label
     a(href="item#show/#{item.id}")= item.item.label
 td.tags
     ul
+      if item.tags && item.tags.wikidata && item.tags.wikidata.P31
         each value, key in item.tags.wikidata.P31
           each v, k in value
             a(href="#{key}")
                 = v.fr
 td.source
+  if item.history.last
     span= item.history.last.from.label.fr
     span= item.history.last.date
 
@@ -18,7 +22,7 @@ td.attachements
 td.comment
     span= item.comment
 td.actions
-    a.edit(title="Editer")
+    a.edit.disabled(title="Editer")
         i.fa.fa-pencil
     a.delete(title="Supprimer")
         i.fa.fa-times

@@ -13,7 +13,7 @@ module.exports = Items = Backbone.Collection.extend(
               label:
                 fr: "Pour l'exemple"
                 en: "King & Country"
-        barcode: "1234567890"
+        gtin: "1234567890"
       tags:
         wikidata:
           P31:
@@ -23,7 +23,7 @@ module.exports = Items = Backbone.Collection.extend(
                 en: "DVD"
       attachements:
         pictures:
-          thumbnail: "http://static.fnac-static.com/multimedia/FR/Images_Produits/FR/fnac.com/Visual_Principal_340/1/6/1/5050582876161.jpg"
+          thumbnail: "http://ecx.images-amazon.com/images/I/51X7fmX0clL._SY100_.jpg"
       history:
         context: "http://respublica.io/schema/transaction-history.jsonld"
         last:

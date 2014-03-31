@@ -19,8 +19,8 @@ module.exports = Item = americano.getModel("items",
 # seed: ->
 #     console.log "receipt seeding :D"
 #     @create
-#       title: "Pour l'exemple"
 #       item:
+#         label: "Pour l'exemple"
 #         wikidata:
 #             Q1570277:
 #               label:

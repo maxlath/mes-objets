@@ -47,6 +47,12 @@ footer {
 ul {
   list-style: none; }
 
+a.edit {
+  color: #999999; }
+
+a.delete {
+  color: rgba(100, 0, 0, 0.7); }
+
 
 .loading {
   display: none; }

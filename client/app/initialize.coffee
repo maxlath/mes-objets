@@ -53,7 +53,12 @@ window.listToReorder = (listToReorder, listitems) ->
 
 window.loaderStart = ->
   $('.loading').fadeIn()
-  setTimeout($('.loading').fadeOut(), 5000)
+  setTimeout(loaderStop, 5000)
 
 window.loaderStop = ->
   $('.loading').fadeOut()
+
+
+window.getRespublicaIoData = (domain, uri)->
+  query = $.getJSON('http://respublica.io/api/#{domain}/#{uri})')
+  return query.responseJSON

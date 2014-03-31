@@ -48,47 +48,23 @@ footer
             input(type="text", name="title", required)
                 small.error Un titre est requis pour identifier le nouvel objet
 
-        //- div.category.row.collapse
-        //-     div.large-4.columns
-        //-         label
-        //-             | Catégorie
-        //-             select(name="cat")
-        //-               option(value='bricolage') Bricolage
-        //-               option(value='starbuck') Starbuck
-        //-               option(value='hotdog') Hot Dog
-        //-               option(value='apollo') Apollo
-
-        //-     div.large-4.columns
-        //-         label
-        //-             | Sous-catégorie
-        //-             select(name="subcat")
-        //-               option(value='pelle') Pelle
-        //-               option(value='husker') Husker
-        //-               option(value='starbuck') Starbuck
-        //-               option(value='hotdog') Hot Dog
-
-        //-     div.large-4.columns
-        //-         label
-        //-             | Sous-sous-catégorie
-        //-             select(name="subsubcat")
-        //-               option(value='pelleapicoucontondants') Pelle à picous contondants
-        //-               option(value='husker') Husker
-        //-               option(value='apollo') Apollo
-        //-               option(value='starbuck') Starbuck
-
         #barcode
             label Code barre:
             input(type="text", name="barcode", required pattern="number")
                 small.error Le Code Barre ne peut comprendre que des chiffres
 
+        #vendor
+          label Vendeur
+          input(type="text", name="vendor")
+
+        #price
+          label Prix
+          input(type="text", name="price")
+
         #comment
             label Comment: (optionel)
             textarea(name="comment")
 
-        #url
-            label Url: (optionel)
-            input(type="text", name="url", pattern="url")
-                small.error Une URL valide doit commencer par http(s)
         a.success.radius.button.right(href='#', id="add-item", type="submit") Ajouter l'objet à l'inventaire
         a.radius.button(href='#', data-reveal-id='step1', type="submit", id="prev") Retour à l'étape 1
 
