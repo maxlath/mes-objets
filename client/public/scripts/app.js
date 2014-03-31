@@ -195,41 +195,42 @@ window.prettyDate = function(rawDate) {
   if (jour < 10) {
     jour = "0" + jour;
   }
-  if (mois === 0) {
-    mois = "Jan";
-  }
-  if (mois === 1) {
-    mois = "Fev";
-  }
-  if (mois === 2) {
-    mois = "Mar";
-  }
-  if (mois === 3) {
-    mois = "Avr";
-  }
-  if (mois === 4) {
-    mois = "Mai";
-  }
-  if (mois === 5) {
-    mois = "Jun";
-  }
-  if (mois === 6) {
-    mois = "Jui";
-  }
-  if (mois === 7) {
-    mois = "Aou";
-  }
-  if (mois === 8) {
-    mois = "Sep";
-  }
-  if (mois === 9) {
-    mois = "Oct";
-  }
-  if (mois === 10) {
-    mois = "Nov";
-  }
-  if (mois === 11) {
-    mois = "Dec";
+  switch (mois) {
+    case 0:
+      mois = "Jan";
+      break;
+    case 1:
+      mois = "Fev";
+      break;
+    case 2:
+      mois = "Mar";
+      break;
+    case 3:
+      mois = "Avr";
+      break;
+    case 4:
+      mois = "Mai";
+      break;
+    case 5:
+      mois = "Jun";
+      break;
+    case 6:
+      mois = "Jui";
+      break;
+    case 7:
+      mois = "Aou";
+      break;
+    case 8:
+      mois = "Sep";
+      break;
+    case 9:
+      mois = "Oct";
+      break;
+    case 10:
+      mois = "Nov";
+      break;
+    case 11:
+      mois = "Dec";
   }
   return jour + "-" + mois + "-" + annee + ", " + heure + ":" + minute;
 };

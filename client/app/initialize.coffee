@@ -23,19 +23,20 @@ window.prettyDate = (rawDate) ->
   minute = d.getMinutes()
   minute = "0" + minute  if minute < 10
   jour = "0" + jour  if jour < 10
-  mois = "Jan"  if mois is 0
-  mois = "Fev"  if mois is 1
-  mois = "Mar"  if mois is 2
-  mois = "Avr"  if mois is 3
-  mois = "Mai"  if mois is 4
-  mois = "Jun"  if mois is 5
-  mois = "Jui"  if mois is 6
-  mois = "Aou"  if mois is 7
-  mois = "Sep"  if mois is 8
-  mois = "Oct"  if mois is 9
-  mois = "Nov"  if mois is 10
-  mois = "Dec"  if mois is 11
-  jour + "-" + mois + "-" + annee + ", " + heure + ":" + minute
+  switch mois
+    when 0 then mois = "Jan"
+    when 1 then mois = "Fev"
+    when 2 then mois = "Mar"
+    when 3 then mois = "Avr"
+    when 4 then mois = "Mai"
+    when 5 then mois = "Jun"
+    when 6 then mois = "Jui"
+    when 7 then mois = "Aou"
+    when 8 then mois = "Sep"
+    when 9 then mois = "Oct"
+    when 10 then mois = "Nov"
+    when 11 then mois = "Dec"
+  return jour + "-" + mois + "-" + annee + ", " + heure + ":" + minute
 
 String::upAndDownCase = ->
   @charAt(0).toUpperCase() + @slice(1).toLowerCase()
