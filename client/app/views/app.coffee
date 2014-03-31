@@ -34,20 +34,25 @@ module.exports = AppView = Backbone.View.extend(
 
     # submit button reload the page, we don't want that
     event.preventDefault()
-    if local.selectedItem.barcode && local.selectedItem.barcode.length > 7
-      rpio = getRespublicaIoData('gtin', local.selectedItem.barcode)
-      window.rpio = rpio
+    # if local.selectedItem.barcode && local.selectedItem.barcode.length > 7
 
     # add it to the collection
     itemData =
       item:
+        context: "http://respublica.io/schema/items.jsonld"
         label: @$el.find("input[name=\"title\"]").val()
         gtin: @$el.find("input[name=\"barcode\"]").val() || local.selectedItem.barcode
-
-      comment: @$el.find("textarea[name=\"comment\"]").val()
-      attachement:
-        receipt: window.local.selectedItem
+        wikidata: undefined
+      tags:
+        wikidata:
+          P31:
+            undefined
+      attachements:
+        pictures:
+          thumbnail: undefined
+        receipt: local.selectedItem
       history:
+        context: "http://respublica.io/schema/transaction-history.jsonld"
         last:
           from:
             label:
@@ -59,17 +64,20 @@ module.exports = AppView = Backbone.View.extend(
                 fr: "vente"
               wikidata: "Q194189"
             date: local.selectedItem.timestamp || ((new Date).toJSON())
+      comment: @$el.find("textarea[name=\"comment\"]").val()
 
-    loaderStart()
-    setTimeout (=>
-      if rpio?
-        itemData.tags = rpio.item.wikidata.P31
-        itemData.item.respublica_io = rpio.item['@id']
 
-      @collection.create itemData
-      $("#step2").foundation "reveal", "close"
-      loaderStop()
-      ), 1500
+    if local.selectedItem.origin is "Intermarché"
+      itemData.history.last.from.label.fr = "Intermarché"
+      itemData.attachements.pictures.thumbnail = "http://drive.intermarche.com/ressources/images/produit/zoom/0#{local.selectedItem.barcode}.jpg"
+
+
+    if local.rpio?
+      itemData.tags = local.rpio.item.wikidata.P31
+      itemData.item.respublica_io = local.rpio.item['@id']
+
+    @collection.create itemData
+    $("#step2").foundation "reveal", "close"
 
   # updateItem: function(event) {
   #     var that = this

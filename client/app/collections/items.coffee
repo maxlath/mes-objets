@@ -3,7 +3,7 @@ module.exports = Items = Backbone.Collection.extend(
   model: Item
   url: "items"
   seed: ->
-    console.log "receipt seeding :D"
+    console.log "Hello! Here is an example"
     @create
       item:
         context: "http://respublica.io/schema/items.jsonld"
@@ -29,8 +29,8 @@ module.exports = Items = Backbone.Collection.extend(
         last:
           from:
             label:
-              fr: 'Intermarché'
-            wikidata: 'Q3153200'
+              fr: 'Fnac'
+            wikidata: 'Q676585'
           transaction:
             type:
               label:

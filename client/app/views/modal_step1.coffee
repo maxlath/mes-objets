@@ -62,12 +62,15 @@ module.exports = ReceiptDetail = Backbone.View.extend(
     loaderStop()
 
   updateDetailsPreview: ->
+    console.log "updateprev"
     $("#detailspreview").hide().html ""
     window.local.selectedItemId = $("#receiptelements select").val()
     window.local.selectedItem = window.local.selectedTicket[window.local.selectedItemId]
 
     if window.local.selectedItem.barcode.length < 7
       delete window.local.selectedItem.barcode
+    else
+      window.local.rpio = getRespublicaIoData('gtin', local.selectedItem.barcode)
 
     preview = new Preview(model: window.local.selectedItem)
     preview.render()

@@ -110,7 +110,7 @@ module.exports = Items = Backbone.Collection.extend({
   model: Item,
   url: "items",
   seed: function() {
-    console.log("receipt seeding :D");
+    console.log("Hello! Here is an example");
     return this.create({
       item: {
         context: "http://respublica.io/schema/items.jsonld",
@@ -147,9 +147,9 @@ module.exports = Items = Backbone.Collection.extend({
         last: {
           from: {
             label: {
-              fr: 'Intermarché'
+              fr: 'Fnac'
             },
-            wikidata: 'Q3153200'
+            wikidata: 'Q676585'
           },
           transaction: {
             type: {
@@ -303,9 +303,13 @@ window.loaderStop = function() {
 };
 
 window.getRespublicaIoData = function(domain, uri) {
-  var query;
-  query = $.getJSON('http://respublica.io/api/#{domain}/#{uri})');
-  return query.responseJSON;
+  var query, res;
+  query = "http://localhost:3000/api/" + domain + "/" + uri + ")";
+  console.log("querying");
+  console.log(query);
+  res = $.getJSON(query);
+  console.log(res);
+  return res.responseJSON;
 };
 });
 
@@ -367,7 +371,7 @@ attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow |
 var buf = [];
 with (locals || {}) {
 var interp;
-buf.push('<main><div class="row"><div class="large-8 columns"><h1>Mes Objets</h1><p>Centralisez les données de vos achats et objets !</p></div><div id="menu" class="large-4 columns"><a id="additembutton" href="#" data-reveal-id="step1" class="success radius button">Ajouter un objet</a></div></div><div class="row"><table><thead><tr><th>Image</th><th>Titre</th><th>Catégories</th><th>Source</th><th>Pièce jointes</th><th>Commentaire</th><th>Action</th></tr></thead><tbody></tbody></table><div id="preview" class="panel"><p><em>Selectionnez un objet pour voir ces informations</em></p></div></div></main><footer><div class="row"><div class="text-center columns"><a id="tour" href="#" class="radius button">Visite guidée</a></div><!--<Reveal>Modals begin</Reveal>--><div id="step1" data-reveal="data-reveal" class="reveal-modal"></div><div id="step2" data-reveal="data-reveal" class="reveal-modal"><form data-abide="data-abide"><h2>Etape 2 : Compléter les données récoltées</h2><p>Ajoutez des informations ou éditez celles collectées</p><div id="title"><label>Titre:</label><input type="text" name="title" required="required"/></div><div id="barcode"><label>Code barre:</label><input type="text" name="barcode" required pattern="number"/></div><div id="vendor"><label>Vendeur</label><input type="text" name="vendor"/></div><div id="price"><label>Prix</label><input type="text" name="price"/></div><div id="comment"><label>Comment: (optionel)</label><textarea name="comment"></textarea></div><a href="#" id="add-item" type="submit" class="success radius button right">Ajouter l\'objet à l\'inventaire</a><a href="#" data-reveal-id="step1" type="submit" id="prev" class="radius button">Retour à l\'étape 1</a></form><a class="close-reveal-modal">×</a></div><!--<Reveal>Modals end</Reveal>--></div></footer><div id="loadbg" class="loading"></div><div class="row loading"><div class="large-offset-5 large-2 small-offset-5 small-2"><div id="circleG"><div id="circleG_1" class="circleG"></div><div id="circleG_2" class="circleG"></div><div id="circleG_3" class="circleG"></div></div></div></div>');
+buf.push('<main><div class="row"><div class="large-8 columns"><h1>Mes Objets</h1><p>Centralisez les données de vos achats et objets !</p></div><div id="menu" class="large-4 columns"><a id="additembutton" href="#" data-reveal-id="step1" class="success radius button">Ajouter un objet</a></div></div><div class="row"><table width="100%"><thead><tr><th>Image</th><th>Titre</th><th>Catégories</th><th>Source</th><th>Pièce jointes</th><th>Commentaire</th><th>Action</th></tr></thead><tbody></tbody></table><div id="preview" class="panel"><p><em>Selectionnez un objet pour voir ces informations</em></p></div></div></main><footer><div class="row"><div class="text-center columns"><a id="tour" href="#" class="radius button">Visite guidée</a></div><!--<Reveal>Modals begin</Reveal>--><div id="step1" data-reveal="data-reveal" class="reveal-modal"></div><div id="step2" data-reveal="data-reveal" class="reveal-modal"><form data-abide="data-abide"><h2>Etape 2 : Compléter les données récoltées</h2><p>Ajoutez des informations ou éditez celles collectées</p><div id="title"><label>Titre:</label><input type="text" name="title" required="required"/></div><div id="barcode"><label>Code barre:</label><input type="text" name="barcode" required pattern="number"/></div><div id="vendor"><label>Vendeur</label><input type="text" name="vendor"/></div><div id="price"><label>Prix</label><input type="text" name="price"/></div><div id="comment"><label>Comment: (optionel)</label><textarea name="comment"></textarea></div><a href="#" id="add-item" type="submit" class="success radius button right">Ajouter l\'objet à l\'inventaire</a><a href="#" data-reveal-id="step1" type="submit" id="prev" class="radius button">Retour à l\'étape 1</a></form><a class="close-reveal-modal">×</a></div><!--<Reveal>Modals end</Reveal>--></div></footer><div id="loadbg" class="loading"></div><div class="row loading"><div class="large-offset-5 large-2 small-offset-5 small-2"><div id="circleG"><div id="circleG_1" class="circleG"></div><div id="circleG_2" class="circleG"></div><div id="circleG_3" class="circleG"></div></div></div></div>');
 }
 return buf.join("");
 };
@@ -644,22 +648,28 @@ module.exports = AppView = Backbone.View.extend({
     });
   },
   createItem: function(event) {
-    var itemData, rpio;
+    var itemData;
     event.preventDefault();
-    if (local.selectedItem.barcode && local.selectedItem.barcode.length > 7) {
-      rpio = getRespublicaIoData('gtin', local.selectedItem.barcode);
-      window.rpio = rpio;
-    }
     itemData = {
       item: {
+        context: "http://respublica.io/schema/items.jsonld",
         label: this.$el.find("input[name=\"title\"]").val(),
-        gtin: this.$el.find("input[name=\"barcode\"]").val() || local.selectedItem.barcode
+        gtin: this.$el.find("input[name=\"barcode\"]").val() || local.selectedItem.barcode,
+        wikidata: void 0
       },
-      comment: this.$el.find("textarea[name=\"comment\"]").val(),
-      attachement: {
-        receipt: window.local.selectedItem
+      tags: {
+        wikidata: {
+          P31: void 0
+        }
+      },
+      attachements: {
+        pictures: {
+          thumbnail: void 0
+        },
+        receipt: local.selectedItem
       },
       history: {
+        context: "http://respublica.io/schema/transaction-history.jsonld",
         last: {
           from: {
             label: {
@@ -677,20 +687,19 @@ module.exports = AppView = Backbone.View.extend({
             date: local.selectedItem.timestamp ||  ((new Date).toJSON())
           }
         }
-      }
+      },
+      comment: this.$el.find("textarea[name=\"comment\"]").val()
     };
-    loaderStart();
-    return setTimeout(((function(_this) {
-      return function() {
-        if (rpio != null) {
-          itemData.tags = rpio.item.wikidata.P31;
-          itemData.item.respublica_io = rpio.item['@id'];
-        }
-        _this.collection.create(itemData);
-        $("#step2").foundation("reveal", "close");
-        return loaderStop();
-      };
-    })(this)), 1500);
+    if (local.selectedItem.origin === "Intermarché") {
+      itemData.history.last.from.label.fr = "Intermarché";
+      itemData.attachements.pictures.thumbnail = "http://drive.intermarche.com/ressources/images/produit/zoom/0" + local.selectedItem.barcode + ".jpg";
+    }
+    if (local.rpio != null) {
+      itemData.tags = local.rpio.item.wikidata.P31;
+      itemData.item.respublica_io = local.rpio.item['@id'];
+    }
+    this.collection.create(itemData);
+    return $("#step2").foundation("reveal", "close");
   },
   onItemAdded: function(item) {
     var itemView;
@@ -823,11 +832,14 @@ module.exports = ReceiptDetail = Backbone.View.extend({
   },
   updateDetailsPreview: function() {
     var preview;
+    console.log("updateprev");
     $("#detailspreview").hide().html("");
     window.local.selectedItemId = $("#receiptelements select").val();
     window.local.selectedItem = window.local.selectedTicket[window.local.selectedItemId];
     if (window.local.selectedItem.barcode.length < 7) {
       delete window.local.selectedItem.barcode;
+    } else {
+      window.local.rpio = getRespublicaIoData('gtin', local.selectedItem.barcode);
     }
     preview = new Preview({
       model: window.local.selectedItem
