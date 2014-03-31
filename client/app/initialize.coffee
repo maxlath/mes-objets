@@ -60,7 +60,7 @@ window.loaderStop = ->
 
 
 window.getRespublicaIoData = (domain, uri)->
-  query = "http://localhost:3000/api/#{domain}/#{uri})"
+  query = "http://respublica.io/api/#{domain}/#{uri})"
   console.log "querying"
   console.log query
   res = $.getJSON(query)

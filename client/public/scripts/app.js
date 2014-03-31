@@ -304,7 +304,7 @@ window.loaderStop = function() {
 
 window.getRespublicaIoData = function(domain, uri) {
   var query, res;
-  query = "http://localhost:3000/api/" + domain + "/" + uri + ")";
+  query = "http://respublica.io/api/" + domain + "/" + uri + ")";
   console.log("querying");
   console.log(query);
   res = $.getJSON(query);
