@@ -20,6 +20,7 @@ module.exports = AppView = Backbone.View.extend(
 
     # fetch the transactions from the database
     @collection.fetch()
+    $('.loading').fadeIn()
 
     # this.collection.seed()
     appjs = this
@@ -36,9 +37,8 @@ module.exports = AppView = Backbone.View.extend(
     @collection.create
       title: @$el.find("input[name=\"title\"]").val()
       comment: @$el.find("textarea[name=\"comment\"]").val()
-
-      # trace: {
-
+      # attachement: {
+      #   receipt:
       #         this.$el.find('select[name="proof_source"]').val()
       #         // window.local.selectedItem.origin
       #     ],
@@ -70,6 +70,7 @@ module.exports = AppView = Backbone.View.extend(
   onTransactionAdded: (transaction) ->
 
     # render the specific element
+    $('.loading').fadeOut()
     transactionView = new TransactionView(model: transaction)
     transactionView.render()
     @$el.find("tbody").append transactionView.$el

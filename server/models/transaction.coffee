@@ -4,18 +4,12 @@ americano = require("americano")
 module.exports = Transaction = americano.getModel("transactions",
   id: String
   title: String
-  barcode:
-    type: String
-    default: ""
-
-  category: String
-  subcategory: String
-  subsubcategory: String
-  proof: Array
-  url:
-    type: String
-    default: ""
-
+  tags: Object
+  # {P31: Q571}
+  history: Object
+  # {last: {from: {id:"https://www.wikidata.org/wiki/Q3153200", label:"intermarché"}, date:"", transaction:"https://www.wikidata.org/wiki/Q194189" }}
+  attachements: Object
+  # {picture: "", receipt: ""}
   comment:
     type: String
     default: ""
