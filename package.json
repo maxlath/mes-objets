@@ -1,7 +1,7 @@
 {
   "name": "mes-objets",
   "version": "0.0.1",
-  "description": "An application to help you gather informations on your belongings.",
+  "description": "Une application pour vous aider à réunir les informations disponibles sur vos objets.",
   "repository": {
     "type": "git",
     "url": "https://github.com/maxlath/mes-objets.git"

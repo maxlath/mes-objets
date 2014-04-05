@@ -371,7 +371,7 @@ attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow |
 var buf = [];
 with (locals || {}) {
 var interp;
-buf.push('<main><div class="row"><div class="large-8 columns"><h1>Mes Objets</h1><p>Centralisez les données de vos achats et objets !</p></div><div id="menu" class="large-4 columns"><a id="additembutton" href="#" data-reveal-id="step1" class="success radius button">Ajouter un objet</a></div></div><div class="row"><table width="100%"><thead><tr><th>Image</th><th>Titre</th><th>Catégories</th><th>Source</th><th>Pièce jointes</th><th>Commentaire</th><th>Action</th></tr></thead><tbody></tbody></table><div id="details" class="panel"><p><em>Selectionnez un objet pour voir ces informations</em></p></div></div></main><footer><div class="row"><div class="text-center columns"><a id="tour" href="#" class="radius button">Visite guidée</a></div></div><div class="row"><div class="text-center columns credits"><a href="http://respublica.io/concours-mesinfos/about">A propos</a></div><!--<Reveal>Modals begin</Reveal>--><div id="step1" data-reveal="data-reveal" class="reveal-modal"></div><div id="step2" data-reveal="data-reveal" class="reveal-modal"><form data-abide="data-abide"><h2>Etape 2 : Compléter les données récoltées</h2><p>Ajoutez des informations ou éditez celles collectées</p><div id="title"><label>Titre:</label><input type="text" name="title" required="required"/></div><div id="barcode"><label>Code barre:</label><input type="text" name="barcode" required pattern="number"/></div><div id="vendor"><label>Vendeur</label><input type="text" name="vendor"/></div><div id="price"><label>Prix</label><input type="text" name="price"/></div><div id="comment"><label>Comment: (optionel)</label><textarea name="comment"></textarea></div><a href="#" id="add-item" type="submit" class="success radius button right">Ajouter l\'objet à l\'inventaire</a><a href="#" data-reveal-id="step1" type="submit" id="prev" class="radius button">Retour à l\'étape 1</a></form><a class="close-reveal-modal">×</a></div><!--<Reveal>Modals end</Reveal>--></div></footer><div id="loadbg" class="loading"></div><div class="row loading"><div class="large-offset-5 large-2 small-offset-5 small-2"><div id="circleG"><div id="circleG_1" class="circleG"></div><div id="circleG_2" class="circleG"></div><div id="circleG_3" class="circleG"></div></div></div></div>');
+buf.push('<main><div class="row"><div class="large-8 columns"><h1>Mes Objets</h1><h4>Centralisez les données de vos achats et objets !</h4></div><div id="menu" class="large-4 columns"><a id="additembutton" href="#" data-reveal-id="step1" class="success radius button">Ajouter un objet</a></div><div class="large-12 columns"><p>Mes Objets vous aide à dresser l\'<strong>inventaire de vos objets</strong>&nbsp;en s\'appuyant sur les données fournies par les &nbsp;<strong>entreprises partenaires</strong>&nbsp;(actuellement seulement Intermarché). Outre cet aide-mémoire pour vos achats importants, l\'application vise à tirer toute la puissance du web des données ouvertes ("<em>Linked Open Data</em>") pour enrichir l\'information sur vos objets. Encore minimal au moment de ce prototype, cette fonctionnalités de centralisation et de structure des données sur les objets devra permettre à l\'avenir la&nbsp;<strong>réutilisation de ces données</strong>&nbsp;par d\'autres applications, par exemple pour des applications d\'économie collaborative (revente, troc, don, prêt...).</p></div></div><div class="row"><table width="100%"><thead><tr><th>Image</th><th>Titre</th><th>Catégories</th><th>Source</th><th>Pièce jointes</th><th>Commentaire</th><th>Action</th></tr></thead><tbody></tbody></table><div id="details" class="panel"><p><em>Selectionnez un objet pour voir ses informations</em></p></div></div></main><footer><div class="row"><div class="text-center columns"><a id="tour" href="#" class="radius button">Visite guidée</a></div></div><div class="row"><div class="text-center columns credits"><a href="http://respublica.io/concours-mesinfos/about">A propos</a></div><!--<Reveal>Modals begin</Reveal>--><div id="step1" data-reveal="data-reveal" class="reveal-modal"></div><div id="step2" data-reveal="data-reveal" class="reveal-modal"><form data-abide="data-abide"><h2>Etape 2 : Compléter les données récoltées</h2><p>Ajoutez des informations ou éditez celles collectées</p><div id="title"><label>Titre:</label><input type="text" name="title" required="required"/></div><div id="barcode"><label>Code barre:</label><input type="text" name="barcode" required pattern="number"/></div><div id="vendor"><label>Vendeur</label><input type="text" name="vendor"/></div><div id="price"><label>Prix</label><input type="text" name="price"/></div><div id="comment"><label>Comment: (optionel)</label><textarea name="comment"></textarea></div><a href="#" id="add-item" type="submit" class="success radius button right">Ajouter l\'objet à l\'inventaire</a><a href="#" data-reveal-id="step1" type="submit" id="prev" class="radius button">Retour à l\'étape 1</a></form><a class="close-reveal-modal">×</a></div><!--<Reveal>Modals end</Reveal>--></div></footer><div id="loadbg" class="loading"></div><div class="row loading"><div class="large-offset-5 large-2 small-offset-5 small-2"><div id="circleG"><div id="circleG_1" class="circleG"></div><div id="circleG_2" class="circleG"></div><div id="circleG_3" class="circleG"></div></div></div></div>');
 }
 return buf.join("");
 };
@@ -683,7 +683,7 @@ buf.push('</span>');
 buf.push('</td><td class="attachements"></td><td class="comment"><span>');
 var __val__ = item.comment
 buf.push(escape(null == __val__ ? "" : __val__));
-buf.push('</span></td><td class="actions"><a title="Editer" class="edit disabled"><i class="fa fa-pencil"></i></a><a title="Supprimer" class="delete"><i class="fa fa-times"></i></a></td>');
+buf.push('</span></td><td class="actions"><a title="Editer" class="edit"><i class="fa fa-pencil"></i></a><a title="Supprimer" class="delete"><i class="fa fa-times"></i></a></td>');
 }
 return buf.join("");
 };
@@ -695,7 +695,7 @@ attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow |
 var buf = [];
 with (locals || {}) {
 var interp;
-buf.push('<h2>Etape 1 : Attacher des preuves d\'achat</h2><p>Choisissez les données relatives à l\'objet que vous souhaitez ajouter à votre inventaire</p><form><div id="sources" class="fields"><label class="superlab">Source</label><select id="source" name="source"><option value="null">* Choisissez une source d\'information *</option><option value="intermarche">Intermarché</option><option value="manuel">Ajout manuel</option></select></div><div id="receipts" class="fields"><label class="superlab">Tickets de caisse</label><select id="receipt" name="receipt" class="dynOption"><option value="null">* Choisissez un ticket de caisse *</option></select></div><div id="receiptelements" class="fields"><label class="superlab">Détails du ticket<select id="receipt_details" name="receipt_details" class="dynOption"><option value="null">* Choisissez une ligne du ticket *</option></select></label></div><div id="detailspreview" class="panel"></div><div id="additionaldata" class="panel"></div></form><div id="manualbarcode"><span>ou entrer le code bar manuellement<input placeholder="barcode"/></span></div><a href="#" data-reveal-id="step2" type="submit" id="next" class="success radius button right">Etape 2...</a><a class="close-reveal-modal">×</a>');
+buf.push('<h2>Etape 1 : Attacher des preuves d\'achat</h2><p>Choisissez les données relatives à l\'objet que vous souhaitez ajouter à votre inventaire</p><form><div id="sources" class="fields"><label class="superlab">Source</label><select id="source" name="source"><option value="null">* Choisissez une source d\'information *</option><option value="intermarche">Intermarché</option><option value="manuel">Ajout manuel (passer directement à l\'étape 2)</option></select></div><div id="receipts" class="fields"><label class="superlab">Tickets de caisse</label><select id="receipt" name="receipt" class="dynOption"><option value="null">* Choisissez un ticket de caisse *</option></select></div><div id="receiptelements" class="fields"><label class="superlab">Détails du ticket<select id="receipt_details" name="receipt_details" class="dynOption"><option value="null">* Choisissez une ligne du ticket *</option></select></label></div><div id="detailspreview" class="panel"></div><div id="additionaldata" class="panel"></div></form><div id="manualbarcode"><span>ou entrer le code bar manuellement<input placeholder="barcode"/></span></div><a href="#" data-reveal-id="step2" type="submit" id="next" class="success radius button right">Etape 2...</a><a class="close-reveal-modal">×</a>');
 }
 return buf.join("");
 };
@@ -923,20 +923,21 @@ module.exports = Item = Backbone.View.extend({
   events: {
     "click a.delete": "deleteItem",
     "click a.edit": "editItem",
-    "click a.itemId": "showDetails",
-    "click a.edit": "editPan"
+    "click a.itemId": "showDetails"
   },
   render: function() {
     return this.$el.html(this.template({
       item: this.model.toJSON()
     }));
   },
-  deleteItem: function() {
+  deleteItem: function(e) {
+    e.preventDefault();
     this.model.destroy();
     return this.remove();
   },
-  editItem: function() {
-    return alert("fonctionnalité indisponible pour la version prototype, désolé pour la gène occasionné");
+  editItem: function(e) {
+    e.preventDefault();
+    return alert("La fonction d'édition des objets n'a pas pu être réalisée dans les temps pour le concours MesInfos, elle sera ajouter à la prochaine version. Toutes nos excuses pour la gène occasionnée.");
   },
   showDetails: function(e) {
     var details;

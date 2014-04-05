@@ -7,17 +7,18 @@ module.exports = Item = Backbone.View.extend(
     "click a.delete": "deleteItem"
     "click a.edit": "editItem"
     "click a.itemId": "showDetails"
-    "click a.edit": "editPan"
 
   render: ->
     @$el.html @template(item: @model.toJSON())
 
-  deleteItem: ->
+  deleteItem: (e)->
+    e.preventDefault()
     @model.destroy()
     @remove()
 
-  editItem: ->
-    alert "fonctionnalité indisponible pour la version prototype, désolé pour la gène occasionné"
+  editItem: (e)->
+    e.preventDefault()
+    alert "La fonction d'édition des objets n'a pas pu être réalisée dans les temps pour le concours MesInfos, elle sera ajouter à la prochaine version. Toutes nos excuses pour la gène occasionnée."
 
   showDetails: (e)->
     e.preventDefault()
