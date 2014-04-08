@@ -1,6 +1,6 @@
 .row
     .large-6.small-12.columns
-        h4 Objet
+        h4#objectTitle Objet
         if item.label
             strong Nom
             p= item.label
@@ -9,7 +9,7 @@
             p= comment
         if item.gtin
             strong Code barre
-            p= item.gtin
+            p#barcode= item.gtin
 
         hr
 
@@ -30,7 +30,7 @@
                 p= history.last.price
         hr
         strong Cet objet sur Wikidata
-        p
+        p#wikidata
         if item.wikidata
             if item.wikidata.Q1570277.label.fr
                 a(href="https://www.wikidata.org/wiki/Q1570277") #{item.wikidata.Q1570277.label.fr}

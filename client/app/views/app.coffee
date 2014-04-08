@@ -5,6 +5,7 @@ module.exports = AppView = Backbone.View.extend(
   template: require("../templates/app")
   events:
     "click #add-item": "createItem"
+    "click #joyride": "startTour"
 
   # initialize is automatically called once after the view is contructed
   initialize: ->
@@ -63,18 +64,19 @@ module.exports = AppView = Backbone.View.extend(
               label:
                 fr: "vente"
               wikidata: "Q194189"
-            date: local.selectedItem.timestamp || ((new Date).toJSON())
+            date: ((new Date).toJSON())
       comment: @$el.find("textarea[name=\"comment\"]").val()
 
+    if local && local.selectedItem
+      if local.selectedItem.origin is "Intermarché"
+        itemData.history.last.from.label.fr = "Intermarché"
+        itemData.history.last.transaction.date = local.selectedItem.timestamp
+        itemData.attachements.pictures.thumbnail = "http://drive.intermarche.com/ressources/images/produit/zoom/0#{local.selectedItem.barcode}.jpg"
 
-    if local.selectedItem.origin is "Intermarché"
-      itemData.history.last.from.label.fr = "Intermarché"
-      itemData.attachements.pictures.thumbnail = "http://drive.intermarche.com/ressources/images/produit/zoom/0#{local.selectedItem.barcode}.jpg"
 
-
-    if local.rpio?
-      itemData.tags = local.rpio.item.wikidata.P31
-      itemData.item.respublica_io = local.rpio.item['@id']
+      if local.rpio?
+        itemData.tags = local.rpio.item.wikidata.P31
+        itemData.item.respublica_io = local.rpio.item['@id']
 
     @collection.create itemData
     $("#step2").foundation "reveal", "close"
@@ -106,6 +108,7 @@ module.exports = AppView = Backbone.View.extend(
 
     # BARCODE
     if local.selectedItem
+      console.log "ENTERED!"
       if local.selectedItem.barcode
         $("#barcode").children('input').remove()
         $("#barcode").children('p').remove()
@@ -124,4 +127,8 @@ module.exports = AppView = Backbone.View.extend(
 
     #TITLE
     $("#title input").val local.selectedItem.name.upAndDownCase()  if local.selectedItem and local.selectedItem.name
+
+  startTour: ->
+    $(document).foundation('joyride', 'start')
+
 )

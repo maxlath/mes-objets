@@ -2,7 +2,7 @@ td.pic
   if item.attachements && item.attachements.pictures
     each value, key in item.attachements.pictures
       img(src="#{value}", alt="#{key}")
-td.title
+td.title#itemTitle
   if item.item.label
     a(href="item#show/#{item.id}", class="itemId", id="#{item.id}")= item.item.label
 td.tags

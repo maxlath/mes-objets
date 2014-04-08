@@ -6,7 +6,7 @@ module.exports = Item = Backbone.View.extend(
   events:
     "click a.delete": "deleteItem"
     "click a.edit": "editItem"
-    "click a.itemId": "showDetails"
+    "click td": "showDetails"
 
   render: ->
     @$el.html @template(item: @model.toJSON())
@@ -21,6 +21,7 @@ module.exports = Item = Backbone.View.extend(
     alert "La fonction d'édition des objets n'a pas pu être réalisée dans les temps pour le concours MesInfos, elle sera ajouter à la prochaine version. Toutes nos excuses pour la gène occasionnée."
 
   showDetails: (e)->
+    console.log('trigger!!')
     e.preventDefault()
 
     details = new Details(model: @model)

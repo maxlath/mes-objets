@@ -371,7 +371,7 @@ attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow |
 var buf = [];
 with (locals || {}) {
 var interp;
-buf.push('<main><div class="row"><div class="large-8 columns"><h1>Mes Objets</h1><h4>Centralisez les données de vos achats et objets !</h4></div><div id="menu" class="large-4 columns"><a id="additembutton" href="#" data-reveal-id="step1" class="success radius button">Ajouter un objet</a></div><div class="large-12 columns"><p>Mes Objets vous aide à dresser l\'<strong>inventaire de vos objets</strong>&nbsp;en s\'appuyant sur les données fournies par les &nbsp;<strong>entreprises partenaires</strong>&nbsp;(actuellement seulement Intermarché). Outre cet aide-mémoire pour vos achats importants, l\'application vise à tirer toute la puissance du web des données ouvertes ("<em>Linked Open Data</em>") pour enrichir l\'information sur vos objets. Encore minimal au moment de ce prototype, cette fonctionnalités de centralisation et de structure des données sur les objets devra permettre à l\'avenir la&nbsp;<strong>réutilisation de ces données</strong>&nbsp;par d\'autres applications, par exemple pour des applications d\'économie collaborative (revente, troc, don, prêt...).</p></div></div><div class="row"><table width="100%"><thead><tr><th>Image</th><th>Titre</th><th>Catégories</th><th>Source</th><th>Pièce jointes</th><th>Commentaire</th><th>Action</th></tr></thead><tbody></tbody></table><div id="details" class="panel"><p><em>Selectionnez un objet pour voir ses informations</em></p></div></div></main><footer><div class="row"><div class="text-center columns"><a id="tour" href="#" class="radius button">Visite guidée</a></div></div><div class="row"><div class="text-center columns credits"><a href="http://respublica.io/concours-mesinfos/about">A propos</a></div><!--<Reveal>Modals begin</Reveal>--><div id="step1" data-reveal="data-reveal" class="reveal-modal"></div><div id="step2" data-reveal="data-reveal" class="reveal-modal"><form data-abide="data-abide"><h2>Etape 2 : Compléter les données récoltées</h2><p>Ajoutez des informations ou éditez celles collectées</p><div id="title"><label>Titre:</label><input type="text" name="title" required="required"/></div><div id="barcode"><label>Code barre:</label><input type="text" name="barcode" required pattern="number"/></div><div id="vendor"><label>Vendeur</label><input type="text" name="vendor"/></div><div id="price"><label>Prix</label><input type="text" name="price"/></div><div id="comment"><label>Comment: (optionel)</label><textarea name="comment"></textarea></div><a href="#" id="add-item" type="submit" class="success radius button right">Ajouter l\'objet à l\'inventaire</a><a href="#" data-reveal-id="step1" type="submit" id="prev" class="radius button">Retour à l\'étape 1</a></form><a class="close-reveal-modal">×</a></div><!--<Reveal>Modals end</Reveal>--></div></footer><div id="loadbg" class="loading"></div><div class="row loading"><div class="large-offset-5 large-2 small-offset-5 small-2"><div id="circleG"><div id="circleG_1" class="circleG"></div><div id="circleG_2" class="circleG"></div><div id="circleG_3" class="circleG"></div></div></div></div>');
+buf.push('<main><div class="row"><div class="large-8 columns"><h1>Mes Objets</h1><h4>Centralisez les données de vos achats et objets !</h4></div><div id="menu" class="large-4 columns"><a id="additembutton" href="#" data-reveal-id="step1" class="success radius button">Ajouter un objet</a></div></div><div class="row"><table width="100%" id="inventory"><thead><tr><th>Image</th><th>Titre</th><th>Catégories</th><th>Source</th><th>Pièce jointes</th><th>Commentaire</th><th>Action</th></tr></thead><tbody></tbody></table><div id="details" class="panel"><p><em>Selectionnez un objet pour voir ses informations</em></p></div></div></main><footer><div class="row"><div class="text-center columns"><a id="joyride" href="#" class="radius button">Visite guidée</a></div><div class="text-center large-12 columns"><p>Mes Objets vous aide à dresser l\'<strong>inventaire de vos objets</strong>&nbsp;en s\'appuyant sur les données fournies par les &nbsp;<strong>entreprises partenaires</strong>&nbsp;(actuellement seulement Intermarché). Outre cet aide-mémoire pour vos achats importants, l\'application vise à tirer toute la puissance du web des données ouvertes ("<em>Linked Open Data</em>") pour enrichir l\'information sur vos objets. Encore minimal au moment de ce prototype, cette fonctionnalités de centralisation et de structure des données sur les objets devra permettre à l\'avenir la&nbsp;<strong>réutilisation de ces données</strong>&nbsp;par d\'autres applications, par exemple pour des applications d\'économie collaborative (revente, troc, don, prêt...).</p></div><div class="text-center large-12 columns"><small>prototype réalisé par&nbsp;<a href="https://twitter.com/maxlath">Max</a>&nbsp;et&nbsp;<a href="https://twitter.com/MFozeu">Tonton Mike</a></small></div><div id="step1" data-reveal="data-reveal" class="reveal-modal"></div><div id="step2" data-reveal="data-reveal" class="reveal-modal"><form data-abide="data-abide"><h2>Etape 2 : Compléter les données récoltées</h2><p>Ajoutez des informations ou éditez celles collectées</p><div id="title"><label>Titre:</label><input type="text" name="title" required="required"/></div><div id="barcode"><label>Code barre:</label><input type="text" name="barcode" required pattern="number"/></div><div id="vendor"><label>Vendeur</label><input type="text" name="vendor"/></div><div id="price"><label>Prix</label><input type="text" name="price"/></div><div id="comment"><label>Comment: (optionel)</label><textarea name="comment"></textarea></div><a href="#" id="add-item" type="submit" class="success radius button right">Ajouter l\'objet à l\'inventaire</a><a href="#" data-reveal-id="step1" type="submit" id="prev" class="radius button">Retour à l\'étape 1</a></form><a class="close-reveal-modal">×</a></div><!--<Reveal>Modals end</Reveal>--></div></footer><ol data-joyride="data-joyride" class="joyride-list"><li data-text="Commencer le tour"><h4>Bienvenue dans l\'application Mes Objets !</h4><p>L\'application est encore à l\'état de prototype mais vous donne déjà un aperçu de ce que l\'on pourrait faire si les vendeurs nous communiquaient nos données !</p></li><li data-id="inventory" data-text="Suivant" data-options="tip_location: top"><h4>Un inventaire personnel</h4><p>L\'application vous aide à faire l\'inventaire de vos achats et objets personnels importants.</p></li><li data-id="itemTitle" data-text="Suivant" data-options="tip_location: top"><h4>Un inventaire connecté au web des données</h4><p>Chaque objet ajouté à l\'inventaire permet de centraliser les informations sur ses achats (preuves d\'achats, code barre...), qu\'elles soient fournit par les vendeurs ou qu\'elle soit disponible ailleurs sur le web !</p><strong>Cliquez sur un objet pour afficher ses détails.</strong><br/><br/></li><li data-id="additembutton" data-text="Dernière étape"><h4>Ajoutez vos objets</h4><p>Ajoutez des objets à votre inventaire à l\'aide des données recoltées auprès des entreprises partenaires (aujourd\'hui seulement Intermarché) ou, à défaut, à la main, en rentrant leur code barre.</p></li><li data-button="Fin"><h4>Merci d\'essayer notre application !</h4></li></ol><div id="loadbg" class="loading"></div><div class="row loading"><div class="large-offset-5 large-2 small-offset-5 small-2"><div id="circleG"><div id="circleG_1" class="circleG"></div><div id="circleG_2" class="circleG"></div><div id="circleG_3" class="circleG"></div></div></div></div>');
 }
 return buf.join("");
 };
@@ -383,7 +383,7 @@ attrs = attrs || jade.attrs; escape = escape || jade.escape; rethrow = rethrow |
 var buf = [];
 with (locals || {}) {
 var interp;
-buf.push('<div class="row"><div class="large-6 small-12 columns"><h4>Objet</h4>');
+buf.push('<div class="row"><div class="large-6 small-12 columns"><h4 id="objectTitle">Objet</h4>');
 if ( item.label)
 {
 buf.push('<strong>Nom</strong><p>');
@@ -400,7 +400,7 @@ buf.push('</p>');
 }
 if ( item.gtin)
 {
-buf.push('<strong>Code barre</strong><p>');
+buf.push('<strong>Code barre</strong><p id="barcode">');
 var __val__ = item.gtin
 buf.push(escape(null == __val__ ? "" : __val__));
 buf.push('</p>');
@@ -437,7 +437,7 @@ buf.push(escape(null == __val__ ? "" : __val__));
 buf.push('</p>');
 }
 }
-buf.push('<hr/><strong>Cet objet sur Wikidata</strong><p></p>');
+buf.push('<hr/><strong>Cet objet sur Wikidata</strong><p id="wikidata"></p>');
 if ( item.wikidata)
 {
 if ( item.wikidata.Q1570277.label.fr)
@@ -574,7 +574,7 @@ buf.push('/>');
 }).call(this);
 
 }
-buf.push('</td><td class="title">');
+buf.push('</td><td id="itemTitle" class="title">');
 if ( item.item.label)
 {
 buf.push('<a');
@@ -785,7 +785,8 @@ module.exports = AppView = Backbone.View.extend({
   el: "body",
   template: require("../templates/app"),
   events: {
-    "click #add-item": "createItem"
+    "click #add-item": "createItem",
+    "click #joyride": "startTour"
   },
   initialize: function() {
     return this.listenTo(this.collection, "add", this.onItemAdded);
@@ -846,19 +847,22 @@ module.exports = AppView = Backbone.View.extend({
               },
               wikidata: "Q194189"
             },
-            date: local.selectedItem.timestamp ||  ((new Date).toJSON())
+            date: (new Date).toJSON()
           }
         }
       },
       comment: this.$el.find("textarea[name=\"comment\"]").val()
     };
-    if (local.selectedItem.origin === "Intermarché") {
-      itemData.history.last.from.label.fr = "Intermarché";
-      itemData.attachements.pictures.thumbnail = "http://drive.intermarche.com/ressources/images/produit/zoom/0" + local.selectedItem.barcode + ".jpg";
-    }
-    if (local.rpio != null) {
-      itemData.tags = local.rpio.item.wikidata.P31;
-      itemData.item.respublica_io = local.rpio.item['@id'];
+    if (local && local.selectedItem) {
+      if (local.selectedItem.origin === "Intermarché") {
+        itemData.history.last.from.label.fr = "Intermarché";
+        itemData.history.last.transaction.date = local.selectedItem.timestamp;
+        itemData.attachements.pictures.thumbnail = "http://drive.intermarche.com/ressources/images/produit/zoom/0" + local.selectedItem.barcode + ".jpg";
+      }
+      if (local.rpio != null) {
+        itemData.tags = local.rpio.item.wikidata.P31;
+        itemData.item.respublica_io = local.rpio.item['@id'];
+      }
     }
     this.collection.create(itemData);
     return $("#step2").foundation("reveal", "close");
@@ -874,6 +878,7 @@ module.exports = AppView = Backbone.View.extend({
   },
   fillFields: function() {
     if (local.selectedItem) {
+      console.log("ENTERED!");
       if (local.selectedItem.barcode) {
         $("#barcode").children('input').remove();
         $("#barcode").children('p').remove();
@@ -893,6 +898,9 @@ module.exports = AppView = Backbone.View.extend({
     if (local.selectedItem && local.selectedItem.name) {
       return $("#title input").val(local.selectedItem.name.upAndDownCase());
     }
+  },
+  startTour: function() {
+    return $(document).foundation('joyride', 'start');
   }
 });
 });
@@ -923,7 +931,7 @@ module.exports = Item = Backbone.View.extend({
   events: {
     "click a.delete": "deleteItem",
     "click a.edit": "editItem",
-    "click a.itemId": "showDetails"
+    "click td": "showDetails"
   },
   render: function() {
     return this.$el.html(this.template({
@@ -941,6 +949,7 @@ module.exports = Item = Backbone.View.extend({
   },
   showDetails: function(e) {
     var details;
+    console.log('trigger!!');
     e.preventDefault();
     details = new Details({
       model: this.model
